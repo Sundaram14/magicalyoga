@@ -1,0 +1,9 @@
+{
+  "routes": {
+    "/magicalyoga": {},
+    "/magicalyoga/about-us": {},
+    "/magicalyoga/contact-us": {},
+    "/magicalyoga/summer-camp": {},
+    "/magicalyoga/video-contents": {}
+  }
+}
