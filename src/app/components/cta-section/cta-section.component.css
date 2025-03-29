@@ -1,0 +1,113 @@
+/* Container Styles */
+.cta-section {
+    width: 80%;
+    margin: 0 auto;
+    padding: 80px 40px;
+    background-color: rgba(8, 62, 86);
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Adds depth */
+    font-family: 'Arial', sans-serif;
+    color: white;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column; /* Stacks children vertically */
+    align-items: center; /* Horizontally centers children */
+  }
+  
+  /* Message Styling */
+  .cta-message {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .highlight {
+    font-weight: bold;
+    color: #ffd700; /* Golden color to emphasize */
+  }
+  
+  /* Pricing Styles */
+  .cta-pricing {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .original-price {
+    text-decoration: line-through;
+    opacity: 0.6; /* Faded effect for crossed price */
+    margin-right: 10px;
+  }
+  
+  .discounted-price {
+    font-weight: bold;
+    color: #4dd3d1; /* Highlight discounted price in teal */
+  }
+  
+  /* Join Now Button */
+  .join-now-button {
+    position: relative;
+    overflow: hidden;
+    background: #ffd700;
+    color: black;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 40px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    width: fit-content;
+  }
+  
+  /* Animated Shine */
+  .join-now-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: all 0.65s ease-in-out;
+    animation: shine-effect 3s ease-in-out infinite; /* Shine effect animation */
+  }
+  
+  /* Keyframes for Shine */
+  @keyframes shine-effect {
+    0% {
+      left: -100%;
+    }
+    50% {
+      left: 100%;
+    }
+    100% {
+      left: -100%;
+    }
+  }
+  
+  
+  /* Shake Effect */
+  .join-now-button:hover {
+    animation: shake 0.3s ease-in-out;
+  }
+  
+  @keyframes shake {
+    0%, 100% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-2px);
+    }
+    75% {
+      transform: translateX(2px);
+    }
+  }
+  
+  /* Responsive Design */
+  @media screen and (max-width: 768px) {
+    .cta-section {
+      width: 100%;
+      border-radius: 0;
+    }
+  }
+  

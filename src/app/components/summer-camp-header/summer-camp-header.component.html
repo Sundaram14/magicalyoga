@@ -1,0 +1,51 @@
+<div class="video-background-container">
+    <!-- Video Background -->
+    <div class="background-video-wrapper" [class.fade]="transitioning">
+      <video
+        [src]="videos[currentVideoIndex]"
+        autoplay
+        muted
+        loop
+        playsinline
+        class="background-video"
+      ></video>
+    </div>
+  
+    <!-- Overlay Content -->
+    <div class="overlay-content">
+      <!-- Logo -->
+      <div class="logo">
+        <img src="/assets/Images/logo-full.png" alt="Magical Yoga Logo">
+      </div>
+  
+      <!-- Tagline -->
+      <h1 class="tagline"><strong> Stretch Into Summer: Yoga Camp </strong></h1>
+      <p class="cta-text">Fun. Fitness. Flexibility. Certificates Included!</p>
+      <p class="cta-text limited">Apr 28 - May 23 | Age: 8 to 18 years</p>
+      <p class="limited">&#40;Limited seats only&#41;</p>
+
+      <div class="free-trial-button-container">
+        <a 
+          href="https://wa.me/919884524742?text=I%20want%20to%20enquire%20about%20the%20summer%20camp"
+          class="free-trial-button"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Enquiry Now <span class="arrow">→</span>
+        </a>
+      </div>
+      
+      
+  
+      <!-- Carousel Dots -->
+      <div class="carousel-dots">
+        <span
+          *ngFor="let video of videos; let i = index"
+          class="dot"
+          [class.active]="i === currentVideoIndex"
+          (click)="changeVideo(i)"
+        ></span>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,51 @@
+/* Header Section */
+.header-section {
+  background: url('/assets/Images/yoga-header.png');
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+  }
+  .header-section .overlay {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 2rem;
+    border-radius: 8px;
+  }
+  .header-section h1 {
+    font-size: 3rem;
+  }
+  .header-section p {
+    font-size: 1.2rem;
+  }
+  
+  /* Welcome Section */
+  .welcome-section, .benefits-section, .reasons-section, .instructor-section, .cta-section {
+    padding: 4rem 2rem;
+    text-align: center;
+  }
+  .welcome-section h2, .benefits-section h2, .reasons-section h2, .instructor-section h2 {
+    color: #0097b2;
+  }
+  
+  /* Benefits and Reasons Section */
+  .card {
+    background-color: #4dbbd3;
+    color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    margin-top: 1rem;
+  }
+  
+  /* Instructor Section */
+  .instructor-card {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+  .instructor-card img {
+    width: 200px;
+    border-radius: 50%;
+  }
+  

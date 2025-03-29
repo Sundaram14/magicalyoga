@@ -1,0 +1,172 @@
+/* Full-Screen Video Background */
+.video-background-container {
+    position: relative;
+    height: 90vh;
+    width: 100%;
+    overflow: hidden;
+  }
+  
+  /* Video Wrapper for Smooth Transition */
+  .background-video-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    z-index: -1; /* Sends the video behind the overlay content */
+    transition: opacity 0.5s ease-in-out; /* Smooth fade effect */
+  }
+  
+  .background-video-wrapper.fade {
+    opacity: 0; /* Makes the video fade out */
+  }
+  
+  /* Video Element */
+  .background-video {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+  
+  /* Overlay Content */
+  .overlay-content {
+    position: absolute;
+    bottom: 10%;
+    width: 100%;
+    display: flex; /* Enables Flexbox */
+    flex-direction: column;
+    justify-content: space-evenly; /* Distributes items with equal spacing */
+    align-items: center; /* Vertically aligns items */
+    text-align: center;
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    z-index: 1;
+}
+
+  
+  /* Logo Styling */
+  .logo img {
+    width: 150px;
+    margin-bottom: 20px;
+  }
+  
+  /* Tagline Styling */
+  .tagline {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .cta-text {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: #fff; /* Highlight for tagline */
+    margin-bottom: 20px;
+  }
+
+  .limited{
+    margin-bottom: 0;
+  }
+
+  /* Free Trial Button Container */
+.free-trial-button-container {
+    position: relative;
+    margin-top: 20px; /* Adjust spacing based on layout */
+  }
+  
+  /* Button Styling */
+  .free-trial-button {
+    display: inline-block;
+    background: linear-gradient(90deg, #0097b2, #4dbbd3, #00c293); /* Professional gradient */
+    color: #fff; /* Button text color */
+    padding: 15px 30px;
+    border-radius: 30px;
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-decoration: none;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* Depth effect */
+    transition: all 0.4s ease-in-out;
+    position: relative;
+    animation: pulse 2s infinite; /* Subtle continuous animation */
+  }
+  
+  /* Bold Arrow Styling */
+  .free-trial-button .arrow {
+    font-weight: bold;
+    margin-left: 10px;
+    transition: transform 0.3s ease;
+  }
+  
+  /* Hover Effect */
+  .free-trial-button:hover {
+    background: linear-gradient(90deg, #00c293, #4dbbd3, #0097b2); /* Reverse gradient */
+    transform: scale(1.1); /* Button zooms slightly */
+  }
+  
+  .free-trial-button:hover .arrow {
+    transform: translateX(5px); /* Arrow slides right */
+  }
+  
+  /* Continuous Animation */
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 6px 12px #4dbbd3(0, 0, 0, 0.7);
+    }
+    50% {
+      box-shadow: 0 10px 20px #4dbbd3(0, 0, 0, 0.8);
+    }
+    100% {
+      box-shadow: 0 6px 12px #4dbbd3(0, 0, 0, 0.7);
+    }
+  }
+  
+  /* Positioning */
+  .free-trial-button-container {
+    text-align: center; /* Centers the button */
+    margin-bottom: 20px; /* Spacing above the dots */
+  }
+  
+  
+  
+  /* Dots Styling */
+  .carousel-dots {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .dot {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  
+  .dot.active {
+    background: #4dbbd3; /* Highlight active dot */
+  }
+  
+  .dot:hover {
+    background: #4dbbd3;
+    transform: scale(1.2);
+  }
+  
+  /* Responsive Design */
+  @media screen and (max-width: 768px) {
+    .tagline {
+      font-size: 2rem;
+    }
+  
+    .cta-text {
+      font-size: 1rem;
+    }
+  
+    .carousel-dots {
+      gap: 8px;
+    }
+  }
+  

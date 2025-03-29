@@ -1,0 +1,76 @@
+/* Container Styling */
+.whats-new-container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 80px 40px;
+    background-color: rgba(8, 62, 86);
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Adds depth */
+    font-family: 'Arial', sans-serif;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effects */
+  }
+  
+  /* Title Styling */
+  .whats-new-title {
+    font-size: 2.2rem;
+    color: #4dbbd3;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Subtle text shadow */
+  }
+  
+  /* Subtitle Styling */
+  .whats-new-subtitle {
+    font-size: 1.7rem;
+    color: white;
+    margin-bottom: 20px;
+  }
+  
+  /* Description Styling */
+  .whats-new-description {
+    font-size: 1.2rem;
+    color: white;
+    margin: 0px 30px 30px 40px;
+    line-height: 1.6;
+
+  }
+
+  /* Add keyframes for shake animation */
+  @keyframes shake {
+    0% { transform: translateX(0); }
+    10% { transform: translateX(-5px); }
+    20% { transform: translateX(10px); }
+    30% { transform: translateX(-10px); }
+    40% { transform: translateX(5px); }
+    50% { transform: translateX(0); }
+    100% { transform: translateX(0); } /* Rest state for the remaining time */
+  }
+
+  
+  /* Button Styling */
+  .view-details-button {
+    font-size: 1rem;
+    background: linear-gradient(90deg, #0097b2, #4dbbd3, #00c293);
+    color: white;
+    border: none;
+    border-radius: 40px;
+    padding: 20px 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease, transform 0.2s ease;
+    animation: shake 5.5s ease-in-out infinite;
+  }
+  
+  .view-details-button:hover {
+    background: linear-gradient(90deg, #00c293, #4dbbd3, #0097b2);
+    transform: scale(1.05); /* Slightly enlarges button on hover */
+    animation: none;
+  }
+
+  @media screen and (max-width: 768px) {
+    .whats-new-description {
+      margin: 0px 0px 30px 0px;
+    }
+  }
+  

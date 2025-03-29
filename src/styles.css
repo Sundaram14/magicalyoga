@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+
+body {
+    font-family: "Arial", sans-serif;
+    background-color: #f8f9fa;
+  }
+  
+  h1 {
+    color: #0097b2;
+  }
+  
+  .highlight {
+    color: #0097b2; /* Highlight important text */
+    font-weight: bold;
+  }

@@ -1,0 +1,33 @@
+.video-contents {
+    padding: 4rem 2rem;
+    text-align: center;
+  }
+  
+  .video-contents h2 {
+    color: #0097b2;
+    margin-bottom: 1rem;
+  }
+  
+  .video-contents p {
+    color: #555;
+    margin-bottom: 2rem;
+  }
+  
+  .video-card {
+    background-color: #4dbbd3;
+    color: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+  }
+  
+  .video-card iframe {
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  
+  .video-card h3 {
+    margin-top: 1rem;
+    color: white;
+  }
+  
