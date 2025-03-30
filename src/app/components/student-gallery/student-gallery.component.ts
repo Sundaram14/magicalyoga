@@ -31,8 +31,8 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 })
 export class StudentGalleryComponent {
   photos: string[] = [
-    '/assets/Images/student1.webp',
-    '/assets/Images/student2.webp',
+    'assets/Images/student1.webp',
+    'assets/Images/student2.webp',
     '/assets/Images/student3.webp',
     '/assets/Images/student4.webp',
     '/assets/Images/student5.webp',
