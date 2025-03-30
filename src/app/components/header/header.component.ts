@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 })
 export class HeaderComponent {
   videos: string[] = [
-    'assets/Videos/video1.mp4',
+    'magicalyoga/assets/Videos/video1.mp4',
     'assets/Videos/video2.mp4',
     'assets/Videos/video3.mp4'
   ];
