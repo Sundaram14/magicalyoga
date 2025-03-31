@@ -10,6 +10,11 @@
     font-family: 'Arial', sans-serif;
     transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effects */
   }
+
+  .color-highlight{
+    color: #4dbbd3;
+    font-weight: bold;
+  }
   
   /* Title Styling */
   .whats-new-title {

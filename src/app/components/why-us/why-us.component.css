@@ -64,7 +64,7 @@
 .card ul {
   font-size: 1rem;
   line-height: 1.5;
-  text-align: justify;
+  text-align: left;
 }
 
 /* List Styling */
@@ -134,11 +134,4 @@
     margin-bottom: 20px;
   }
 
-  .benefits-title {
-    font-size: 2rem;
-  }
-
-  .why-us-subtitle {
-    font-size: 1.8rem;
-  }
 }

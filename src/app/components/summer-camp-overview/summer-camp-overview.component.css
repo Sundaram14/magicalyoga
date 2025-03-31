@@ -52,4 +52,11 @@
   ul{
     width: fit-content;
   }
+
+  @media screen and (max-width: 768px) {
+    .overview-points li{
+      align-items: flex-start;
+      text-align: left;
+    }
+  }
   
