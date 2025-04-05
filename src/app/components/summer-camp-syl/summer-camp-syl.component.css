@@ -64,6 +64,11 @@
     margin-right: 10px; /* Space between icon and text */
     font-size: 1.2rem;
   }
+
+  p{
+    font-weight: bold;
+    margin-top: 20px;
+  }
   
   /* Responsive Design */
   @media screen and (max-width: 768px) {

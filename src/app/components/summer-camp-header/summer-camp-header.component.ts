@@ -9,8 +9,8 @@ import { CommonModule } from '@angular/common';
 })
 export class SummerCampHeaderComponent {
   videos: string[] = [
-    'assets/Videos/sc1.mp4',
-    'assets/Videos/sc0.mp4'
+    'assets/Videos/sc0.mp4',
+    'assets/Videos/sc1.mp4'
   ];
 
 
