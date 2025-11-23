@@ -1,0 +1,32 @@
+/* Custom enhancements for Bootstrap */
+.card {
+  border-radius: 1rem;
+}
+
+.input-group-text {
+  transition: all 0.2s ease;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.1);
+  border-color: #0097b2;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, rgba(8, 62, 86, 1) 0%, #0dcaf0 100%);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, rgba(8, 62, 86, 1) 0%, #0ba8d9 100%);
+  transform: translateY(-1px);
+}
+
+.btn-outline-primary:hover {
+  transform: translateY(-1px);
+}
+
+.bg-light{
+  background-color: var(--primary-extra-light) !important;
+}

@@ -1,29 +1,97 @@
-<nav class="navbar navbar-expand-lg navbar-light">
-    <div class="container-fluid d-flex justify-content-between align-items-center">
-      <a class="navbar-brand" routerLink="/">
-        <img src="assets/Images/logo.png" alt="Magical Yoga" height="50">
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-  
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/summer-camp" routerLinkActive="active">Summer Camp</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/video-contents" routerLinkActive="active">Video Contents</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/contact-us" routerLinkActive="active">Contact Us</a>
-          </li>
-        </ul>
+<nav class="navbar navbar-expand-lg fixed-top modern-navbar" [class.scrolled]="isScrolled">
+  <div class="container">
+    <!-- Logo with Animation -->
+    <a class="navbar-brand" routerLink="/home" (click)="setActiveLink('home')">
+      <div class="logo-container">
+        <div class="logo-gradient">
+          <span class="logo-icon">🧘‍♀️</span>
+        </div>
+        <div class="logo-text">
+          <span class="logo-primary">Magical</span>
+          <span class="logo-secondary">Yoga</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Mobile Toggle with Animation -->
+    <button class="navbar-toggler modern-toggler" type="button" (click)="toggleMenu()" 
+            [attr.aria-expanded]="isMenuOpen" aria-controls="navbarNav">
+      <span class="toggler-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+    </button>
+
+    <!-- Navigation Links with Modern Design -->
+    <div class="collapse navbar-collapse modern-collapse" [class.show]="isMenuOpen" id="navbarNav">
+      <ul class="navbar-nav modern-nav">
+        <li class="nav-item" *ngFor="let link of navLinks">
+          <a class="nav-link modern-link" 
+             [routerLink]="link.route" 
+             routerLinkActive="active"
+             [class.active]="activeLink === link.id"
+             (click)="setActiveLink(link.id)">
+            <span class="link-icon">{{ link.icon }}</span>
+            <span class="link-text">{{ link.text }}</span>
+            <span class="link-underline"></span>
+          </a>
+        </li>
+      </ul>
+
+      <!-- User Section with Modern Design -->
+      <div class="navbar-nav modern-user-section">
+        <!-- Authenticated User -->
+        <div class="nav-item" *ngIf="isAuthenticated && currentUser">
+          <div class="user-dropdown">
+            <button class="user-trigger" (click)="toggleUserDropdown()">
+              <div class="user-avatar-gradient">
+                <span class="user-initials">
+                  {{ currentUser?.firstName?.charAt(0) }}{{ currentUser?.lastName?.charAt(0) }}
+                </span>
+                <div class="online-indicator"></div>
+              </div>
+              <div class="user-info">
+                <span class="user-name">{{ currentUser.firstName }} {{ currentUser.lastName }}</span>
+                <span class="user-status">Yoga Member</span>
+              </div>
+              <i class="dropdown-arrow" [class.rotated]="isUserDropdownOpen">▼</i>
+            </button>
+            
+            <div class="user-dropdown-menu" [class.show]="isUserDropdownOpen">
+              <a class="dropdown-item" routerLink="/dashboard" (click)="closeDropdowns()">
+                <i class="bi bi-speedometer2"></i>
+                <span>Dashboard</span>
+              </a>
+              <a class="dropdown-item" routerLink="/profile" (click)="closeDropdowns()">
+                <i class="bi bi-person"></i>
+                <span>My Profile</span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item logout-item" (click)="logout()">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Logout</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Not Authenticated - Modern Buttons -->
+        <div class="nav-item" *ngIf="!isAuthenticated">
+          <div class="auth-buttons">
+            <a class="btn btn-login" routerLink="/login" (click)="setActiveLink('login')">
+              <span>Sign In</span>
+            </a>
+            <a class="btn btn-primary btn-signup" routerLink="/register" (click)="setActiveLink('register')">
+              <span>Start Journey</span>
+              <div class="btn-glow"></div>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
-  </nav>
+  </div>
   
+  <!-- Background Blur Effect -->
+  <div class="nav-backdrop" [class.active]="isMenuOpen" (click)="isMenuOpen = false"></div>
+</nav>

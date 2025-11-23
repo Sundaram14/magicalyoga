@@ -1,26 +1,78 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
-import { SummerCampComponent } from './pages/summer-camp/summer-camp.component';
-import { VideoContentsComponent } from './pages/video-contents/video-contents.component';
-import { ContactUsComponent } from './pages/contact-us/contact-us.component';
-import { IntroductionComponent } from './components/introduction/introduction.component';
-
+import { authGuard } from '../guards/auth.guard';
 
 export const routes: Routes = [
-  {
-    path: 'sitemap.xml',
-    redirectTo: '/assets/sitemap.xml',
-    pathMatch: 'full',
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  
+  // Public Routes (No Header)
+  { 
+    path: 'login', 
+    loadComponent: () => import('./pages/login/login.component').then(m => m.LoginComponent) 
   },
-  {
-    path: 'robots.txt',
-    redirectTo: '/assets/robots.txt',
-    pathMatch: 'full',
-  },  
-  { path: '', component: HomeComponent },
-  { path: 'summer-camp', component: SummerCampComponent },
-  { path: 'video-contents', component: VideoContentsComponent },
-  { path: 'contact-us', component: ContactUsComponent },
-  { path: 'about-us', component: IntroductionComponent},
-  { path: '**', redirectTo: '' } // Redirect invalid routes to home
+  { 
+    path: 'register', 
+    loadComponent: () => import('./pages/register/register.component').then(m => m.RegisterComponent) 
+  },
+  
+  // Protected Routes (With Header)
+  { 
+    path: 'dashboard', 
+    loadComponent: () => import('./pages/dashboard/dashboard.component').then(m => m.DashboardComponent),
+    canActivate: [authGuard]
+  },
+  { 
+    path: 'profile', 
+    loadComponent: () => import('./pages/profile/profile.component').then(m => m.ProfileComponent),
+    canActivate: [authGuard]
+  },
+  
+  // Your Existing Public Pages
+  { 
+    path: 'home', 
+    loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent) 
+  },
+
+      { 
+    path: 'about', 
+    loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent) 
+  },
+  { 
+    path: 'contact', 
+    loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent) 
+  },
+  { 
+    path: 'reset42', 
+    loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent) 
+  },
+  { 
+    path: 'classes', 
+    loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent) 
+  },
+  { 
+    path: 'shop', 
+    loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent) 
+  },
+
+  //   { 
+  //   path: 'about', 
+  //   loadComponent: () => import('./pages/about/about.component').then(m => m.AboutComponent) 
+  // },
+  // { 
+  //   path: 'contact', 
+  //   loadComponent: () => import('./pages/contact/contact.component').then(m => m.ContactComponent) 
+  // },
+  // { 
+  //   path: 'reset42', 
+  //   loadComponent: () => import('./pages/reset42/reset42.component').then(m => m.Reset42Component) 
+  // },
+  // { 
+  //   path: 'classes', 
+  //   loadComponent: () => import('./pages/classes/classes.component').then(m => m.ClassesComponent) 
+  // },
+  // { 
+  //   path: 'shop', 
+  //   loadComponent: () => import('./pages/shop/shop.component').then(m => m.ShopComponent) 
+  // },
+  
+  { path: '**', redirectTo: '/dashboard' }
 ];
