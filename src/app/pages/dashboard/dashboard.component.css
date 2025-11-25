@@ -1,3 +1,188 @@
 .bg-light{
   background-color: var(--primary-extra-light) !important;
 }
+
+.bg-light{
+  background-color: var(--primary-extra-light) !important;
+}
+
+/* Profile Completion Banner - Theme Styling */
+.profile-banner {
+  border: 2px solid var(--primary-color) !important;
+  border-left: 4px solid var(--primary-color) !important;
+  background: linear-gradient(135deg, var(--primary-extra-light) 0%, rgba(255, 255, 255, 0.9) 100%);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+}
+
+.profile-banner:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.profile-banner .card-body {
+  background: transparent !important;
+  padding: 1.25rem;
+}
+
+/* Banner text colors using theme */
+.profile-banner .text-warning {
+  color: var(--primary-color) !important;
+}
+
+.profile-banner .bi-info-circle-fill {
+  color: var(--primary-color) !important;
+}
+
+/* Progress bar theme styling */
+.profile-banner .progress {
+  background-color: var(--primary-extra-light) !important;
+  border: 1px solid var(--primary-light);
+  border-radius: 10px;
+  height: 10px !important;
+}
+
+.profile-banner .progress-bar {
+  background: linear-gradient(90deg, var(--primary-color), var(--primary-light)) !important;
+  border-radius: 10px;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Button theme styling */
+.profile-banner .btn-warning {
+  background: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  color: white !important;
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  transition: all 0.3s ease;
+}
+
+.profile-banner .btn-warning:hover {
+  background: var(--primary-dark) !important;
+  border-color: var(--primary-dark) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 151, 178, 0.3);
+}
+
+/* Toggle button - fixed visibility and theme */
+.profile-banner .btn-link {
+  color: var(--primary-color) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  border: 1px solid var(--primary-light);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  transition: all 0.3s ease;
+  text-decoration: none !important;
+}
+
+.profile-banner .btn-link:hover {
+  background: var(--primary-extra-light);
+  border-color: var(--primary-color);
+  transform: scale(1.1);
+}
+
+.profile-banner .btn-link .bi {
+  font-size: 1.1rem;
+  transition: transform 0.2s ease;
+}
+
+/* Link styling within banner */
+.profile-banner a.text-warning {
+  color: var(--primary-color) !important;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.profile-banner a.text-warning:hover {
+  color: var(--primary-dark) !important;
+  border-bottom-color: var(--primary-color);
+}
+
+/* Profile status badge */
+.badge.alert-primary {
+  background-color: var(--primary-extra-light) !important;
+  color: var(--primary-dark) !important;
+  border: 1px solid var(--primary-light);
+  padding: 0.5rem 0.75rem;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+/* Stats cards enhancement */
+.rounded-circle.bg-primary-light {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-light)) !important;
+}
+
+.rounded-circle.bg-primary-light .bi {
+  color: white !important;
+}
+
+.rounded-circle.bg-secondary-light {
+  background: linear-gradient(135deg, var(--secondary-color), var(--secondary-light)) !important;
+}
+
+.rounded-circle.bg-secondary-light .bi {
+  color: white !important;
+}
+
+/* Minimized state styling */
+.profile-banner .text-warning small {
+  color: var(--primary-color) !important;
+  opacity: 0.9;
+}
+
+.icon-layout-style{
+  border: 1px solid var(--primary-color); 
+  border-radius: 50%;
+  background: white; 
+  width: 32px; 
+  height: 32px; 
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+}
+
+.icon-style{
+  color: var(--primary-color);
+  font-size: 0.9rem;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .profile-banner .d-flex {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+  
+  .profile-banner .btn-link {
+    align-self: flex-end;
+    margin-top: -2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .icon-layout-style{
+    margin-top: 15px;
+  }
+
+}
+
+/* Animation for smooth expand/collapse */
+.profile-banner .card-body > div > div:last-child {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+

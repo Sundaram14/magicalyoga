@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { User } from '../../../models/user.model';
+import { HostListener } from '@angular/core';
+
 
 @Component({
   selector: 'app-navbar',
@@ -18,6 +20,15 @@ export class NavbarComponent implements OnInit {
   currentUser: User | null = null;
   isAuthenticated = false;
   isMenuOpen = false;
+
+  // Add this property to your class:
+  isScrolled = false;
+
+  // Add this method:
+  @HostListener('window:scroll')
+  onWindowScroll() {
+    this.isScrolled = window.scrollY > 20;
+  }
 
   ngOnInit(): void {
     this.authService.currentUser$.subscribe(user => {

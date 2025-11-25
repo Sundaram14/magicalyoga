@@ -173,3 +173,10 @@ a:hover {
 .border-primary-light {
   border-color: var(--primary-light) !important;
 }
+
+.mt-6{
+  margin-top: 6rem !important;
+}
+.mt-6pt5{
+  margin-top: 6.5rem !important;
+}
