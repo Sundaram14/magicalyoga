@@ -79,17 +79,16 @@
               </div>
               
               <!-- Minimize/Expand Toggle -->
-              <div class="minimse-div-style">
-                <button type="button" 
-                  class="btn btn-sm btn-toggle p-1 ms-2 flex-shrink-0 icon-layout-style"
-                  (click)="toggleBanner()"
-                  [attr.aria-expanded]="!isBannerMinimized">
-                  <i class="fas icon-style" 
-                    [class.fa-minus]="!isBannerMinimized" 
-                    [class.fa-plus]="isBannerMinimized">
-                  </i>
-                </button>
-              </div>
+              <button type="button" 
+                      class="btn btn-sm btn-toggle p-1 ms-2 flex-shrink-0"
+                      (click)="toggleBanner()"
+                      [attr.aria-expanded]="!isBannerMinimized"
+                      style="border: 1px solid var(--primary-color); border-radius: 50%; background: white; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                <i class="fas" 
+                   [class.fa-minus]="!isBannerMinimized" 
+                   [class.fa-plus]="isBannerMinimized"
+                   style="color: var(--primary-color); font-size: 0.9rem;"></i>
+              </button>
             </div>
           </div>
         </div>
@@ -104,7 +103,7 @@
                 
                 <!-- Profile Status Badge - Only show if profile is NOT complete -->
                 <div *ngIf="!isProfileComplete" class="mt-2">
-                  <span class="badge alert-primary text-dark">
+                  <span class="badge bg-warning text-dark">
                     <i class="fas fa-user-check me-1"></i>
                     <span *ngIf="isProfilePartial">Profile {{profileCompletion}}% complete</span>
                     <span *ngIf="profileCompletion === 0">Profile setup required</span>
@@ -122,7 +121,7 @@
               <div class="card-body text-center">
                 <div class="rounded-circle bg-primary-light d-inline-flex align-items-center justify-content-center mb-3" 
                      style="width: 60px; height: 60px;">
-                  <i class="fas fa-play text-primary fs-4"></i>
+                  <i class="fas fa-play text-white fs-4"></i>
                 </div>
                 <h3 class="h5 text-dark">Available Classes</h3>
                 <p class="text-muted mb-2">Explore our yoga programs</p>
@@ -136,7 +135,7 @@
               <div class="card-body text-center">
                 <div class="rounded-circle bg-primary-light d-inline-flex align-items-center justify-content-center mb-3" 
                      style="width: 60px; height: 60px;">
-                  <i class="fas fa-book text-primary fs-4"></i>
+                  <i class="fas fa-book text-white fs-4"></i>
                 </div>
                 <h3 class="h5 text-dark">Daily Journal</h3>
                 <p class="text-muted mb-2">Track your yoga practice</p>
@@ -150,7 +149,7 @@
               <div class="card-body text-center">
                 <div class="rounded-circle bg-primary-light d-inline-flex align-items-center justify-content-center mb-3" 
                      style="width: 60px; height: 60px;">
-                  <i class="fas fa-video text-primary fs-4"></i>
+                  <i class="fas fa-video text-white fs-4"></i>
                 </div>
                 <h3 class="h5 text-dark">Recordings</h3>
                 <p class="text-muted mb-2">Access class recordings</p>
@@ -159,83 +158,43 @@
             </div>
           </div>
         </div>
-          <div class="row g-4">
-            <div class="col-md-6">
-              <div class="card border-0 shadow-sm h-100 journal-dashboard-modern">
+
+        <!-- Bottom Section: Journal and Recent Activity Side by Side -->
+        <div class="row g-4">
+          <!-- Recent Journal Entries -->
+          <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100 journal-dashboard-preview">
               <div class="card-header bg-white border-0 py-3 d-flex justify-content-between align-items-center">
-                <div class="d-flex align-items-center">
-                  <div class="journal-icon-wrapper me-3">
-                    <i class="fas fa-book-open journal-main-icon"></i>
-                  </div>
-                  <div>
-                    <h3 class="h5 mb-0 text-dark">Recent Journal Entries</h3>
-                    <small class="text-muted">Your yoga reflections</small>
-                  </div>
-                </div>
-                <a routerLink="/journal" class="btn btn-sm btn-primary journal-view-all-btn">
-                  <i class="fas fa-arrow-right me-1"></i>View All
-                </a>
+                <h3 class="h5 mb-0 text-dark">
+                  <i class="fas fa-book-open me-2"></i>Recent Journal Entries
+                </h3>
+                <a routerLink="/journal" class="btn btn-sm btn-outline-primary">View All</a>
               </div>
               <div class="card-body p-0">
-                <div *ngIf="recentJournalEntries.length === 0" class="text-center py-5 journal-preview-empty-modern">
-                  <div class="journal-empty-icon">
-                    <i class="fas fa-edit"></i>
-                  </div>
-                  <h5 class="text-dark mb-2">Start Your Journey</h5>
-                  <p class="text-muted mb-4 small">Document your yoga practice and reflections</p>
-                  <a routerLink="/journal/new" class="btn btn-primary journal-create-btn">
-                    <i class="fas fa-plus me-2"></i>Create First Entry
+                <div *ngIf="recentJournalEntries.length === 0" class="text-center py-4 journal-preview-empty">
+                  <i class="fas fa-book text-muted fs-2 mb-3"></i>
+                  <p class="text-muted mb-3 small">No journal entries yet</p>
+                  <a routerLink="/journal/new" class="btn btn-primary btn-sm">
+                    <i class="fas fa-plus me-1"></i>Start Journaling
                   </a>
                 </div>
                 
-                <div *ngIf="recentJournalEntries.length > 0" class="journal-preview-list-modern">
-                  <div *ngFor="let entry of recentJournalEntries; let i = index" 
-                      class="journal-preview-item-modern">
-                    <a [routerLink]="['/journal', entry.id]" class="journal-preview-link-modern">
-                      <div class="journal-preview-number">
-                        {{ i + 1 }}
-                      </div>
-                      <div class="journal-preview-content-modern">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                          <h6 class="journal-preview-title-modern">{{ entry.title }}</h6>
-                          <div class="journal-preview-badge">
+                <div *ngIf="recentJournalEntries.length > 0" class="journal-preview-list">
+                  <div *ngFor="let entry of recentJournalEntries" 
+                      class="journal-preview-item">
+                    <a [routerLink]="['/journal', entry.id]" class="journal-preview-link">
+                      <div class="journal-preview-content">
+                        <h6 class="journal-preview-title">{{ entry.title }}</h6>
+                        <p class="journal-preview-text">{{ truncateContent(entry.content, 80) }}</p>
+                        <div class="journal-preview-meta">
+                          <small class="text-muted">
                             <i class="fas fa-calendar me-1"></i>
                             {{ formatDate(entry.entryDate) }}
-                          </div>
-                        </div>
-                        <p class="journal-preview-text-modern">{{ truncateContent(entry.content, 100) }}</p>
-                        <div class="journal-preview-footer">
-                          <div class="journal-preview-meta-modern">
-                            <small class="text-muted">
-                              <i class="fas fa-clock me-1"></i>
-                              Updated {{ formatDate(entry.updatedAt) }}
-                            </small>
-                          </div>
-                          <div class="journal-preview-actions">
-                            <span class="journal-read-more">Read More</span>
-                            <i class="fas fa-chevron-right journal-preview-arrow-modern"></i>
-                          </div>
+                          </small>
                         </div>
                       </div>
+                      <i class="fas fa-chevron-right journal-preview-arrow"></i>
                     </a>
-                  </div>
-                </div>
-              </div>
-              
-              <!-- Quick Stats Footer -->
-              <div *ngIf="recentJournalEntries.length > 0" class="card-footer bg-transparent border-0 py-3">
-                <div class="row text-center">
-                  <div class="col-4">
-                    <div class="journal-stat-number">{{ recentJournalEntries.length }}</div>
-                    <small class="text-muted">Entries</small>
-                  </div>
-                  <div class="col-4">
-                    <div class="journal-stat-number">{{ getLatestEntryDate() }}</div>
-                    <small class="text-muted">Latest</small>
-                  </div>
-                  <div class="col-4">
-                    <div class="journal-stat-number">{{ getTotalWords() }}</div>
-                    <small class="text-muted">Words</small>
                   </div>
                 </div>
               </div>
@@ -258,8 +217,7 @@
             </div>
           </div>
         </div>
-      </div>  
+      </div>
     </div>
   </main>
 </div>
-

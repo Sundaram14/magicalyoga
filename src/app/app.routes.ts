@@ -1,5 +1,8 @@
 import { Routes } from '@angular/router';
 import { authGuard } from '../guards/auth.guard';
+import { JournalListComponent } from './pages/journal/journal-list/journal-list.component';
+import { JournalFormComponent } from './pages/journal/journal-form/journal-form.component';
+import { JournalDetailComponent } from './pages/journal/journal-detail/journal-detail.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -73,6 +76,11 @@ export const routes: Routes = [
   //   path: 'shop', 
   //   loadComponent: () => import('./pages/shop/shop.component').then(m => m.ShopComponent) 
   // },
+
+  { path: 'journal', component: JournalListComponent },
+  { path: 'journal/new', component: JournalFormComponent },
+  { path: 'journal/edit/:id', component: JournalFormComponent },
+  { path: 'journal/:id', component: JournalDetailComponent },
   
   { path: '**', redirectTo: '/dashboard' }
 ];

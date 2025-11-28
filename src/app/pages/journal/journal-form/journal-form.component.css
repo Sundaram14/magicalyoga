@@ -1,0 +1,197 @@
+/* Journal Notebook Form Styles */
+.journal-notebook-form {
+  position: relative;
+}
+
+.journal-notebook-page {
+  background: #fffef7;
+  border: 1px solid #e0d9c6;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  background-image: 
+    linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px),
+    linear-gradient(#eee .1em, transparent .1em);
+  background-size: 100% 1.5em;
+  background-position: 0 1.2em;
+}
+
+.journal-notebook-header {
+  padding: 2rem 2rem 1rem 2rem;
+  border-bottom: 2px solid var(--primary-color);
+  background: rgba(255, 255, 255, 0.9);
+  position: relative;
+  z-index: 2;
+}
+
+.journal-date-input {
+  max-width: 200px;
+}
+
+.journal-page-number {
+  color: var(--gray-500);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.journal-notebook-section {
+  padding: 1.5rem 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.journal-notebook-footer {
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-top: 2px solid var(--primary-color);
+  position: relative;
+  z-index: 2;
+}
+
+/* Lined Input Containers */
+.journal-lined-container {
+  position: relative;
+  margin-bottom: 0.5rem;
+}
+
+.journal-lined-input {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0.5rem 0 !important;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  line-height: 1.5em !important;
+  position: relative;
+  z-index: 3;
+  resize: none;
+}
+
+.journal-title-field {
+  font-size: 1.4rem !important;
+  font-weight: 600 !important;
+  color: var(--secondary-color) !important;
+  padding-left: 85px !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.journal-content-field {
+  font-size: 1.1rem !important;
+  color: #2c3e50 !important;
+  min-height: 400px !important;
+  padding-left: 85px !important;
+  line-height: 1.5em !important;
+}
+
+/* Custom Lines */
+.journal-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, 
+    transparent 0%, 
+    transparent 1.4em, 
+    #e0e0e0 1.4em, 
+    #e0e0e0 1.5em
+  );
+  background-size: 100% 1.5em;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Labels and Hints */
+.journal-field-label {
+  color: var(--primary-color);
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+  display: block;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.journal-field-hint {
+  color: var(--gray-500);
+  font-size: 0.85rem;
+  font-style: italic;
+  margin-top: 0.5rem;
+  display: block;
+}
+
+/* Form Elements */
+.journal-form-error {
+  color: var(--danger-color);
+  font-size: 0.9rem;
+  background: rgba(220, 53, 69, 0.05);
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  border-left: 3px solid var(--danger-color);
+  margin-bottom: 1rem;
+}
+
+.journal-form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Focus States */
+.journal-lined-input:focus {
+  background: rgba(255, 255, 255, 0.8) !important;
+  outline: none !important;
+}
+
+/* Placeholder Styling */
+.journal-lined-input::placeholder {
+  color: #a0a0a0 !important;
+  font-style: italic;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .journal-notebook-header,
+  .journal-notebook-section,
+  .journal-notebook-footer {
+    padding: 1.25rem;
+  }
+  
+  .journal-title-field,
+  .journal-content-field {
+    padding-left: 60px !important;
+  }
+  
+  .journal-notebook-page {
+    background-position: 0 1.2em;
+  }
+  
+  .journal-form-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .journal-form-actions button {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Red Margin Line */
+.journal-notebook-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 80px;
+  bottom: 0;
+  width: 1px;
+  background: #ff6b6b;
+  z-index: 2;
+}
+
+@media (max-width: 768px) {
+  .journal-notebook-page::before {
+    left: 55px;
+  }
+}
