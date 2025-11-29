@@ -31,6 +31,19 @@ interface GalleryImage {
   alt: string;
 }
 
+interface Announcement {
+  id: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  badge: string;
+  ageCategory?: string;
+  image: string;
+  ctaText: string;
+  ctaLink: string;
+  badgeColor: string; // 'primary', 'success', 'warning', 'info'
+}
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -41,8 +54,58 @@ interface GalleryImage {
 export class HomeComponent implements OnInit, OnDestroy {
   
   private resizeListener?: () => void;
+  private announcementInterval?: any;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+
+  // Announcements data - CAROUSEL CONTENT
+  announcements: Announcement[] = [
+    {
+      id: '1',
+      badge: "What's New?",
+      badgeColor: 'primary',
+      title: 'Stretch Into Summer: Enroll in Summer Yoga Camp',
+      subtitle: 'Limited Seats Available!',
+      description: 'Breathe, stretch, and unwind with us. Experience yoga, mindfulness, and fun activities designed to refresh your mind and body this summer.',
+      ageCategory: '8 to 18 years old',
+      image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1200&q=80',
+      ctaText: 'View Camp Details',
+      ctaLink: '/summer-camp'
+    },
+    {
+      id: '2',
+      badge: 'New Program',
+      badgeColor: 'success',
+      title: 'Reset42: Transform Your Life in 42 Days',
+      subtitle: 'Holistic Wellness Journey',
+      description: 'Join our transformative 42-day program combining yoga, meditation, and lifestyle changes for complete mind-body wellness.',
+      image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1200&q=80',
+      ctaText: 'Start Your Journey',
+      ctaLink: '/reset42'
+    },
+    {
+      id: '3',
+      badge: 'Special Offer',
+      badgeColor: 'info',
+      title: 'Prenatal Yoga Classes - Now Enrolling',
+      subtitle: 'Safe & Nurturing Practice',
+      description: 'Specially designed classes for expecting mothers. Join our supportive community and prepare your body and mind for motherhood.',
+      image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1200&q=80',
+      ctaText: 'Join Prenatal Classes',
+      ctaLink: '/classes/prenatal'
+    },
+    {
+      id: '4',
+      badge: 'Limited Time',
+      badgeColor: 'warning',
+      title: 'Early Bird Registration - Save 20%',
+      subtitle: 'Register Now & Save',
+      description: 'Get exclusive early bird pricing on all our yoga programs. Limited spots available at discounted rates.',
+      image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1200&q=80',
+      ctaText: 'Register Now',
+      ctaLink: '/register'
+    }
+  ];
 
   // Programs data
   programs: Program[] = [
@@ -60,7 +123,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       title: 'Kids Yoga',
       description: 'Fun and engaging yoga sessions designed specifically for children',
       category: 'Kids',
-      image: 'https://images.unsplash.com/photo-1599447332326-ec683f97cb40?w=800&q=80',
+      image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=80',
       features: ['Playful Learning', 'Body Awareness', 'Confidence', 'Focus'],
       route: '/classes/kids'
     },
@@ -69,7 +132,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       title: 'Prenatal Yoga',
       description: 'Safe and nurturing yoga practice for expecting mothers',
       category: 'Prenatal',
-      image: 'https://images.unsplash.com/photo-1597075933223-86b4f85e6f92?w=800&q=80',
+      image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=80',
       features: ['Safe Practices', 'Pelvic Floor', 'Breathing', 'Bonding'],
       route: '/classes/prenatal'
     },
@@ -84,7 +147,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   ];
 
-  // Benefits data - Your actual content
+  // Benefits data
   benefits: Benefit[] = [
     {
       icon: '🧘‍♀️',
@@ -118,7 +181,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   ];
 
-  // Instructors data - Your 3 instructors
+  // Instructors data
   instructors: Instructor[] = [
     {
       name: 'Instructor Name 1',
@@ -143,7 +206,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   ];
 
-  // Gallery images - YOUR 959x1280 PORTRAIT IMAGES
+  // Gallery images
   galleryImages: GalleryImage[] = [
     { url: 'assets/Images/gallery/student1.webp', alt: 'Yoga Class Moment 1' },
     { url: 'assets/Images/gallery/student2.webp', alt: 'Yoga Class Moment 2' },
@@ -154,20 +217,66 @@ export class HomeComponent implements OnInit, OnDestroy {
   ];
 
   currentGalleryIndex = 0;
-  imagesPerView = 3; // Desktop default
+  imagesPerView = 3;
+  
+  // Announcement carousel state
+  currentAnnouncementIndex = 0;
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       this.updateImagesPerView();
       this.setupResizeListener();
       this.initializeLazyLoading();
+      this.startAnnouncementAutoPlay();
     }
   }
 
   ngOnDestroy(): void {
-    // Clean up resize listener
-    if (isPlatformBrowser(this.platformId) && this.resizeListener) {
-      window.removeEventListener('resize', this.resizeListener);
+    if (isPlatformBrowser(this.platformId)) {
+      if (this.resizeListener) {
+        window.removeEventListener('resize', this.resizeListener);
+      }
+      if (this.announcementInterval) {
+        clearInterval(this.announcementInterval);
+      }
+    }
+  }
+
+  // Announcement carousel methods
+  private startAnnouncementAutoPlay(): void {
+    this.announcementInterval = setInterval(() => {
+      this.nextAnnouncement();
+    }, 5000); // Change every 5 seconds
+  }
+
+  previousAnnouncement(): void {
+    this.currentAnnouncementIndex = 
+      this.currentAnnouncementIndex === 0 
+        ? this.announcements.length - 1 
+        : this.currentAnnouncementIndex - 1;
+    this.resetAnnouncementAutoPlay();
+  }
+
+  nextAnnouncement(): void {
+    this.currentAnnouncementIndex = 
+      this.currentAnnouncementIndex === this.announcements.length - 1 
+        ? 0 
+        : this.currentAnnouncementIndex + 1;
+  }
+
+  goToAnnouncement(index: number): void {
+    this.currentAnnouncementIndex = index;
+    this.resetAnnouncementAutoPlay();
+  }
+
+  getCurrentAnnouncement(): Announcement {
+    return this.announcements[this.currentAnnouncementIndex];
+  }
+
+  private resetAnnouncementAutoPlay(): void {
+    if (this.announcementInterval) {
+      clearInterval(this.announcementInterval);
+      this.startAnnouncementAutoPlay();
     }
   }
 
@@ -177,7 +286,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         const oldImagesPerView = this.imagesPerView;
         this.updateImagesPerView();
         
-        // Adjust current index if images per view changed
         if (oldImagesPerView !== this.imagesPerView) {
           const maxIndex = this.galleryImages.length - this.imagesPerView;
           this.currentGalleryIndex = Math.min(this.currentGalleryIndex, maxIndex);
@@ -191,11 +299,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (isPlatformBrowser(this.platformId)) {
       const width = window.innerWidth;
       if (width >= 992) {
-        this.imagesPerView = 3; // Desktop: 3 images
+        this.imagesPerView = 3;
       } else if (width >= 768) {
-        this.imagesPerView = 2; // Tablet: 2 images
+        this.imagesPerView = 2;
       } else {
-        this.imagesPerView = 1; // Mobile: 1 image
+        this.imagesPerView = 1;
       }
     }
   }
@@ -215,7 +323,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         });
       });
 
-      // Observer will be applied to images after view init
       setTimeout(() => {
         document.querySelectorAll('img[data-src]').forEach(img => {
           imageObserver.observe(img);
@@ -230,7 +337,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Gallery navigation methods
   previousGalleryImage(): void {
     if (this.currentGalleryIndex > 0) {
       this.currentGalleryIndex--;
@@ -262,5 +368,28 @@ export class HomeComponent implements OnInit, OnDestroy {
   goToImage(index: number): void {
     const maxIndex = this.galleryImages.length - this.imagesPerView;
     this.currentGalleryIndex = Math.min(index, maxIndex);
+  }
+
+// Add this method to your HomeComponent class
+  getBenefitIcon(emojiIcon: string): string {
+    const iconMap: { [key: string]: string } = {
+      '🧘‍♀️': 'fas fa-spa', // Yoga pose → Spa icon
+      '🌟': 'fas fa-star', // Star
+      '✨': 'fas fa-magic', // Sparkles → Magic wand
+      '🎯': 'fas fa-bullseye', // Target
+      '📱': 'fas fa-mobile-alt', // Mobile
+      '👥': 'fas fa-users', // Users
+      '👶': 'fas fa-child', // Child
+      '⏱️': 'fas fa-stopwatch', // Stopwatch
+      '💪': 'fas fa-dumbbell', // Strength → Dumbbell
+      '🌿': 'fas fa-leaf', // Leaf/nature
+      '🎓': 'fas fa-graduation-cap', // Education
+      '❤️': 'fas fa-heart', // Heart
+      '🏆': 'fas fa-trophy', // Trophy
+      '🔒': 'fas fa-lock', // Security
+      '🚀': 'fas fa-rocket' // Rocket
+    };
+    
+    return iconMap[emojiIcon] || 'fas fa-circle'; // Default icon
   }
 }

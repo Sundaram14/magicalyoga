@@ -5,6 +5,11 @@
     <div class="container">
       <div class="row align-items-center">
         <div class="col-lg-7">
+          <!-- Logo Section -->
+          <div class="hero-logo mb-4">
+            <img src="assets/Images/footer-logo.png" alt="Magical Yoga" class="hero-brand-logo" height="40">
+          </div>
+          
           <h1 class="hero-title animate-fade-in">
             Awaken Your Best Self <br>
             <span class="text-gradient">With Every Breath!!</span>
@@ -14,13 +19,13 @@
           </p>
           <div class="hero-buttons animate-fade-in-delay-2">
             <a routerLink="/register" class="btn btn-primary btn-lg">
-              Free Trial →
+              Free Trial <i class="fas fa-arrow-right ms-2"></i>
             </a>
           </div>
         </div>
         <div class="col-lg-5 d-none d-lg-block">
           <img 
-            src="https://images.unsplash.com/photo-1545389336-cf090694435e?w=1200&q=80" 
+            src="assets/Images/hero/hero.webp" 
             alt="Yoga Practice" 
             class="hero-image"
             loading="eager">
@@ -46,37 +51,110 @@
   </div>
 </section>
 
-<!-- Summer Camp Highlight -->
-<section class="summer-camp-section">
+<!-- Announcements Carousel Section -->
+<section class="announcements-section">
   <div class="container">
-    <div class="camp-card">
-      <div class="row align-items-center">
-        <div class="col-lg-6 mb-4 mb-lg-0">
-          <img 
-            data-src="https://images.unsplash.com/photo-1599447332326-ec683f97cb40?w=1200&q=80" 
-            alt="Summer Yoga Camp" 
-            class="camp-image lazy-load"
-            loading="lazy">
+    <div class="section-header text-center mb-5">
+      <span class="section-badge">Latest Updates</span>
+      <h2 class="section-title">What's Happening at Magical Yoga</h2>
+      <p class="section-description">
+        Stay updated with our latest programs, offers, and events
+      </p>
+    </div>
+
+    <div class="announcement-carousel">
+      <!-- Navigation Buttons -->
+      <button 
+        class="carousel-nav prev" 
+        (click)="previousAnnouncement()" 
+        aria-label="Previous announcement">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+
+      <!-- Announcement Card -->
+      <div class="announcement-card" [attr.data-theme]="getCurrentAnnouncement().badgeColor">
+        <div class="row align-items-center g-4">
+          <div class="col-lg-6">
+            <div class="announcement-visual">
+              <img 
+                [src]="getCurrentAnnouncement().image" 
+                [alt]="getCurrentAnnouncement().title" 
+                class="announcement-image"
+                loading="eager">
+              <div class="image-overlay"></div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="announcement-content">
+              <span class="announcement-badge" [attr.data-color]="getCurrentAnnouncement().badgeColor">
+                <i class="fas fa-bullhorn me-2"></i>{{ getCurrentAnnouncement().badge }}
+              </span>
+              
+              <h3 class="announcement-title">{{ getCurrentAnnouncement().title }}</h3>
+              
+              <p class="announcement-subtitle" *ngIf="getCurrentAnnouncement().subtitle">
+                {{ getCurrentAnnouncement().subtitle }}
+              </p>
+              
+              <p class="announcement-description">
+                {{ getCurrentAnnouncement().description }}
+              </p>
+
+              <div class="announcement-meta" *ngIf="getCurrentAnnouncement().ageCategory">
+                <i class="fas fa-child meta-icon"></i>
+                <span><strong>Age Group:</strong> {{ getCurrentAnnouncement().ageCategory }}</span>
+              </div>
+
+              <div class="announcement-actions">
+                <a 
+                  [routerLink]="getCurrentAnnouncement().ctaLink" 
+                  class="btn btn-primary btn-announcement">
+                  <i class="fas fa-arrow-right me-2"></i>{{ getCurrentAnnouncement().ctaText }}
+                </a>
+                <button class="btn btn-outline-primary btn-announcement" (click)="scrollToSection('programs')">
+                  <i class="fas fa-list me-2"></i>View All Programs
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="col-lg-6">
-          <span class="camp-badge">What's New?</span>
-          <h2 class="camp-title">Stretch Into Summer: Enroll in Summer Yoga Camp</h2>
-          <p class="camp-description">
-            Breathe, stretch, and unwind with us. Experience yoga, mindfulness, and fun activities 
-            designed to refresh your mind and body this summer.
-          </p>
-          <p class="camp-age">
-            <strong>Age category:</strong> 8 to 18 years old!
-          </p>
-          <a routerLink="/summer-camp" class="btn btn-primary btn-lg">
-            View More Details
-          </a>
-        </div>
+      </div>
+
+      <button 
+        class="carousel-nav next" 
+        (click)="nextAnnouncement()" 
+        aria-label="Next announcement">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Carousel Indicators -->
+    <div class="carousel-indicators">
+      <button 
+        *ngFor="let announcement of announcements; let i = index"
+        class="indicator"
+        [class.active]="i === currentAnnouncementIndex"
+        (click)="goToAnnouncement(i)"
+        [attr.aria-label]="'Go to announcement ' + (i + 1)">
+        <span class="indicator-progress"></span>
+      </button>
+    </div>
+
+    <!-- Quick Navigation -->
+    <div class="carousel-quick-nav">
+      <span class="quick-nav-label"><i class="fas fa-bolt me-2"></i>Quick Jump:</span>
+      <div class="quick-nav-buttons">
+        <button 
+          *ngFor="let announcement of announcements; let i = index"
+          class="quick-nav-btn"
+          [class.active]="i === currentAnnouncementIndex"
+          (click)="goToAnnouncement(i)">
+          <i class="fas fa-circle me-1" style="font-size: 0.5rem;"></i>{{ announcement.badge }}
+        </button>
       </div>
     </div>
   </div>
 </section>
-
 
 <!-- Benefits Section -->
 <section class="benefits-section" id="benefits">
@@ -89,11 +167,13 @@
     <div class="row g-4">
       <div class="col-md-6 col-lg-4" *ngFor="let benefit of benefits">
         <div class="benefit-card">
-          <div class="benefit-icon">{{ benefit.icon }}</div>
+          <div class="benefit-icon">
+            <i [class]="getBenefitIcon(benefit.icon)"></i>
+          </div>
           <h3 class="benefit-title">{{ benefit.title }}</h3>
           <ul class="benefit-list">
             <li *ngFor="let item of benefit.items">
-              <i class="check-icon">✔</i> {{ item }}
+              <i class="fas fa-check check-icon"></i> {{ item }}
             </li>
           </ul>
         </div>
@@ -119,9 +199,9 @@
         <div class="program-card">
           <div class="program-image-wrapper">
             <img 
-              [attr.data-src]="program.image" 
+              [src]="program.image" 
               [alt]="program.title" 
-              class="program-image lazy-load"
+              class="program-image"
               loading="lazy">
             <span class="program-category">{{ program.category }}</span>
           </div>
@@ -130,11 +210,11 @@
             <p class="program-description">{{ program.description }}</p>
             <ul class="program-features">
               <li *ngFor="let feature of program.features">
-                <i class="feature-check">✓</i> {{ feature }}
+                <i class="fas fa-check feature-check"></i> {{ feature }}
               </li>
             </ul>
             <a [routerLink]="program.route" class="btn btn-outline-primary w-100">
-              Learn More
+              <i class="fas fa-info-circle me-2"></i>Learn More
             </a>
           </div>
         </div>
@@ -159,18 +239,20 @@
         <div class="instructor-card">
           <div class="instructor-image-wrapper">
             <img 
-              [attr.data-src]="instructor.image" 
+              [src]="instructor.image" 
               [alt]="instructor.name" 
-              class="instructor-image lazy-load"
+              class="instructor-image"
               loading="lazy">
           </div>
           <div class="instructor-content">
             <h3 class="instructor-name">{{ instructor.name }}</h3>
-            <p class="instructor-title">{{ instructor.title }}</p>
+            <p class="instructor-title">
+              <i class="fas fa-user-tie me-2"></i>{{ instructor.title }}
+            </p>
             <p class="instructor-bio">{{ instructor.bio }}</p>
             <div class="instructor-specialization">
               <span class="specialization-tag" *ngFor="let spec of instructor.specialization">
-                {{ spec }}
+                <i class="fas fa-star me-1"></i>{{ spec }}
               </span>
             </div>
           </div>
@@ -180,7 +262,7 @@
   </div>
 </section>
 
-<!-- Gallery Section - FIXED VERSION -->
+<!-- Gallery Section -->
 <section class="gallery-section" id="gallery">
   <div class="container">
     <div class="text-center mb-5">
@@ -195,7 +277,7 @@
         [disabled]="!canGoPrevious()"
         [class.disabled]="!canGoPrevious()"
         aria-label="Previous images">
-        ‹
+        <i class="fas fa-chevron-left"></i>
       </button>
       
       <div class="gallery-images-container">
@@ -218,7 +300,7 @@
         [disabled]="!canGoNext()"
         [class.disabled]="!canGoNext()"
         aria-label="Next images">
-        ›
+        <i class="fas fa-chevron-right"></i>
       </button>
     </div>
 
@@ -254,6 +336,9 @@
 <section class="cta-section">
   <div class="container">
     <div class="cta-content">
+      <div class="cta-logo mb-4">
+        <img src="assets/Images/footer-logo.png" alt="Magical Yoga" class="cta-brand-logo" height="80">
+      </div>
       <h2 class="cta-title">Ready to Begin Your Yoga Journey?</h2>
       <p class="cta-description">
         Join thousands of students who have transformed their lives through yoga. 
@@ -261,10 +346,10 @@
       </p>
       <div class="cta-buttons">
         <a routerLink="/register" class="btn btn-light btn-lg me-3">
-          Get Started Free
+          <i class="fas fa-play-circle me-2"></i>Get Started Free
         </a>
         <a routerLink="/classes" class="btn btn-outline-light btn-lg">
-          View All Classes
+          <i class="fas fa-eye me-2"></i>View All Classes
         </a>
       </div>
     </div>
@@ -277,56 +362,68 @@
     <div class="row g-4">
       <!-- Brand & Social -->
       <div class="col-lg-4 mb-4 mb-lg-0">
-        <h3 class="footer-brand">Magical Yoga</h3>
-        <p class="footer-tagline">Awaken Your Best Self With Every Breath</p>
-        <div class="social-links">
-          <span class="social-title">Connect with us on Socials:</span>
-          <div class="social-icons">
-            <a href="#" class="social-icon" aria-label="Facebook">
-              <i>📘</i>
-            </a>
-            <a href="#" class="social-icon" aria-label="Instagram">
-              <i>📷</i>
-            </a>
-            <a href="#" class="social-icon" aria-label="YouTube">
-              <i>📹</i>
-            </a>
-            <a href="#" class="social-icon" aria-label="WhatsApp">
-              <i>💬</i>
-            </a>
+        <div class="footer-brand">
+          <img src="assets/Images/footer-logo.png" alt="Magical Yoga" class="footer-logo-img mb-3" height="40">
+          <p class="footer-tagline">Awaken Your Best Self With Every Breath</p>
+          <div class="social-links">
+            <span class="social-title">Connect with us on Socials:</span>
+            <div class="social-icons">
+              <a href="#" class="social-icon" aria-label="Facebook">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="#" class="social-icon" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a href="#" class="social-icon" aria-label="YouTube">
+                <i class="fab fa-youtube"></i>
+              </a>
+              <a href="#" class="social-icon" aria-label="WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+              </a>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Quick Links -->
       <div class="col-lg-4 col-md-6">
-        <h4 class="footer-heading">Quick Links</h4>
+        <h4 class="footer-heading">
+          <i class="fas fa-link me-2"></i>Quick Links
+        </h4>
         <ul class="footer-links">
-          <li><a routerLink="/summer-camp">Summer Camp</a></li>
-          <li><a routerLink="/videos">Video Contents</a></li>
-          <li><a routerLink="/about">About Us</a></li>
-          <li><a routerLink="/contact">Contact</a></li>
+          <li><a routerLink="/summer-camp"><i class="fas fa-sun me-2"></i>Summer Camp</a></li>
+          <li><a routerLink="/videos"><i class="fas fa-video me-2"></i>Video Contents</a></li>
+          <li><a routerLink="/about"><i class="fas fa-info-circle me-2"></i>About Us</a></li>
+          <li><a routerLink="/contact"><i class="fas fa-envelope me-2"></i>Contact</a></li>
         </ul>
       </div>
 
       <!-- Contact Info -->
       <div class="col-lg-4 col-md-6">
-        <h4 class="footer-heading">Contact Us</h4>
+        <h4 class="footer-heading">
+          <i class="fas fa-address-book me-2"></i>Contact Us
+        </h4>
         <ul class="footer-contact">
           <li>
-            <i>✉️</i>
+            <i class="fas fa-envelope me-2"></i>
             <a href="mailto:magicalyogatamil@gmail.com">magicalyogatamil&#64;gmail.com</a>
           </li>
           <li>
-            <i>📞</i>
+            <i class="fas fa-phone me-2"></i>
             <a href="tel:+919884524742">+91-9884524742</a>
+          </li>
+          <li>
+            <i class="fas fa-map-marker-alt me-2"></i>
+            <span>Chennai, Tamil Nadu</span>
           </li>
         </ul>
       </div>
     </div>
 
     <div class="footer-bottom">
-      <p>© 2025 Magical Yoga. All rights reserved.</p>
+      <p>
+        <i class="fas fa-copyright me-1"></i>2025 Magical Yoga. All rights reserved.
+      </p>
     </div>
   </div>
 </footer>
