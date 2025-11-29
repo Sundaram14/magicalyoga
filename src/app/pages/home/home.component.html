@@ -1,6 +1,332 @@
-<app-header></app-header>
-<app-introduction></app-introduction>
-<app-why-us></app-why-us>
-<app-student-gallery></app-student-gallery>
-<app-whats-new></app-whats-new>
-<app-about-founder></app-about-founder>
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-7">
+          <h1 class="hero-title animate-fade-in">
+            Awaken Your Best Self <br>
+            <span class="text-gradient">With Every Breath!!</span>
+          </h1>
+          <p class="hero-subtitle animate-fade-in-delay">
+            Are you ready to experience yoga with fun and harmony?
+          </p>
+          <div class="hero-buttons animate-fade-in-delay-2">
+            <a routerLink="/register" class="btn btn-primary btn-lg">
+              Free Trial →
+            </a>
+          </div>
+        </div>
+        <div class="col-lg-5 d-none d-lg-block">
+          <img 
+            src="https://images.unsplash.com/photo-1545389336-cf090694435e?w=1200&q=80" 
+            alt="Yoga Practice" 
+            class="hero-image"
+            loading="eager">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Welcome Section -->
+<section class="welcome-section">
+  <div class="container">
+    <div class="text-center mb-5">
+      <span class="section-badge">Welcome to Magical Yoga</span>
+      <h2 class="section-title">Learn yoga anytime, anywhere!</h2>
+      <p class="section-description mx-auto" style="max-width: 800px;">
+        At Magical Yoga, we are driven by the vision of helping you become the best version of yourself. 
+        Born from a passion for wellness, we blend traditional yoga techniques with a modern approach to 
+        make your practice enjoyable and transformative. Experience the Magic of Yoga and embrace a 
+        healthier, more balanced life - wherever you are.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Summer Camp Highlight -->
+<section class="summer-camp-section">
+  <div class="container">
+    <div class="camp-card">
+      <div class="row align-items-center">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+          <img 
+            data-src="https://images.unsplash.com/photo-1599447332326-ec683f97cb40?w=1200&q=80" 
+            alt="Summer Yoga Camp" 
+            class="camp-image lazy-load"
+            loading="lazy">
+        </div>
+        <div class="col-lg-6">
+          <span class="camp-badge">What's New?</span>
+          <h2 class="camp-title">Stretch Into Summer: Enroll in Summer Yoga Camp</h2>
+          <p class="camp-description">
+            Breathe, stretch, and unwind with us. Experience yoga, mindfulness, and fun activities 
+            designed to refresh your mind and body this summer.
+          </p>
+          <p class="camp-age">
+            <strong>Age category:</strong> 8 to 18 years old!
+          </p>
+          <a routerLink="/summer-camp" class="btn btn-primary btn-lg">
+            View More Details
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Benefits Section -->
+<section class="benefits-section" id="benefits">
+  <div class="container">
+    <div class="text-center mb-5">
+      <span class="section-badge">Benefits</span>
+      <h2 class="section-title">Why Join Magical Yoga?</h2>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4" *ngFor="let benefit of benefits">
+        <div class="benefit-card">
+          <div class="benefit-icon">{{ benefit.icon }}</div>
+          <h3 class="benefit-title">{{ benefit.title }}</h3>
+          <ul class="benefit-list">
+            <li *ngFor="let item of benefit.items">
+              <i class="check-icon">✔</i> {{ item }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Programs Section -->
+<section class="programs-section" id="programs">
+  <div class="container">
+    <div class="text-center mb-5">
+      <span class="section-badge">Our Programs</span>
+      <h2 class="section-title">Find Your Perfect Yoga Journey</h2>
+      <p class="section-description mx-auto" style="max-width: 600px;">
+        Whether you're a beginner or advanced practitioner, we have programs 
+        designed to meet your unique needs and goals.
+      </p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-3" *ngFor="let program of programs">
+        <div class="program-card">
+          <div class="program-image-wrapper">
+            <img 
+              [attr.data-src]="program.image" 
+              [alt]="program.title" 
+              class="program-image lazy-load"
+              loading="lazy">
+            <span class="program-category">{{ program.category }}</span>
+          </div>
+          <div class="program-content">
+            <h3 class="program-title">{{ program.title }}</h3>
+            <p class="program-description">{{ program.description }}</p>
+            <ul class="program-features">
+              <li *ngFor="let feature of program.features">
+                <i class="feature-check">✓</i> {{ feature }}
+              </li>
+            </ul>
+            <a [routerLink]="program.route" class="btn btn-outline-primary w-100">
+              Learn More
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Instructors Section -->
+<section class="instructors-section" id="instructors">
+  <div class="container">
+    <div class="text-center mb-5">
+      <span class="section-badge">Meet Our Team</span>
+      <h2 class="section-title">Expert Instructors</h2>
+      <p class="section-description mx-auto" style="max-width: 600px;">
+        Learn from certified professionals passionate about guiding you on your yoga journey
+      </p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4" *ngFor="let instructor of instructors">
+        <div class="instructor-card">
+          <div class="instructor-image-wrapper">
+            <img 
+              [attr.data-src]="instructor.image" 
+              [alt]="instructor.name" 
+              class="instructor-image lazy-load"
+              loading="lazy">
+          </div>
+          <div class="instructor-content">
+            <h3 class="instructor-name">{{ instructor.name }}</h3>
+            <p class="instructor-title">{{ instructor.title }}</p>
+            <p class="instructor-bio">{{ instructor.bio }}</p>
+            <div class="instructor-specialization">
+              <span class="specialization-tag" *ngFor="let spec of instructor.specialization">
+                {{ spec }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery Section - FIXED VERSION -->
+<section class="gallery-section" id="gallery">
+  <div class="container">
+    <div class="text-center mb-5">
+      <span class="section-badge">Our Students Gallery</span>
+      <h2 class="section-title">Moments of Magic</h2>
+    </div>
+
+    <div class="gallery-carousel-wrapper">
+      <button 
+        class="gallery-nav prev" 
+        (click)="previousGalleryImage()" 
+        [disabled]="!canGoPrevious()"
+        [class.disabled]="!canGoPrevious()"
+        aria-label="Previous images">
+        ‹
+      </button>
+      
+      <div class="gallery-images-container">
+        <div class="gallery-images-track">
+          <div 
+            *ngFor="let image of getVisibleGalleryImages()" 
+            class="gallery-image-item">
+            <img 
+              [src]="image.url"
+              [alt]="image.alt" 
+              class="gallery-image"
+              loading="lazy">
+          </div>
+        </div>
+      </div>
+      
+      <button 
+        class="gallery-nav next" 
+        (click)="nextGalleryImage()" 
+        [disabled]="!canGoNext()"
+        [class.disabled]="!canGoNext()"
+        aria-label="Next images">
+        ›
+      </button>
+    </div>
+
+    <!-- Pagination Dots -->
+    <div class="gallery-pagination">
+      <button 
+        *ngFor="let image of galleryImages; let i = index" 
+        class="pagination-dot"
+        [class.active]="i >= currentGalleryIndex && i < currentGalleryIndex + imagesPerView"
+        (click)="goToImage(i)"
+        [attr.aria-label]="'Go to image ' + (i + 1)">
+      </button>
+    </div>
+
+    <!-- Thumbnails -->
+    <div class="gallery-thumbnails">
+      <div 
+        *ngFor="let image of galleryImages; let i = index" 
+        class="thumbnail-wrapper"
+        [class.active]="i >= currentGalleryIndex && i < currentGalleryIndex + imagesPerView"
+        (click)="goToImage(i)">
+        <img 
+          [src]="image.url"
+          [alt]="image.alt" 
+          class="thumbnail-image"
+          loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-content">
+      <h2 class="cta-title">Ready to Begin Your Yoga Journey?</h2>
+      <p class="cta-description">
+        Join thousands of students who have transformed their lives through yoga. 
+        Start your free trial today!
+      </p>
+      <div class="cta-buttons">
+        <a routerLink="/register" class="btn btn-light btn-lg me-3">
+          Get Started Free
+        </a>
+        <a routerLink="/classes" class="btn btn-outline-light btn-lg">
+          View All Classes
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer-section">
+  <div class="container">
+    <div class="row g-4">
+      <!-- Brand & Social -->
+      <div class="col-lg-4 mb-4 mb-lg-0">
+        <h3 class="footer-brand">Magical Yoga</h3>
+        <p class="footer-tagline">Awaken Your Best Self With Every Breath</p>
+        <div class="social-links">
+          <span class="social-title">Connect with us on Socials:</span>
+          <div class="social-icons">
+            <a href="#" class="social-icon" aria-label="Facebook">
+              <i>📘</i>
+            </a>
+            <a href="#" class="social-icon" aria-label="Instagram">
+              <i>📷</i>
+            </a>
+            <a href="#" class="social-icon" aria-label="YouTube">
+              <i>📹</i>
+            </a>
+            <a href="#" class="social-icon" aria-label="WhatsApp">
+              <i>💬</i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="col-lg-4 col-md-6">
+        <h4 class="footer-heading">Quick Links</h4>
+        <ul class="footer-links">
+          <li><a routerLink="/summer-camp">Summer Camp</a></li>
+          <li><a routerLink="/videos">Video Contents</a></li>
+          <li><a routerLink="/about">About Us</a></li>
+          <li><a routerLink="/contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="col-lg-4 col-md-6">
+        <h4 class="footer-heading">Contact Us</h4>
+        <ul class="footer-contact">
+          <li>
+            <i>✉️</i>
+            <a href="mailto:magicalyogatamil@gmail.com">magicalyogatamil&#64;gmail.com</a>
+          </li>
+          <li>
+            <i>📞</i>
+            <a href="tel:+919884524742">+91-9884524742</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2025 Magical Yoga. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
