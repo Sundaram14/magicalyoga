@@ -32,10 +32,18 @@ export class AuthService {
   }
 
   register(registerRequest: RegisterRequest): Observable<LoginResponse> {
+    console.log('Calling register endpoint:', `${this.apiUrl}/auth/register`); // Debug log
+    
     return this.http.post<LoginResponse>(`${this.apiUrl}/auth/register`, registerRequest)
       .pipe(
-        tap(response => this.handleAuthentication(response)),
-        catchError(error => this.handleError('Registration failed', error))
+        tap(response => {
+          console.log('Register successful:', response);
+          this.handleAuthentication(response);
+        }),
+        catchError(error => {
+          console.error('Register API error:', error);
+          return this.handleError('Registration failed', error);
+        })
       );
   }
 

@@ -1,8 +1,11 @@
+// app.routes.ts - KEEP IT SIMPLE
 import { Routes } from '@angular/router';
 import { authGuard } from '../guards/auth.guard';
 import { JournalListComponent } from './pages/journal/journal-list/journal-list.component';
 import { JournalFormComponent } from './pages/journal/journal-form/journal-form.component';
 import { JournalDetailComponent } from './pages/journal/journal-detail/journal-detail.component';
+import { PaymentComponent } from './pages/payment/payment.component';
+import { PaymentStatusComponent } from './components/payment-status/payment-status.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -34,8 +37,7 @@ export const routes: Routes = [
     path: 'home', 
     loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent) 
   },
-
-      { 
+  { 
     path: 'about', 
     loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent) 
   },
@@ -49,38 +51,29 @@ export const routes: Routes = [
   },
   { 
     path: 'classes', 
-    loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent) 
+    loadComponent: () => import('./pages/classes/classes.component').then(m => m.ClassesComponent) 
   },
   { 
     path: 'shop', 
     loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent) 
   },
 
-  //   { 
-  //   path: 'about', 
-  //   loadComponent: () => import('./pages/about/about.component').then(m => m.AboutComponent) 
-  // },
-  // { 
-  //   path: 'contact', 
-  //   loadComponent: () => import('./pages/contact/contact.component').then(m => m.ContactComponent) 
-  // },
-  // { 
-  //   path: 'reset42', 
-  //   loadComponent: () => import('./pages/reset42/reset42.component').then(m => m.Reset42Component) 
-  // },
-  // { 
-  //   path: 'classes', 
-  //   loadComponent: () => import('./pages/classes/classes.component').then(m => m.ClassesComponent) 
-  // },
-  // { 
-  //   path: 'shop', 
-  //   loadComponent: () => import('./pages/shop/shop.component').then(m => m.ShopComponent) 
-  // },
-
+  // Journal Routes
   { path: 'journal', component: JournalListComponent },
   { path: 'journal/new', component: JournalFormComponent },
   { path: 'journal/edit/:id', component: JournalFormComponent },
   { path: 'journal/:id', component: JournalDetailComponent },
-  
+
+  // Payment Routes
+  { 
+    path: 'payment', 
+    component: PaymentComponent,
+    canActivate: [authGuard] 
+  },
+  { 
+    path: 'payment-status', 
+    component: PaymentStatusComponent 
+  },
+
   { path: '**', redirectTo: '/dashboard' }
 ];

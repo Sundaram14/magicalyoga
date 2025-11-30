@@ -1,0 +1,42 @@
+<div class="payment-container">
+  <!-- Show Payment Status if available -->
+  <app-payment-status 
+    *ngIf="paymentStatus" 
+    [statusData]="paymentStatus">
+  </app-payment-status>
+
+  <!-- Show Payment Form if no status -->
+  <div *ngIf="!paymentStatus" class="payment-card">
+    <div class="loading-overlay" *ngIf="isLoading">
+      <div class="spinner"></div>
+      <p>Processing your payment...</p>
+    </div>
+
+    <div class="payment-header">
+      <h2>Complete Your Enrollment</h2>
+      <p>You're one step away from starting your yoga journey!</p>
+    </div>
+
+    <div class="program-details" *ngIf="programName && amount">
+      <div class="program-info">
+        <h3>{{ programName }}</h3>
+        <p class="amount">₹{{ amount }}</p>
+      </div>
+    </div>
+
+    <div class="payment-actions">
+      <button class="btn btn-primary" (click)="initiatePayment()" [disabled]="isLoading">
+        <span class="btn-icon">💳</span>
+        {{ isLoading ? 'Processing...' : 'Proceed to Payment' }}
+      </button>
+      <button class="btn btn-secondary" (click)="cancelPayment()" [disabled]="isLoading">
+        <span class="btn-icon">↶</span>
+        Cancel
+      </button>
+    </div>
+
+    <div class="payment-security">
+      <p>🔒 Secure payment powered by Razorpay</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,133 @@
+<div *ngIf="isVisible" class="modal-overlay" (click)="close()">
+  
+  <!-- Confetti Animation -->
+  <div *ngIf="showConfetti" class="confetti-container">
+    <div class="confetti" *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]"></div>
+  </div>
+
+  <div class="modal-dialog" (click)="$event.stopPropagation()">
+    <div class="modal-content">
+      
+      <!-- Close Button -->
+      <button type="button" class="btn-close-custom" (click)="close()">
+        <i class="fas fa-times"></i>
+      </button>
+
+      <!-- Success Icon with Animation -->
+      <div class="success-icon-wrapper">
+        <div class="success-checkmark">
+          <div class="check-icon">
+            <span class="icon-line line-tip"></span>
+            <span class="icon-line line-long"></span>
+            <div class="icon-circle"></div>
+            <div class="icon-fix"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WhatsApp Icon -->
+      <div class="whatsapp-icon-large">
+        <i class="fab fa-whatsapp"></i>
+      </div>
+
+      <!-- Modal Header -->
+      <div class="modal-header-custom">
+        <h2 class="modal-title-custom">
+          Welcome to the Community! 🎉
+        </h2>
+        <p class="modal-subtitle">You're all set to begin your yoga journey</p>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body-custom">
+        
+        <!-- Program Info Card -->
+        <div *ngIf="membershipDetails" class="program-info-card">
+          <div class="program-icon">
+            <i class="fas fa-yin-yang"></i>
+          </div>
+          <div class="program-details">
+            <h3 class="program-name">{{ membershipDetails.programName }}</h3>
+            <p class="program-category">{{ membershipDetails.programCategory }}</p>
+          </div>
+          <div class="status-badges">
+            <span class="badge-active">
+              <i class="fas fa-check-circle"></i> Active
+            </span>
+            <span class="badge-whatsapp">
+              <i class="fab fa-whatsapp"></i> Connected
+            </span>
+          </div>
+        </div>
+
+        <!-- Benefits Grid -->
+        <div class="benefits-section">
+          <h4 class="benefits-title">What You Get Access To:</h4>
+          <div class="benefits-grid">
+            <div class="benefit-item">
+              <div class="benefit-icon">
+                <i class="fas fa-calendar-check"></i>
+              </div>
+              <div class="benefit-text">
+                <strong>Live Classes</strong>
+                <small>Join scheduled sessions</small>
+              </div>
+            </div>
+
+            <div class="benefit-item">
+              <div class="benefit-icon">
+                <i class="fas fa-video"></i>
+              </div>
+              <div class="benefit-text">
+                <strong>Recordings</strong>
+                <small>Access anytime</small>
+              </div>
+            </div>
+
+            <div class="benefit-item">
+              <div class="benefit-icon">
+                <i class="fas fa-users"></i>
+              </div>
+              <div class="benefit-text">
+                <strong>Community</strong>
+                <small>Connect with others</small>
+              </div>
+            </div>
+
+            <div class="benefit-item">
+              <div class="benefit-icon">
+                <i class="fas fa-hands-helping"></i>
+              </div>
+              <div class="benefit-text">
+                <strong>Support</strong>
+                <small>Expert guidance</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Next Steps -->
+        <div class="next-steps-card">
+          <h4 class="next-steps-title">
+            <i class="fas fa-route me-2"></i>Next Steps
+          </h4>
+          <ol class="next-steps-list">
+            <li>Check WhatsApp for class schedule and updates</li>
+            <li>Introduce yourself to the community</li>
+            <li>Browse available classes and recordings</li>
+            <li>Start your practice journey today!</li>
+          </ol>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="modal-footer-custom">
+        <button type="button" class="btn-primary-custom" (click)="close()">
+          <i class="fas fa-spa me-2"></i>Begin Your Practice
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

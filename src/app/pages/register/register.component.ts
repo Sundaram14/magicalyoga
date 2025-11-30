@@ -1,8 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
+import { PaymentSessionService, SecurePaymentSession } from '../../../services/payment-session.service';
 
 @Component({
   selector: 'app-register',
@@ -11,14 +12,19 @@ import { AuthService } from '../../../services/auth.service';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private paymentSessionService = inject(PaymentSessionService); // Add this
 
   registerForm: FormGroup;
   isLoading = false;
   errorMessage = '';
+  
+  private sessionId: string = '';
+  private shouldRedirectToPayment: boolean = false;
 
   constructor() {
     this.registerForm = this.fb.group({
@@ -29,6 +35,21 @@ export class RegisterComponent {
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]]
     }, { validators: this.passwordMatchValidator });
+  }
+
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.sessionId = params['session'] || '';
+      this.shouldRedirectToPayment = !!params['redirect'];
+      
+      console.log('Registration session ID:', this.sessionId);
+      
+      // Validate session exists
+      if (this.sessionId && !this.paymentSessionService.validateSession(this.sessionId)) {
+        console.warn('Invalid or expired payment session');
+        this.sessionId = '';
+      }
+    });
   }
 
   passwordMatchValidator(form: FormGroup) {
@@ -42,31 +63,47 @@ export class RegisterComponent {
     return null;
   }
 
-  onSubmit(): void {
+   onSubmit(): void {
     if (this.registerForm.valid) {
-      this.isLoading = true;
-      this.errorMessage = '';
+        this.isLoading = true;
+        this.errorMessage = '';
 
-      const registerRequest = {
-        whatsAppNumber: this.registerForm.value.whatsAppNumber,
-        email: this.registerForm.value.email,
-        firstName: this.registerForm.value.firstName,
-        lastName: this.registerForm.value.lastName,
-        password: this.registerForm.value.password
-      };
+        const registerRequest = {
+          whatsAppNumber: this.registerForm.value.whatsAppNumber,
+          email: this.registerForm.value.email,
+          firstName: this.registerForm.value.firstName,
+          lastName: this.registerForm.value.lastName,
+          password: this.registerForm.value.password
+        };
 
-      this.authService.register(registerRequest).subscribe({
-        next: (response) => {
-          this.isLoading = false;
-          if (response.success) {
-            this.router.navigate(['/dashboard']);
+        console.log('Sending registration request:', registerRequest);
+
+        this.authService.register(registerRequest).subscribe({
+          next: (response) => {
+            this.isLoading = false;
+            console.log('Registration response:', response);
+            
+            if (response.success) {
+              if (this.shouldRedirectToPayment && this.sessionId) {
+                console.log('Redirecting to payment page with secure session');
+                
+                this.router.navigate(['/payment'], {
+                  queryParams: { session: this.sessionId }
+                });
+              } else {
+                this.router.navigate(['/dashboard']);
+              }
+            }
+          },
+          error: (error) => {
+            this.isLoading = false;
+            console.error('Registration error details:', error); 
+            
+            const serverMessage = error?.error?.message || error?.message || 'Registration failed';
+            this.errorMessage = serverMessage;
+
           }
-        },
-        error: (error) => {
-          this.isLoading = false;
-          this.errorMessage = error.message;
-        }
       });
     }
-  }
+  } 
 }

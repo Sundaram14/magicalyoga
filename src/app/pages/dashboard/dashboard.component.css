@@ -1,12 +1,8 @@
-.bg-light{
+.bg-light {
   background-color: var(--primary-extra-light) !important;
 }
 
-.bg-light{
-  background-color: var(--primary-extra-light) !important;
-}
-
-/* Profile Completion Banner - Theme Styling */
+/* Profile Completion Banner */
 .profile-banner {
   border: 2px solid var(--primary-color) !important;
   border-left: 4px solid var(--primary-color) !important;
@@ -25,16 +21,10 @@
   padding: 1.25rem;
 }
 
-/* Banner text colors using theme */
 .profile-banner .text-warning {
   color: var(--primary-color) !important;
 }
 
-.profile-banner .bi-info-circle-fill {
-  color: var(--primary-color) !important;
-}
-
-/* Progress bar theme styling */
 .profile-banner .progress {
   background-color: var(--primary-extra-light) !important;
   border: 1px solid var(--primary-light);
@@ -48,7 +38,6 @@
   transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Button theme styling */
 .profile-banner .btn-warning {
   background: var(--primary-color) !important;
   border-color: var(--primary-color) !important;
@@ -66,48 +55,30 @@
   box-shadow: 0 4px 12px rgba(0, 151, 178, 0.3);
 }
 
-/* Toggle button - fixed visibility and theme */
-.profile-banner .btn-link {
-  color: var(--primary-color) !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  border: 1px solid var(--primary-light);
+.icon-layout-style {
+  border: 1px solid var(--primary-color);
   border-radius: 50%;
+  background: white;
   width: 32px;
   height: 32px;
-  display: flex !important;
+  display: flex;
   align-items: center;
   justify-content: center;
-  background: white;
   transition: all 0.3s ease;
-  text-decoration: none !important;
 }
 
-.profile-banner .btn-link:hover {
+.icon-layout-style:hover {
   background: var(--primary-extra-light);
   border-color: var(--primary-color);
   transform: scale(1.1);
 }
 
-.profile-banner .btn-link .bi {
-  font-size: 1.1rem;
-  transition: transform 0.2s ease;
+.icon-style {
+  color: var(--primary-color);
+  font-size: 0.9rem;
 }
 
-/* Link styling within banner */
-.profile-banner a.text-warning {
-  color: var(--primary-color) !important;
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: all 0.2s ease;
-}
-
-.profile-banner a.text-warning:hover {
-  color: var(--primary-dark) !important;
-  border-bottom-color: var(--primary-color);
-}
-
-/* Profile status badge */
+/* Badge Styling */
 .badge.alert-primary {
   background-color: var(--primary-extra-light) !important;
   color: var(--primary-dark) !important;
@@ -117,76 +88,131 @@
   font-weight: 500;
 }
 
-/* Stats cards enhancement */
+/* Enrolled Programs Section */
+.enrolled-program-card {
+  padding: 1.25rem;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  background: white;
+  border: 2px solid transparent;
+}
+
+.enrolled-program-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.enrolled-program-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.enrolled-program-card:hover::before {
+  opacity: 1;
+}
+
+.enrolled-program-card.active {
+  background: linear-gradient(135deg, rgba(0, 151, 178, 0.05) 0%, rgba(255, 255, 255, 0.9) 100%);
+  border-color: var(--primary-color);
+}
+
+.enrolled-program-card.active::before {
+  background: linear-gradient(to bottom, var(--primary-color), var(--primary-light));
+}
+
+.enrolled-program-card.pending {
+  background: linear-gradient(135deg, rgba(255, 193, 7, 0.05) 0%, rgba(255, 255, 255, 0.9) 100%);
+  border-color: var(--warning-color);
+}
+
+.enrolled-program-card.pending::before {
+  background: linear-gradient(to bottom, var(--warning-color), #ffc107);
+}
+
+.access-granted-badge {
+  background: rgba(0, 151, 178, 0.1);
+  border: 1px solid var(--primary-color);
+  border-radius: 10px;
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.whatsapp-action-box {
+  background: rgba(255, 193, 7, 0.1);
+  border: 1px solid var(--warning-color);
+  border-left: 4px solid var(--warning-color);
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.program-meta {
+  background: var(--gray-50);
+  padding: 0.75rem;
+  border-radius: 8px;
+}
+
+/* Stats Cards Enhancement */
+.hover-lift {
+  transition: all 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 151, 178, 0.2) !important;
+}
+
 .rounded-circle.bg-primary-light {
   background: linear-gradient(135deg, var(--primary-color), var(--primary-light)) !important;
 }
 
-.rounded-circle.bg-primary-light .bi {
+.rounded-circle.bg-primary-light i {
   color: white !important;
 }
 
-.rounded-circle.bg-secondary-light {
-  background: linear-gradient(135deg, var(--secondary-color), var(--secondary-light)) !important;
+/* Sidebar Sticky */
+.sticky-sidebar {
+  position: sticky;
+  top: 7rem;
 }
 
-.rounded-circle.bg-secondary-light .bi {
-  color: white !important;
-}
-
-/* Minimized state styling */
-.profile-banner .text-warning small {
-  color: var(--primary-color) !important;
-  opacity: 0.9;
-}
-
-.icon-layout-style{
-  border: 1px solid var(--primary-color); 
-  border-radius: 50%;
-  background: white; 
-  width: 32px; 
-  height: 32px; 
+/* Quick Action Links */
+.quick-action-link {
   display: flex;
-  align-items: center; 
-  justify-content: center;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  position: relative;
 }
 
-.icon-style{
-  color: var(--primary-color);
-  font-size: 0.9rem;
+.quick-action-link .fa-chevron-right {
+  font-size: 0.75rem;
+  opacity: 0;
+  transition: all 0.3s ease;
 }
 
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .profile-banner .d-flex {
-    flex-direction: column;
-    align-items: flex-start !important;
-  }
-  
-  .profile-banner .btn-link {
-    align-self: flex-end;
-    margin-top: -2.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .icon-layout-style{
-    margin-top: 15px;
-  }
-
+.quick-action-link:hover .fa-chevron-right {
+  opacity: 1;
+  transform: translateX(3px);
 }
 
-/* Animation for smooth expand/collapse */
-.profile-banner .card-body > div > div:last-child {
-  animation: fadeIn 0.3s ease-in-out;
+.quick-action-link:hover {
+  background: var(--primary-extra-light);
+  border-color: var(--primary-color) !important;
+  transform: translateX(5px);
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Modern Journal Dashboard Preview */
+/* Journal Dashboard */
 .journal-dashboard-modern {
   border-radius: 12px;
   border-left: 4px solid var(--primary-color);
@@ -225,7 +251,7 @@
   transform: translateX(3px);
 }
 
-/* Empty State Modern */
+/* Journal Empty State */
 .journal-preview-empty-modern {
   padding: 3rem 2rem;
 }
@@ -255,7 +281,7 @@
   box-shadow: 0 4px 12px rgba(0, 151, 178, 0.3);
 }
 
-/* Modern Journal List */
+/* Journal List */
 .journal-preview-list-modern {
   max-height: 350px;
   overflow-y: auto;
@@ -396,7 +422,7 @@
   transform: translateX(3px);
 }
 
-/* Quick Stats Footer */
+/* Journal Stats Footer */
 .journal-stat-number {
   font-size: 1.25rem;
   font-weight: 600;
@@ -425,23 +451,84 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .profile-banner .d-flex {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+
+  .icon-layout-style {
+    margin-top: 15px;
+  }
+
+  .enrolled-program-card {
+    margin-bottom: 1rem;
+  }
+
   .journal-preview-link-modern {
     padding: 1rem;
   }
-  
+
   .journal-preview-number {
     width: 28px;
     height: 28px;
     margin-right: 0.75rem;
   }
-  
+
   .journal-preview-footer {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
   }
-  
+
   .journal-preview-actions {
     align-self: flex-end;
   }
+
+  .sticky-sidebar {
+    position: relative;
+    top: 0;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.profile-banner .card-body > div > div:last-child {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Button Enhancements */
+.btn {
+  transition: all 0.3s ease;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 4px 12px rgba(0, 151, 178, 0.3);
+}
+
+.btn-outline-primary:hover {
+  box-shadow: 0 4px 12px rgba(0, 151, 178, 0.2);
+}
+
+.btn-success {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+}
+
+.btn-success:hover {
+  background-color: var(--primary-dark) !important;
+  border-color: var(--primary-dark) !important;
 }

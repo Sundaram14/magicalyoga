@@ -1,30 +1,11 @@
 <div class="min-vh-100 bg-light mt-6pt5">
-  <!-- Main Content -->
   <main class="container-fluid py-4">
     <div class="row">
-      <!-- Sidebar -->
-      <div class="col-md-3 mb-4">
-        <div class="card border-0 shadow-sm">
-          <div class="card-body">
-            <h5 class="card-title text-secondary mb-3">Quick Actions</h5>
-            <div class="d-grid gap-2">
-              <a routerLink="/profile" class="btn btn-outline-primary text-start">
-                <i class="fas fa-user me-2"></i>My Profile
-              </a>
-              <a routerLink="/classes" class="btn btn-outline-primary text-start">
-                <i class="fas fa-play-circle me-2"></i>Browse Classes
-              </a>
-              <a routerLink="/memberships" class="btn btn-outline-primary text-start">
-                <i class="fas fa-clipboard-list me-2"></i>My Membership
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Main Dashboard -->
+      
+      <!-- Main Dashboard Content -->
       <div class="col-md-9">
-        <!-- Profile Completion Banner - Only show if profile is NOT complete -->
+        
+        <!-- Profile Completion Banner -->
         <div *ngIf="currentUser && !isProfileComplete" 
              class="card border-warning border-2 mb-4 profile-banner">
           <div class="card-body bg-warning bg-opacity-10">
@@ -49,7 +30,6 @@
                     </span>
                   </p>
                   
-                  <!-- Progress Bar for Partial Completion -->
                   <div *ngIf="isProfilePartial" class="mb-3">
                     <div class="progress" style="height: 8px; background-color: rgba(255, 193, 7, 0.3);">
                       <div class="progress-bar bg-warning" 
@@ -68,7 +48,6 @@
                   </a>
                 </div>
                 
-                <!-- Minimized Content -->
                 <div *ngIf="isBannerMinimized" style="color: var(--primary-color);">
                   <small>
                     <i class="fas fa-user me-1"></i>
@@ -78,7 +57,6 @@
                 </div>
               </div>
               
-              <!-- Minimize/Expand Toggle -->
               <div class="minimse-div-style">
                 <button type="button" 
                   class="btn btn-sm btn-toggle p-1 ms-2 flex-shrink-0 icon-layout-style"
@@ -102,7 +80,6 @@
                 <h2 class="card-title h4 text-dark mb-2">Welcome back, {{ currentUser?.firstName }}! 👋</h2>
                 <p class="text-muted mb-0">Ready to continue your yoga journey? Explore our classes and track your progress.</p>
                 
-                <!-- Profile Status Badge - Only show if profile is NOT complete -->
                 <div *ngIf="!isProfileComplete" class="mt-2">
                   <span class="badge alert-primary text-dark">
                     <i class="fas fa-user-check me-1"></i>
@@ -115,14 +92,191 @@
           </div>
         </div>
 
+        <!-- Currently Enrolled Programs Section -->
+        <div class="card border-0 shadow-sm mb-4">
+          <div class="card-header bg-white border-0 py-3 d-flex justify-content-between align-items-center">
+            <h5 class="mb-0" style="color: var(--secondary-color);">
+              <i class="fas fa-graduation-cap me-2" style="color: var(--primary-color);"></i>
+              My Enrolled Programs
+            </h5>
+            <div class="d-flex gap-2">
+              <span class="badge bg-primary">{{ fullAccessMembershipsCount }}</span>
+              <span *ngIf="getMembershipsNeedingWhatsApp().length > 0" 
+                    class="badge bg-warning text-dark">
+                {{ getMembershipsNeedingWhatsApp().length }} Pending
+              </span>
+            </div>
+          </div>
+          
+          <div class="card-body">
+            <!-- Loading State -->
+            <div *ngIf="membershipsLoading" class="text-center py-4">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <p class="mt-2 text-muted">Loading your programs...</p>
+            </div>
+
+            <!-- No Enrollments - Call to Action -->
+            <div *ngIf="!membershipsLoading && memberships.length === 0" class="text-center py-5">
+              <div class="mb-4">
+                <i class="fas fa-yoga fa-3x" style="color: var(--primary-light);"></i>
+              </div>
+              <h5 class="mb-2" style="color: var(--secondary-color);">Start Your Yoga Journey</h5>
+              <p class="text-muted mb-4">You haven't enrolled in any programs yet. Browse our classes to begin your transformation!</p>
+              <a routerLink="/classes" class="btn btn-primary">
+                <i class="fas fa-search me-2"></i>Browse All Programs
+              </a>
+            </div>
+
+            <!-- Active Programs with Full Access -->
+            <div *ngIf="!membershipsLoading && getMembershipsWithFullAccess().length > 0" class="mb-4">
+              <h6 class="mb-3" style="color: var(--primary-color);">
+                <i class="fas fa-check-circle me-2"></i>Active Programs
+              </h6>
+              
+              <div class="row g-3">
+                <div *ngFor="let membership of getMembershipsWithFullAccess()" 
+                     class="col-md-12">
+                  <div class="enrolled-program-card active">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                      <h6 class="mb-0 fw-bold" style="color: var(--secondary-color);">
+                        {{ membership.programName }}
+                      </h6>
+                      <span class="badge bg-success">Active</span>
+                    </div>
+                    
+                    <p class="small text-muted mb-3">{{ membership.programCategory }}</p>
+
+                    <div class="access-granted-badge mb-3">
+                      <i class="fas fa-check-circle text-success me-2"></i>
+                      <div>
+                        <strong class="d-block">Full Access Granted</strong>
+                        <small class="text-muted">All classes and recordings available</small>
+                      </div>
+                    </div>
+
+                    <div class="program-meta mb-3">
+                      <div class="d-flex justify-content-between mb-1">
+                        <small class="text-muted">
+                          <i class="fas fa-calendar-alt me-1"></i>
+                          Started: {{ formatDate(membership.startDate) }}
+                        </small>
+                      </div>
+                      <div class="d-flex justify-content-between">
+                        <small class="text-muted">
+                          <i class="fab fa-whatsapp me-1"></i>
+                          Joined: {{ formatDate(membership.whatsAppJoinDate) }}
+                        </small>
+                        <small *ngIf="membership.daysRemaining" class="text-success fw-bold">
+                          <i class="fas fa-clock me-1"></i>
+                          {{ membership.daysRemaining }} days left
+                        </small>
+                      </div>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                      <a routerLink="/classes" class="btn btn-outline-success btn-sm flex-fill">
+                        <i class="fas fa-play me-1"></i>Access Classes
+                      </a>
+                      <button class="btn btn-outline-primary btn-sm flex-fill" disabled>
+                        <i class="fas fa-video me-1"></i>Recordings
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Programs Needing WhatsApp Confirmation -->
+            <div *ngIf="!membershipsLoading && getMembershipsNeedingWhatsApp().length > 0" class="mb-4">
+              <h6 class="text-warning mb-3">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                Action Required - Join WhatsApp Group
+              </h6>
+              
+              <div *ngFor="let membership of getMembershipsNeedingWhatsApp()" 
+                   class="enrolled-program-card pending mb-3">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                  <h6 class="mb-0 fw-bold" style="color: var(--secondary-color);">
+                    {{ membership.programName }}
+                  </h6>
+                  <span class="badge bg-warning text-dark">Pending Access</span>
+                </div>
+                
+                <p class="small text-muted mb-3">{{ membership.programCategory }}</p>
+
+                <div class="whatsapp-action-box mb-3">
+                  <div class="d-flex align-items-start mb-3">
+                    <i class="fab fa-whatsapp fs-3 me-3" style="color: #25D366;"></i>
+                    <div class="flex-grow-1">
+                      <strong class="d-block mb-2">Join WhatsApp Group to Access Classes</strong>
+                      <small class="text-dark d-block mb-2">
+                        You've successfully enrolled! Now join the WhatsApp group to get:
+                      </small>
+                      <ul class="small text-dark mb-0 ps-3">
+                        <li>Class schedule & live updates</li>
+                        <li>Video recordings access</li>
+                        <li>Direct instructor support</li>
+                        <li>Community interaction</li>
+                      </ul>
+                    </div>
+                  </div>
+                  
+                  <div class="d-flex gap-2">
+                    <a *ngIf="membership.whatsAppGroupLink" 
+                       [href]="membership.whatsAppGroupLink" 
+                       target="_blank" 
+                       class="btn btn-success btn-sm flex-fill">
+                      <i class="fab fa-whatsapp me-1"></i>Join WhatsApp Group
+                    </a>
+                    <button class="btn btn-primary btn-sm flex-fill" 
+                            (click)="confirmWhatsAppJoin(membership.programId)">
+                      <i class="fas fa-check me-1"></i>I've Joined
+                    </button>
+                  </div>
+
+                  <div *ngIf="!membership.whatsAppGroupLink" class="text-center mt-2">
+                    <small class="text-danger">
+                      <i class="fas fa-exclamation-circle me-1"></i>
+                      WhatsApp group link not available. Please contact support.
+                    </small>
+                  </div>
+                </div>
+
+                <div class="program-meta">
+                  <div class="d-flex justify-content-between">
+                    <small class="text-muted">
+                      <i class="fas fa-calendar-alt me-1"></i>
+                      Enrolled: {{ formatDate(membership.startDate) }}
+                    </small>
+                    <small *ngIf="membership.daysRemaining" class="text-success fw-bold">
+                      <i class="fas fa-clock me-1"></i>
+                      {{ membership.daysRemaining }} days remaining
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Explore More Programs CTA -->
+            <div *ngIf="memberships.length > 0" class="text-center pt-3 border-top">
+              <p class="text-muted small mb-2">Want to explore more programs?</p>
+              <a routerLink="/classes" class="btn btn-outline-primary btn-sm">
+                <i class="fas fa-plus-circle me-1"></i>Browse All Programs
+              </a>
+            </div>
+          </div>
+        </div>
+
         <!-- Stats Grid -->
         <div class="row g-4 mb-4">
           <div class="col-md-4">
-            <div class="card border-0 shadow-sm h-100">
+            <div class="card border-0 shadow-sm h-100 hover-lift">
               <div class="card-body text-center">
                 <div class="rounded-circle bg-primary-light d-inline-flex align-items-center justify-content-center mb-3" 
                      style="width: 60px; height: 60px;">
-                  <i class="fas fa-play text-primary fs-4"></i>
+                  <i class="fas fa-play text-white fs-4"></i>
                 </div>
                 <h3 class="h5 text-dark">Available Classes</h3>
                 <p class="text-muted mb-2">Explore our yoga programs</p>
@@ -132,11 +286,11 @@
           </div>
 
           <div class="col-md-4">
-            <div class="card border-0 shadow-sm h-100">
+            <div class="card border-0 shadow-sm h-100 hover-lift">
               <div class="card-body text-center">
                 <div class="rounded-circle bg-primary-light d-inline-flex align-items-center justify-content-center mb-3" 
                      style="width: 60px; height: 60px;">
-                  <i class="fas fa-book text-primary fs-4"></i>
+                  <i class="fas fa-book text-white fs-4"></i>
                 </div>
                 <h3 class="h5 text-dark">Daily Journal</h3>
                 <p class="text-muted mb-2">Track your yoga practice</p>
@@ -146,11 +300,11 @@
           </div>
 
           <div class="col-md-4">
-            <div class="card border-0 shadow-sm h-100">
+            <div class="card border-0 shadow-sm h-100 hover-lift">
               <div class="card-body text-center">
                 <div class="rounded-circle bg-primary-light d-inline-flex align-items-center justify-content-center mb-3" 
                      style="width: 60px; height: 60px;">
-                  <i class="fas fa-video text-primary fs-4"></i>
+                  <i class="fas fa-video text-white fs-4"></i>
                 </div>
                 <h3 class="h5 text-dark">Recordings</h3>
                 <p class="text-muted mb-2">Access class recordings</p>
@@ -159,9 +313,11 @@
             </div>
           </div>
         </div>
-          <div class="row g-4">
-            <div class="col-md-6">
-              <div class="card border-0 shadow-sm h-100 journal-dashboard-modern">
+
+        <!-- Recent Journal Entries -->
+        <div class="row g-4">
+          <div class="col-md-12">
+            <div class="card border-0 shadow-sm h-100 journal-dashboard-modern">
               <div class="card-header bg-white border-0 py-3 d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center">
                   <div class="journal-icon-wrapper me-3">
@@ -176,6 +332,7 @@
                   <i class="fas fa-arrow-right me-1"></i>View All
                 </a>
               </div>
+              
               <div class="card-body p-0">
                 <div *ngIf="recentJournalEntries.length === 0" class="text-center py-5 journal-preview-empty-modern">
                   <div class="journal-empty-icon">
@@ -190,7 +347,7 @@
                 
                 <div *ngIf="recentJournalEntries.length > 0" class="journal-preview-list-modern">
                   <div *ngFor="let entry of recentJournalEntries; let i = index" 
-                      class="journal-preview-item-modern">
+                       class="journal-preview-item-modern">
                     <a [routerLink]="['/journal', entry.id]" class="journal-preview-link-modern">
                       <div class="journal-preview-number">
                         {{ i + 1 }}
@@ -241,25 +398,42 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
 
-          <!-- Recent Activity -->
-          <div class="col-md-6">
-            <div class="card border-0 shadow-sm h-100">
-              <div class="card-header bg-white border-0 py-3">
-                <h3 class="h5 mb-0 text-dark">Recent Activity</h3>
-              </div>
-              <div class="card-body">
-                <div class="text-center py-5">
-                  <i class="fas fa-history text-muted fs-1 mb-3"></i>
-                  <p class="text-muted">No recent activity yet</p>
-                  <p class="text-muted small">Your yoga journey activities will appear here</p>
-                </div>
-              </div>
+      <!-- Sidebar -->
+      <div class="col-md-3 mb-4">
+        <div class="card border-0 shadow-sm sticky-sidebar">
+          <div class="card-body">
+            <h5 class="card-title text-secondary mb-3">
+              <i class="fas fa-bolt me-2" style="color: var(--primary-color);"></i>
+              Quick Actions
+            </h5>
+            <div class="d-grid gap-2">
+              <a routerLink="/profile" class="btn btn-outline-primary text-start quick-action-link">
+                <i class="fas fa-user me-2"></i>My Profile
+                <i class="fas fa-chevron-right ms-auto"></i>
+              </a>
+              <a routerLink="/classes" class="btn btn-outline-primary text-start quick-action-link">
+                <i class="fas fa-play-circle me-2"></i>Browse Classes
+                <i class="fas fa-chevron-right ms-auto"></i>
+              </a>
+              <a routerLink="/memberships" class="btn btn-outline-primary text-start quick-action-link">
+                <i class="fas fa-clipboard-list me-2"></i>My Membership
+                <i class="fas fa-chevron-right ms-auto"></i>
+              </a>
             </div>
           </div>
         </div>
-      </div>  
+      </div>
+
     </div>
   </main>
 </div>
 
+<!-- Success Modal -->
+<app-whatsapp-success-modal 
+  [isVisible]="showSuccessModal"
+  [membershipDetails]="selectedMembership"
+  (closed)="onModalClosed()">
+</app-whatsapp-success-modal>
