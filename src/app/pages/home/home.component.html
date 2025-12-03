@@ -1,156 +1,83 @@
-<!-- Hero Section -->
-<section class="hero-section">
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-7">
-          <!-- Logo Section -->
-          <div class="hero-logo mb-4">
-            <img src="assets/Images/footer-logo.png" alt="Magical Yoga" class="hero-brand-logo" height="40">
+<!-- Hero Section - Slider -->
+<section class="hero-slider">
+  <div class="hero-slides">
+    <div 
+      *ngFor="let slide of heroSlides; let i = index" 
+      class="hero-slide"
+      [class.active]="i === currentSlide">
+      <div class="hero-slide-image">
+        <img [src]="slide.image" [alt]="slide.title" loading="eager">
+        <div class="hero-overlay"></div>
+      </div>
+      
+      <div class="hero-slide-content">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-lg-8 col-xl-7">
+              <span class="hero-badge">{{ slide.badge }}</span>
+              <h1 class="hero-title animate-fade-in">{{ slide.title }}</h1>
+              <p class="hero-description animate-fade-in-delay">{{ slide.description }}</p>
+              <a [routerLink]="slide.link" class="btn btn-hero btn-lg animate-fade-in-delay-2">
+                {{ slide.cta }} <i class="fas fa-arrow-right ms-2"></i>
+              </a>
+            </div>
           </div>
-          
-          <h1 class="hero-title animate-fade-in">
-            Awaken Your Best Self <br>
-            <span class="text-gradient">With Every Breath!!</span>
-          </h1>
-          <p class="hero-subtitle animate-fade-in-delay">
-            Are you ready to experience yoga with fun and harmony?
-          </p>
-          <div class="hero-buttons animate-fade-in-delay-2">
-            <a routerLink="/register" class="btn btn-primary btn-lg">
-              Free Trial <i class="fas fa-arrow-right ms-2"></i>
-            </a>
-          </div>
-        </div>
-        <div class="col-lg-5 d-none d-lg-block">
-          <img 
-            src="assets/Images/hero/hero.webp" 
-            alt="Yoga Practice" 
-            class="hero-image"
-            loading="eager">
+            <!-- Dots Indicator -->
+            <div class="hero-dots">
+              <button 
+                *ngFor="let slide of heroSlides; let i = index"
+                class="hero-dot"
+                [class.active]="i === currentSlide"
+                (click)="goToSlide(i)"
+                [attr.aria-label]="'Go to slide ' + (i + 1)">
+              </button>
+            </div>
         </div>
       </div>
     </div>
   </div>
+
 </section>
 
-<!-- Welcome Section -->
+
+<!-- Welcome Section - Clean & Minimal -->
 <section class="welcome-section">
-  <div class="container">
-    <div class="text-center mb-5">
-      <span class="section-badge">Welcome to Magical Yoga</span>
-      <h2 class="section-title">Learn yoga anytime, anywhere!</h2>
-      <p class="section-description mx-auto" style="max-width: 800px;">
-        At Magical Yoga, we are driven by the vision of helping you become the best version of yourself. 
-        Born from a passion for wellness, we blend traditional yoga techniques with a modern approach to 
-        make your practice enjoyable and transformative. Experience the Magic of Yoga and embrace a 
-        healthier, more balanced life - wherever you are.
-      </p>
-    </div>
-  </div>
-</section>
-
-<!-- Announcements Carousel Section -->
-<section class="announcements-section">
-  <div class="container">
-    <div class="section-header text-center mb-5">
-      <span class="section-badge">Latest Updates</span>
-      <h2 class="section-title">What's Happening at Magical Yoga</h2>
-      <p class="section-description">
-        Stay updated with our latest programs, offers, and events
-      </p>
-    </div>
-
-    <div class="announcement-carousel">
-      <!-- Navigation Buttons -->
-      <button 
-        class="carousel-nav prev" 
-        (click)="previousAnnouncement()" 
-        aria-label="Previous announcement">
-        <i class="fas fa-chevron-left"></i>
-      </button>
-
-      <!-- Announcement Card -->
-      <div class="announcement-card" [attr.data-theme]="getCurrentAnnouncement().badgeColor">
-        <div class="row align-items-center g-4">
-          <div class="col-lg-6">
-            <div class="announcement-visual">
-              <img 
-                [src]="getCurrentAnnouncement().image" 
-                [alt]="getCurrentAnnouncement().title" 
-                class="announcement-image"
-                loading="eager">
-              <div class="image-overlay"></div>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="announcement-content">
-              <span class="announcement-badge" [attr.data-color]="getCurrentAnnouncement().badgeColor">
-                <i class="fas fa-bullhorn me-2"></i>{{ getCurrentAnnouncement().badge }}
-              </span>
-              
-              <h3 class="announcement-title">{{ getCurrentAnnouncement().title }}</h3>
-              
-              <p class="announcement-subtitle" *ngIf="getCurrentAnnouncement().subtitle">
-                {{ getCurrentAnnouncement().subtitle }}
-              </p>
-              
-              <p class="announcement-description">
-                {{ getCurrentAnnouncement().description }}
-              </p>
-
-              <div class="announcement-meta" *ngIf="getCurrentAnnouncement().ageCategory">
-                <i class="fas fa-child meta-icon"></i>
-                <span><strong>Age Group:</strong> {{ getCurrentAnnouncement().ageCategory }}</span>
-              </div>
-
-              <div class="announcement-actions">
-                <a 
-                  [routerLink]="getCurrentAnnouncement().ctaLink" 
-                  class="btn btn-primary btn-announcement">
-                  <i class="fas fa-arrow-right me-2"></i>{{ getCurrentAnnouncement().ctaText }}
-                </a>
-                <button class="btn btn-outline-primary btn-announcement" (click)="scrollToSection('programs')">
-                  <i class="fas fa-list me-2"></i>View All Programs
-                </button>
-              </div>
-            </div>
-          </div>
+  <div class="welcome-container">
+    <div class="welcome-grid">
+      <!-- Left: Logo -->
+      <div class="welcome-logo">
+        <div class="logo-container">
+          <img src="assets/Images/logo-img.png" alt="Magical Yoga" class="brand-logo">
         </div>
       </div>
 
-      <button 
-        class="carousel-nav next" 
-        (click)="nextAnnouncement()" 
-        aria-label="Next announcement">
-        <i class="fas fa-chevron-right"></i>
-      </button>
-    </div>
+      <!-- Right: Content -->
+      <div class="welcome-content">
+        <div class="content-intro">
+          <span class="welcome-subtitle">Welcome to</span>
+          <h1 class="welcome-title"><b>Magical Yoga</b> </h1>
+          <div class="title-divider"></div>
+        </div>
 
-    <!-- Carousel Indicators -->
-    <div class="carousel-indicators">
-      <button 
-        *ngFor="let announcement of announcements; let i = index"
-        class="indicator"
-        [class.active]="i === currentAnnouncementIndex"
-        (click)="goToAnnouncement(i)"
-        [attr.aria-label]="'Go to announcement ' + (i + 1)">
-        <span class="indicator-progress"></span>
-      </button>
-    </div>
+        <div class="content-body">
+          <p class="welcome-text">
+            At Magical Yoga, we blend traditional wisdom with modern practice to help you 
+            discover balance, strength, and inner peace. Our approach makes yoga accessible 
+            and transformative for practitioners of all levels.
+          </p>
 
-    <!-- Quick Navigation -->
-    <div class="carousel-quick-nav">
-      <span class="quick-nav-label"><i class="fas fa-bolt me-2"></i>Quick Jump:</span>
-      <div class="quick-nav-buttons">
-        <button 
-          *ngFor="let announcement of announcements; let i = index"
-          class="quick-nav-btn"
-          [class.active]="i === currentAnnouncementIndex"
-          (click)="goToAnnouncement(i)">
-          <i class="fas fa-circle me-1" style="font-size: 0.5rem;"></i>{{ announcement.badge }}
-        </button>
+          <p class="welcome-text">
+            Whether you're seeking physical wellness, mental clarity, or spiritual growth, 
+            our carefully designed programs guide you toward holistic wellbeing. Experience 
+            yoga that adapts to your life, not the other way around.
+          </p>
+        </div>
+        <div class="welcome-actions">
+          <a routerLink="/classes" class="btn-primary">
+            <span>Begin Your Journey</span>
+            <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -165,97 +92,13 @@
     </div>
 
     <div class="row g-4">
-      <div class="col-md-6 col-lg-4" *ngFor="let benefit of benefits">
+      <div class="col-md-6 col-lg-3" *ngFor="let benefit of benefits">
         <div class="benefit-card">
           <div class="benefit-icon">
-            <i [class]="getBenefitIcon(benefit.icon)"></i>
+            <i [class]="benefit.icon"></i>
           </div>
           <h3 class="benefit-title">{{ benefit.title }}</h3>
-          <ul class="benefit-list">
-            <li *ngFor="let item of benefit.items">
-              <i class="fas fa-check check-icon"></i> {{ item }}
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Programs Section -->
-<section class="programs-section" id="programs">
-  <div class="container">
-    <div class="text-center mb-5">
-      <span class="section-badge">Our Programs</span>
-      <h2 class="section-title">Find Your Perfect Yoga Journey</h2>
-      <p class="section-description mx-auto" style="max-width: 600px;">
-        Whether you're a beginner or advanced practitioner, we have programs 
-        designed to meet your unique needs and goals.
-      </p>
-    </div>
-
-    <div class="row g-4">
-      <div class="col-md-6 col-lg-3" *ngFor="let program of programs">
-        <div class="program-card">
-          <div class="program-image-wrapper">
-            <img 
-              [src]="program.image" 
-              [alt]="program.title" 
-              class="program-image"
-              loading="lazy">
-            <span class="program-category">{{ program.category }}</span>
-          </div>
-          <div class="program-content">
-            <h3 class="program-title">{{ program.title }}</h3>
-            <p class="program-description">{{ program.description }}</p>
-            <ul class="program-features">
-              <li *ngFor="let feature of program.features">
-                <i class="fas fa-check feature-check"></i> {{ feature }}
-              </li>
-            </ul>
-            <a [routerLink]="program.route" class="btn btn-outline-primary w-100">
-              <i class="fas fa-info-circle me-2"></i>Learn More
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Instructors Section -->
-<section class="instructors-section" id="instructors">
-  <div class="container">
-    <div class="text-center mb-5">
-      <span class="section-badge">Meet Our Team</span>
-      <h2 class="section-title">Expert Instructors</h2>
-      <p class="section-description mx-auto" style="max-width: 600px;">
-        Learn from certified professionals passionate about guiding you on your yoga journey
-      </p>
-    </div>
-
-    <div class="row g-4">
-      <div class="col-md-6 col-lg-4" *ngFor="let instructor of instructors">
-        <div class="instructor-card">
-          <div class="instructor-image-wrapper">
-            <img 
-              [src]="instructor.image" 
-              [alt]="instructor.name" 
-              class="instructor-image"
-              loading="lazy">
-          </div>
-          <div class="instructor-content">
-            <h3 class="instructor-name">{{ instructor.name }}</h3>
-            <p class="instructor-title">
-              <i class="fas fa-user-tie me-2"></i>{{ instructor.title }}
-            </p>
-            <p class="instructor-bio">{{ instructor.bio }}</p>
-            <div class="instructor-specialization">
-              <span class="specialization-tag" *ngFor="let spec of instructor.specialization">
-                <i class="fas fa-star me-1"></i>{{ spec }}
-              </span>
-            </div>
-          </div>
+          <p class="benefit-description">{{ benefit.description }}</p>
         </div>
       </div>
     </div>
@@ -266,7 +109,7 @@
 <section class="gallery-section" id="gallery">
   <div class="container">
     <div class="text-center mb-5">
-      <span class="section-badge">Our Students Gallery</span>
+      <span class="section-badge">Our Gallery</span>
       <h2 class="section-title">Moments of Magic</h2>
     </div>
 
@@ -332,25 +175,39 @@
   </div>
 </section>
 
-<!-- CTA Section -->
-<section class="cta-section">
+<!-- Birth of Magical Yoga -->
+<section class="birth-section">
   <div class="container">
-    <div class="cta-content">
-      <div class="cta-logo mb-4">
-        <img src="assets/Images/footer-logo.png" alt="Magical Yoga" class="cta-brand-logo" height="80">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6">
+        <span class="section-badge">Our Story</span>
+        <h2 class="section-title">Birth of Magical Yoga</h2>
+        <p class="birth-description">
+          Magical Yoga was born from a simple belief: that everyone deserves to experience the 
+          transformative power of yoga, regardless of where they are or what stage of life they're in.
+        </p>
+        <p class="birth-description">
+          Founded by passionate yoga practitioners, our journey began with a vision to make authentic 
+          yoga practices accessible to all. We combine ancient wisdom with modern teaching methods, 
+          creating a unique experience that resonates with today's lifestyle while staying true to 
+          yoga's traditional roots.
+        </p>
+        <a routerLink="/about" class="btn btn-primary btn-lg">
+          <i class="fas fa-info-circle me-2"></i>Learn More About Us
+        </a>
       </div>
-      <h2 class="cta-title">Ready to Begin Your Yoga Journey?</h2>
-      <p class="cta-description">
-        Join thousands of students who have transformed their lives through yoga. 
-        Start your free trial today!
-      </p>
-      <div class="cta-buttons">
-        <a routerLink="/register" class="btn btn-light btn-lg me-3">
-          <i class="fas fa-play-circle me-2"></i>Get Started Free
-        </a>
-        <a routerLink="/classes" class="btn btn-outline-light btn-lg">
-          <i class="fas fa-eye me-2"></i>View All Classes
-        </a>
+      <div class="col-lg-6">
+        <div class="birth-image-wrapper">
+          <img 
+            src="https://images.unsplash.com/photo-1545389336-cf090694435e?w=800&q=80" 
+            alt="Yoga Journey" 
+            class="birth-image"
+            loading="lazy">
+          <div class="birth-stats">
+            <div class="stat-number">10+</div>
+            <div class="stat-label">Years of Excellence</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -363,10 +220,10 @@
       <!-- Brand & Social -->
       <div class="col-lg-4 mb-4 mb-lg-0">
         <div class="footer-brand">
-          <img src="assets/Images/footer-logo.png" alt="Magical Yoga" class="footer-logo-img mb-3" height="40">
+          <h3 class="footer-logo-text">Magical Yoga</h3>
           <p class="footer-tagline">Awaken Your Best Self With Every Breath</p>
           <div class="social-links">
-            <span class="social-title">Connect with us on Socials:</span>
+            <span class="social-title">Connect with us:</span>
             <div class="social-icons">
               <a href="#" class="social-icon" aria-label="Facebook">
                 <i class="fab fa-facebook-f"></i>
@@ -391,8 +248,9 @@
           <i class="fas fa-link me-2"></i>Quick Links
         </h4>
         <ul class="footer-links">
-          <li><a routerLink="/summer-camp"><i class="fas fa-sun me-2"></i>Summer Camp</a></li>
-          <li><a routerLink="/videos"><i class="fas fa-video me-2"></i>Video Contents</a></li>
+          <li><a routerLink="/reset42"><i class="fas fa-sun me-2"></i>Reset42 Program</a></li>
+          <li><a routerLink="/classes"><i class="fas fa-video me-2"></i>Live Classes</a></li>
+          <li><a routerLink="/magical-mama"><i class="fas fa-heart me-2"></i>Magical Mama</a></li>
           <li><a routerLink="/about"><i class="fas fa-info-circle me-2"></i>About Us</a></li>
           <li><a routerLink="/contact"><i class="fas fa-envelope me-2"></i>Contact</a></li>
         </ul>

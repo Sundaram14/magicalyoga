@@ -47,7 +47,7 @@ export const routes: Routes = [
   },
   { 
     path: 'reset42', 
-    loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent) 
+    loadComponent: () => import('./pages/reset42-landing/reset42-landing.component').then(m => m.Reset42LandingComponent) 
   },
   { 
     path: 'classes', 

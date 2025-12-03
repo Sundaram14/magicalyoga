@@ -10,10 +10,11 @@ import { User } from '../../../models/user.model';
 import { UserProfile, ProfileResponse } from '../../../models/profile.model';
 import { JournalEntry } from '../../../models/journal.model';
 import { WhatsappSuccessModalComponent } from '../../components/whatsapp-success-modal/whatsapp-success-modal.component';
+import { NavbarComponent } from '../../components/navbar/navbar.component';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule, WhatsappSuccessModalComponent],
+  imports: [CommonModule, RouterModule, WhatsappSuccessModalComponent, NavbarComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
