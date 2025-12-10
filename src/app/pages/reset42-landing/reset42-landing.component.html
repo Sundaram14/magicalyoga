@@ -1,350 +1,45 @@
-<!-- reset42-landing.component.html -->
+<main class="reset42-landing">
+  <!-- Hero Section -->
+  <app-hero-section
+    [isEnrolling]="isEnrolling"
+    (enrollClick)="onEnrollClick()">
+  </app-hero-section>
 
-<!-- Hero Section -->
-<section class="hero-section">
-  <div class="hero-pattern"></div>
-  
-  <div class="container">
-    <div class="hero-content">
-      <!-- Logo -->
-      <div class="logo-container">
-        <img 
-          src="assets/Images/footer-logo.png" 
-          alt="Magical Yoga Logo" 
-          class="logo-full"
-          width="250"
-          height="40"
-          loading="eager"
-        />
-      </div>
+  <!-- Stats Bar -->
+  <app-stats-bar [stats]="stats"></app-stats-bar>
 
-      <!-- Social Proof Badge -->
-      <div class="hero-badge">
-        <i class="fas fa-star"></i>
-        <span>500+ Students Transformed | 4.9★ Rating</span>
-      </div>
+  <!-- Timeline Journey -->
+  <app-timeline-section
+    [isEnrolling]="isEnrolling"
+    (enrollClick)="onEnrollClick()">
+  </app-timeline-section>
 
-      <!-- Main Heading -->
-      <h1 class="hero-title">
-        Reset <span class="highlight">42</span>
-      </h1>
+  <!-- Features -->
+  <app-features-section [features]="features"></app-features-section>
 
-      <p class="hero-subtitle">
-        Reset your body, calm your mind, and rebuild your habits in 42 days
-      </p>
+  <!-- Offerings -->
+  <app-offerings-section
+    [offerings]="offerings"
+    [isEnrolling]="isEnrolling"
+    (enrollClick)="onEnrollClick()">
+  </app-offerings-section>
 
-      <p class="hero-description">
-        Transform your sleep, stress, and daily habits with live yoga and expert coaching
-      </p>
+  <!-- Testimonials -->
+  <app-testimonials-section [testimonials]="testimonials"></app-testimonials-section>
 
-      <!-- Countdown Timer -->
-      <div class="countdown-container">
-        <p class="countdown-label">Program Starts In</p>
-        <div class="countdown-grid">
-          <div class="countdown-item">
-            <div class="countdown-value">{{ timeLeft.days.toString().padStart(2, '0') }}</div>
-            <div class="countdown-unit">Days</div>
-          </div>
-          <div class="countdown-item">
-            <div class="countdown-value">{{ timeLeft.hours.toString().padStart(2, '0') }}</div>
-            <div class="countdown-unit">Hours</div>
-          </div>
-          <div class="countdown-item">
-            <div class="countdown-value">{{ timeLeft.minutes.toString().padStart(2, '0') }}</div>
-            <div class="countdown-unit">Minutes</div>
-          </div>
-          <div class="countdown-item">
-            <div class="countdown-value">{{ timeLeft.seconds.toString().padStart(2, '0') }}</div>
-            <div class="countdown-unit">Seconds</div>
-          </div>
-        </div>
-      </div>
+  <!-- Pricing -->
+  <app-pricing-section
+    [program]="program"
+    [isEnrolling]="isEnrolling"
+    (enrollClick)="onEnrollClick()">
+  </app-pricing-section>
 
-      <!-- CTA Button -->
-      <button 
-        class="cta-button cta-primary"
-        [disabled]="isEnrolling"
-        (click)="onEnrollClick()"
-        aria-label="Enroll in Reset 42 Program"
-      >
-        <span *ngIf="!isEnrolling">Enroll Now at ₹6,499</span>
-        <span *ngIf="isEnrolling">Processing...</span>
-        <i class="fas fa-arrow-right cta-arrow"></i>
-      </button>
+  <!-- FAQ -->
+  <app-faq-section></app-faq-section>
 
-      <p class="price-info">
-        <span class="price-original">₹14,000</span>
-        <span class="price-badge">Save ₹{{ getSavings().toLocaleString('en-IN') }}</span>
-      </p>
-    </div>
-  </div>
-
-  <div class="hero-gradient"></div>
-</section>
-
-<!-- Social Proof Bar -->
-<section class="stats-bar">
-  <div class="container">
-    <div class="stats-grid">
-      <div class="stat-item animate-on-scroll" *ngFor="let stat of stats">
-        <div class="stat-value">{{ stat.value }}</div>
-        <div class="stat-label">{{ stat.label }}</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Who It's For Section -->
-<section class="section" id="who-its-for">
-  <div class="container">
-    <div class="section-header animate-on-scroll">
-      <h2 class="section-title">Who Is Reset 42 For?</h2>
-      <p class="section-subtitle">If you relate to any of these, this program is designed for you</p>
-    </div>
-
-    <div class="perfect-for-grid">
-      <div class="perfect-for-card animate-on-scroll" *ngFor="let item of perfectFor; let i = index" [style.animation-delay]="i * 0.1 + 's'">
-        <i class="fas fa-check-circle check-icon"></i>
-        <p>{{ item }}</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Our Promise Section -->
-<section class="section section-gradient">
-  <div class="container">
-    <div class="section-header animate-on-scroll">
-      <h2 class="section-title">Our Promise</h2>
-      <p class="section-subtitle">Real results in 42 days</p>
-    </div>
-
-    <div class="features-grid">
-      <div 
-        class="feature-card animate-on-scroll" 
-        *ngFor="let feature of features; trackBy: trackFeature; let i = index"
-        [style.animation-delay]="i * 0.1 + 's'"
-      >
-        <div class="feature-icon">
-          <i *ngIf="feature.icon === 'heart'" class="fas fa-heartbeat"></i>
-          <i *ngIf="feature.icon === 'brain'" class="fas fa-brain"></i>
-          <i *ngIf="feature.icon === 'target'" class="fas fa-bullseye"></i>
-          <i *ngIf="feature.icon === 'zap'" class="fas fa-bolt"></i>
-          <i *ngIf="feature.icon === 'award'" class="fas fa-award"></i>
-        </div>
-        <h3 class="feature-title">{{ feature.title }}</h3>
-        <p class="feature-description">{{ feature.description }}</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- What You Get Section -->
-<section class="section" id="whats-included">
-  <div class="container">
-    <div class="section-header animate-on-scroll">
-      <h2 class="section-title">Everything You Get in Reset 42</h2>
-      <p class="section-subtitle">Comprehensive support for your transformation journey</p>
-    </div>
-
-    <div class="offerings-grid">
-      <div 
-        class="offering-card animate-on-scroll" 
-        *ngFor="let offering of offerings; trackBy: trackOffering; let i = index"
-        [class.offering-highlight]="offering.highlight"
-        [style.animation-delay]="i * 0.1 + 's'"
-      >
-        <div class="offering-icon">
-          <i *ngIf="offering.icon === 'calendar'" class="fas fa-calendar-alt"></i>
-          <i *ngIf="offering.icon === 'users'" class="fas fa-users"></i>
-          <i *ngIf="offering.icon === 'message-circle'" class="fas fa-comments"></i>
-          <i *ngIf="offering.icon === 'trending-up'" class="fas fa-chart-line"></i>
-          <i *ngIf="offering.icon === 'gamepad'" class="fas fa-gamepad"></i>
-
-        </div>
-        <h3 class="offering-title">{{ offering.title }}</h3>
-        <p class="offering-description">{{ offering.description }}</p>
-        <span class="badge-highlight" *ngIf="offering.highlight">Most Valuable</span>
-      </div>
-    </div>
-
-    <!-- CTA in Section -->
-    <div class="section-cta animate-on-scroll">
-      <button 
-        class="cta-button cta-secondary"
-        [disabled]="isEnrolling"
-        (click)="onEnrollClick()"
-        aria-label="Enroll in Reset 42 Program"
-      >
-        <span *ngIf="!isEnrolling">Start Your Transformation</span>
-        <span *ngIf="isEnrolling">Processing...</span>
-      </button>
-    </div>
-  </div>
-</section>
-
-<!-- Testimonials Section -->
-<section class="section section-testimonials">
-  <div class="container">
-    <div class="section-header animate-on-scroll">
-      <h2 class="section-title">Real Results from Real People</h2>
-      <p class="section-subtitle">Join 500+ students who transformed their lives</p>
-    </div>
-
-    <div class="testimonials-grid">
-      <div 
-        class="testimonial-card animate-on-scroll" 
-        *ngFor="let testimonial of testimonials; trackBy: trackTestimonial; let i = index"
-        [style.animation-delay]="i * 0.1 + 's'"
-      >
-        <div class="testimonial-quote">
-          <i class="fas fa-quote-left"></i>
-        </div>
-        <p class="testimonial-text">{{ testimonial.text }}</p>
-        <div class="testimonial-footer">
-          <div class="testimonial-author">{{ testimonial.author }}</div>
-          <div class="testimonial-result">{{ testimonial.result }}</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Pricing Section -->
-<section class="section section-pricing" id="pricing">
-  <div class="container">
-    <div class="pricing-card animate-on-scroll">
-      <div class="pricing-header">
-        <h2 class="pricing-title">Ready to Transform Your Life?</h2>
-        <p class="pricing-subtitle">Limited spots available for the January batch</p>
-      </div>
-
-      <div class="pricing-body">
-        <div class="pricing-value">
-          <span class="pricing-label">Program Value:</span>
-          <span class="pricing-original">₹14,000</span>
-        </div>
-
-        <div class="pricing-current">
-          <span class="pricing-label">Your Investment:</span>
-          <span class="pricing-amount">₹6,499</span>
-          <span class="pricing-savings">Save ₹7,501 (54% off)</span>
-        </div>
-
-        <ul class="pricing-features">
-          <li>
-            <i class="fas fa-check-circle"></i>
-            30 Live Yoga Sessions
-          </li>
-          <li>
-            <i class="fas fa-check-circle"></i>
-            6 Lifestyle Coaching Classes
-          </li>
-          <li>
-            <i class="fas fa-check-circle"></i>
-            Fortnightly 1:1 Personalized Calls
-          </li>
-          <li>
-            <i class="fas fa-check-circle"></i>
-            Private WhatsApp Accountability Group
-          </li>
-          <li>
-            <i class="fas fa-check-circle"></i>
-            Daily Habit Tracking & Leaderboard
-          </li>
-        </ul>
-
-        <button 
-          class="cta-button cta-primary cta-large"
-          [disabled]="isEnrolling"
-          (click)="onEnrollClick()"
-          aria-label="Enroll in Reset 42 Program Now"
-        >
-          <span *ngIf="!isEnrolling">Secure Your Spot Now</span>
-          <span *ngIf="isEnrolling">Processing...</span>
-        </button>
-
-        <p class="pricing-guarantee">
-          <i class="fas fa-shield-alt"></i>
-          Secure payment | Limited seats available
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ Section -->
-<section class="section section-faq">
-  <div class="container">
-    <div class="section-header animate-on-scroll">
-      <h2 class="section-title">Frequently Asked Questions</h2>
-    </div>
-
-    <div class="faq-grid">
-      <div class="faq-item animate-on-scroll">
-        <h3 class="faq-question">When does the program start?</h3>
-        <p class="faq-answer">The program starts on January 15, 2025. Live sessions are held Monday to Friday from 7:30-8:30 AM IST.</p>
-      </div>
-
-      <div class="faq-item animate-on-scroll">
-        <h3 class="faq-question">What if I miss a live session?</h3>
-        <p class="faq-answer">We don't provide recordings for yoga sessions as real-time participation is crucial for proper form correction and maximum benefit. However, coaching classes are recorded.</p>
-      </div>
-
-      <div class="faq-item animate-on-scroll">
-        <h3 class="faq-question">Do I need prior yoga experience?</h3>
-        <p class="faq-answer">No prior experience needed! The program is designed for beginners and those starting their health journey. We'll guide you every step of the way.</p>
-      </div>
-
-      <div class="faq-item animate-on-scroll">
-        <h3 class="faq-question">What equipment do I need?</h3>
-        <p class="faq-answer">Just a yoga mat and comfortable clothing. All sessions can be done from home with minimal space.</p>
-      </div>
-
-      <div class="faq-item animate-on-scroll">
-        <h3 class="faq-question">Is there a money-back guarantee?</h3>
-        <p class="faq-answer">We're confident in our program's effectiveness. If you attend all sessions in the first 14 days and don't see any improvement, we'll refund your full amount.</p>
-      </div>
-
-      <div class="faq-item animate-on-scroll">
-        <h3 class="faq-question">How do I contact support?</h3>
-        <p class="faq-answer">You can reach us on WhatsApp at +91 9884524742 or through the private accountability group once you enroll.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Final CTA Section -->
-<section class="section section-final-cta">
-  <div class="container">
-    <div class="final-cta-card animate-on-scroll">
-      <h2 class="final-cta-title">Don't Wait Another Day</h2>
-      <p class="final-cta-subtitle">Your transformation starts January 15th. Limited spots available.</p>
-      
-      <button 
-        class="cta-button cta-primary cta-large"
-        [disabled]="isEnrolling"
-        (click)="onEnrollClick()"
-        aria-label="Final enrollment for Reset 42 Program"
-      >
-        <span *ngIf="!isEnrolling">Join Reset 42 Today</span>
-        <span *ngIf="isEnrolling">Processing...</span>
-      </button>
-
-      <p class="final-cta-note">Only ₹6,499 | Save ₹7,501</p>
-    </div>
-  </div>
-</section>
-
-<!-- Sticky CTA Button (Mobile) -->
-<div class="sticky-cta" [class.sticky-cta-visible]="true">
-  <button 
-    class="cta-button cta-primary"
-    [disabled]="isEnrolling"
-    (click)="onEnrollClick()"
-    aria-label="Mobile sticky enrollment button"
-  >
-    <span *ngIf="!isEnrolling">Enroll at ₹6,499</span>
-    <span *ngIf="isEnrolling">Processing...</span>
-  </button>
-</div>
+  <!-- Sticky CTA (Note: This component manages its own visibility) -->
+  <app-sticky-cta
+    [isEnrolling]="isEnrolling"
+    (enrollClick)="onEnrollClick()">
+  </app-sticky-cta>
+</main>

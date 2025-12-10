@@ -1,0 +1,68 @@
+<section class="offerings-section animate-section" id="whats-included">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-badge">
+        <i class="fas fa-box-open"></i>
+        What's Included
+      </div>
+      <h2 class="section-title">Everything You Get in Reset 42</h2>
+      <p class="section-subtitle">Comprehensive support system for guaranteed results</p>
+    </div>
+
+    <div class="offerings-grid">
+      <div 
+        class="offering-card" 
+        *ngFor="let offering of offerings; trackBy: trackByOffering"
+        [class.highlight]="offering.highlight">
+        
+        <div class="offering-badge" *ngIf="offering.highlight">
+          <i class="fas fa-crown"></i>
+          Most Valuable
+        </div>
+        
+        <div class="offering-icon">
+          <i [class]="offering.icon"></i>
+        </div>
+        
+        <h3 class="offering-title">{{ offering.title }}</h3>
+        <p class="offering-description">{{ offering.description }}</p>
+        
+        <div class="offering-features" *ngIf="offering.features">
+          <div class="feature-item" *ngFor="let feature of offering.features">
+            <i class="fas fa-check-circle"></i>
+            <span>{{ feature }}</span>
+          </div>
+        </div>
+        
+        <div class="offering-value">
+          <div class="value-badge">
+            <i class="fas fa-gem"></i>
+            High Value
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="offerings-summary">
+      <div class="summary-card">
+        <div class="summary-icon">
+          <i class="fas fa-shield-alt"></i>
+        </div>
+        <div class="summary-content">
+          <h3>Total Program Value: ₹14,000</h3>
+          <p>Get everything for just ₹6,499 – that's 54% off!</p>
+        </div>
+        <button 
+          class="summary-cta"
+          [disabled]="isEnrolling"
+          (click)="enrollClick.emit()">
+          <span *ngIf="!isEnrolling">Enroll & Save ₹7,501</span>
+          <span *ngIf="isEnrolling">
+            <i class="fas fa-spinner fa-spin"></i> Processing...
+          </span>
+          <i class="fas fa-arrow-right" *ngIf="!isEnrolling"></i>
+        </button>
+      </div>
+    </div> -->
+  </div>
+</section>

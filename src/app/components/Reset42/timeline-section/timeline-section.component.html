@@ -1,0 +1,336 @@
+<section class="timeline-section animate-section" id="journey">
+  <div class="container">
+    <!-- Header -->
+    <div class="section-header">
+      <div class="section-badge">
+        <i class="fas fa-map-signs"></i>
+        YOUR TRANSFORMATION JOURNEY
+      </div>
+      <h2 class="section-title">The 42-Day Reset Experience</h2>
+      <p class="section-subtitle">Scroll to discover your transformation journey</p>
+    </div>
+
+    <!-- Navigation Progress -->
+    <div class="scroll-progress">
+      <div class="progress-indicator" [style.width.%]="scrollProgress"></div>
+    </div>
+
+    <!-- Phase Indicator -->
+    <div class="phase-indicator">
+      <div class="phase-item" [class.active]="activePhase === 1">
+        <div class="phase-number">01</div>
+        <div class="phase-label">Starting Point</div>
+      </div>
+      <div class="phase-item" [class.active]="activePhase === 2">
+        <div class="phase-number">02</div>
+        <div class="phase-label">Transformation</div>
+      </div>
+      <div class="phase-item" [class.active]="activePhase === 3">
+        <div class="phase-number">03</div>
+        <div class="phase-label">New Life</div>
+      </div>
+    </div>
+
+    <!-- Vertical Timeline -->
+    <div class="vertical-timeline">
+      <!-- Timeline Line -->
+      <div class="timeline-line">
+        <div class="line-progress" [style.height.%]="scrollProgress"></div>
+      </div>
+
+      <!-- Timeline Cards (Auto-expand on scroll) -->
+      <div class="timeline-cards">
+        <!-- Phase 1 - Automatically expands when scrolled into view -->
+        <div class="timeline-card" [class.active]="activePhase === 1">
+          <div class="card-header">
+            <div class="card-number">01</div>
+            <div class="card-title-content">
+              <div class="card-phase">The Starting Point</div>
+              <h3 class="card-title">Where You Are Now</h3>
+              <div class="card-stats">
+                <span><i class="fas fa-users"></i> 87% start here</span>
+                <span><i class="fas fa-clock"></i> 6+ months stuck</span>
+              </div>
+            </div>
+            <div class="card-scroll-hint" *ngIf="activePhase === 1">
+              <i class="fas fa-arrow-down"></i>
+              <span>Scroll to continue</span>
+            </div>
+          </div>
+
+          <!-- Content automatically shows when card is active -->
+          <div class="card-content" [class.expanded]="activePhase === 1">
+            <!-- Content Grid -->
+            <div class="content-grid">
+              <div class="content-card struggle">
+                <div class="card-icon">
+                  <i class="fas fa-bed"></i>
+                </div>
+                <h4>Exhaustion Cycle</h4>
+                <p>Wake up tired despite sleeping 8+ hours. Feel drained by mid-afternoon.</p>
+                <div class="card-metrics">
+                  <div class="metric">
+                    <i class="fas fa-battery-quarter"></i>
+                    <span>Energy: 30%</span>
+                  </div>
+                  <div class="metric">
+                    <i class="fas fa-moon"></i>
+                    <span>Sleep: 4/10</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="content-card struggle">
+                <div class="card-icon">
+                  <i class="fas fa-brain"></i>
+                </div>
+                <h4>Mental Overload</h4>
+                <p>Constant anxiety, racing thoughts, and inability to relax or focus.</p>
+                <div class="card-metrics">
+                  <div class="metric">
+                    <i class="fas fa-heartbeat"></i>
+                    <span>Stress: Chronic</span>
+                  </div>
+                  <div class="metric">
+                    <i class="fas fa-focus"></i>
+                    <span>Focus: 30min</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="content-card struggle">
+                <div class="card-icon">
+                  <i class="fas fa-utensils"></i>
+                </div>
+                <h4>Habit Inconsistency</h4>
+                <p>Know what to do but can't maintain healthy routines consistently.</p>
+                <div class="card-metrics">
+                  <div class="metric">
+                    <i class="fas fa-repeat"></i>
+                    <span>Consistency: 20%</span>
+                  </div>
+                  <div class="metric">
+                    <i class="fas fa-weight"></i>
+                    <span>Diet Control: Poor</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Insight -->
+            <div class="card-insight">
+              <div class="insight-icon">
+                <i class="fas fa-lightbulb"></i>
+              </div>
+              <p><strong>The Truth:</strong> You're not lazy or lacking willpower. Your body's systems are simply dysregulated.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 2 -->
+        <div class="timeline-card" [class.active]="activePhase === 2">
+          <div class="card-header">
+            <div class="card-number">02</div>
+            <div class="card-title-content">
+              <div class="card-phase">The Transformation</div>
+              <h3 class="card-title">42 Days to Change</h3>
+              <div class="card-stats">
+                <span><i class="fas fa-chart-line"></i> 94% completion rate</span>
+                <span><i class="fas fa-heart"></i> 80% stress reduction</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-content" [class.expanded]="activePhase === 2">
+            <!-- Week Timeline -->
+            <div class="week-timeline">
+              <div class="week-phase">
+                <div class="week-badge">
+                  <i class="fas fa-seedling"></i>
+                  Weeks 1-2
+                </div>
+                <h4>Foundation Building</h4>
+                <ul>
+                  <li><i class="fas fa-check-circle"></i> Sleep schedule resets naturally</li>
+                  <li><i class="fas fa-check-circle"></i> Basic yoga postures mastered</li>
+                  <li><i class="fas fa-check-circle"></i> Morning routine becomes automatic</li>
+                  <li><i class="fas fa-check-circle"></i> First energy improvements</li>
+                </ul>
+              </div>
+
+              <div class="week-phase">
+                <div class="week-badge">
+                  <i class="fas fa-bolt"></i>
+                  Weeks 3-4
+                </div>
+                <h4>Momentum Building</h4>
+                <ul>
+                  <li><i class="fas fa-check-circle"></i> Wake up naturally without alarms</li>
+                  <li><i class="fas fa-check-circle"></i> Stress management tools integrated</li>
+                  <li><i class="fas fa-check-circle"></i> Mindful eating becomes natural</li>
+                  <li><i class="fas fa-check-circle"></i> Body pain starts reducing</li>
+                </ul>
+              </div>
+
+              <div class="week-phase">
+                <div class="week-badge">
+                  <i class="fas fa-trophy"></i>
+                  Weeks 5-6
+                </div>
+                <h4>Habit Mastery</h4>
+                <ul>
+                  <li><i class="fas fa-check-circle"></i> Sustainable habits locked in</li>
+                  <li><i class="fas fa-check-circle"></i> Practice yoga independently</li>
+                  <li><i class="fas fa-check-circle"></i> Become community inspiration</li>
+                  <li><i class="fas fa-check-circle"></i> Ready for lifelong transformation</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Support Grid -->
+            <div class="support-grid">
+              <div class="support-item">
+                <div class="support-icon">
+                  <i class="fas fa-video"></i>
+                </div>
+                <span>30 Live Yoga Sessions</span>
+              </div>
+              <div class="support-item">
+                <div class="support-icon">
+                  <i class="fas fa-chalkboard-teacher"></i>
+                </div>
+                <span>6 Coaching Classes</span>
+              </div>
+              <div class="support-item">
+                <div class="support-icon">
+                  <i class="fas fa-user-md"></i>
+                </div>
+                <span>1:1 Personal Calls</span>
+              </div>
+              <div class="support-item">
+                <div class="support-icon">
+                  <i class="fas fa-users"></i>
+                </div>
+                <span>WhatsApp Community</span>
+              </div>
+            </div>
+
+            <!-- Insight -->
+            <div class="card-insight">
+              <div class="insight-icon">
+                <i class="fas fa-rocket"></i>
+              </div>
+              <p><strong>What Makes It Work:</strong> Daily accountability + expert guidance + supportive community = sustainable transformation.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 3 -->
+        <div class="timeline-card" [class.active]="activePhase === 3">
+          <div class="card-header">
+            <div class="card-number">03</div>
+            <div class="card-title-content">
+              <div class="card-phase">Life After Reset</div>
+              <h3 class="card-title">Your New Normal</h3>
+              <div class="card-stats">
+                <span><i class="fas fa-smile"></i> 96% satisfaction</span>
+                <span><i class="fas fa-redo"></i> 88% continue 6+ months</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-content" [class.expanded]="activePhase === 3">
+            <!-- Results Grid -->
+            <div class="results-grid">
+              <div class="result-card">
+                <div class="result-value">+3.2hrs</div>
+                <div class="result-label">Quality Sleep</div>
+                <div class="result-change positive">
+                  <i class="fas fa-arrow-up"></i> 92% improvement
+                </div>
+              </div>
+
+              <div class="result-card highlight">
+                <div class="result-value">-80%</div>
+                <div class="result-label">Daily Stress</div>
+                <div class="result-change positive">
+                  <i class="fas fa-arrow-down"></i> Cortisol normalized
+                </div>
+              </div>
+
+              <div class="result-card">
+                <div class="result-value">94%</div>
+                <div class="result-label">Habit Consistency</div>
+                <div class="result-change positive">
+                  <i class="fas fa-check-circle"></i> Sustainable change
+                </div>
+              </div>
+
+              <div class="result-card">
+                <div class="result-value">5.2kg</div>
+                <div class="result-label">Weight Loss</div>
+                <div class="result-change positive">
+                  <i class="fas fa-chart-line"></i> Healthy reduction
+                </div>
+              </div>
+            </div>
+
+            <!-- New Habits -->
+            <div class="habits-grid">
+              <div class="habit-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Wake up naturally energized</span>
+              </div>
+              <div class="habit-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Mindful eating is automatic</span>
+              </div>
+              <div class="habit-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Daily yoga feels effortless</span>
+              </div>
+              <div class="habit-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Stress doesn't control you</span>
+              </div>
+            </div>
+
+            <!-- Insight -->
+            <div class="card-insight">
+              <div class="insight-icon">
+                <i class="fas fa-crown"></i>
+              </div>
+              <p><strong>The Best Part:</strong> These aren't temporary changes. They're your new normal.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="timeline-cta">
+      <div class="cta-card">
+        <div class="cta-icon">
+          <i class="fas fa-play-circle"></i>
+        </div>
+        <div class="cta-content">
+          <h3>Ready to Begin Your Journey?</h3>
+          <p>Join 500+ students who transformed their lives with Reset 42</p>
+        </div>
+        <div class="cta-actions">
+          <button 
+            class="cta-primary"
+            [disabled]="isEnrolling"
+            (click)="enrollClick.emit()">
+            <span *ngIf="!isEnrolling">Start My 42-Day Journey</span>
+            <span *ngIf="isEnrolling">
+              <i class="fas fa-spinner fa-spin"></i> Processing...
+            </span>
+          </button>
+          <button class="cta-secondary" (click)="scrollToPricing()">
+            See Program Details
+          </button>
+        </div>
+      </div>
+    </div> -->
+  </div>
+</section>

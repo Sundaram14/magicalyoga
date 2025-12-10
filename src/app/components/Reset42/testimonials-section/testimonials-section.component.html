@@ -1,0 +1,64 @@
+<section class="testimonials-section animate-section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-badge">
+        <i class="fas fa-heart"></i>
+        Success Stories
+      </div>
+      <h2 class="section-title">Real People, Real Results</h2>
+      <p class="section-subtitle">Join 500+ students who transformed their lives</p>
+    </div>
+
+    <div class="testimonials-grid">
+      <div class="testimonial-card" *ngFor="let testimonial of testimonials; trackBy: trackByTestimonial">
+        <div class="testimonial-rating">
+          <div class="stars">
+            <i class="fas fa-star" *ngFor="let star of [1,2,3,4,5]"></i>
+          </div>
+          <div class="result-badge">{{ testimonial.result }}</div>
+        </div>
+        
+        <div class="testimonial-quote">
+          <i class="fas fa-quote-left"></i>
+          <p>{{ testimonial.text }}</p>
+        </div>
+        
+        <div class="testimonial-author">
+          <div class="author-avatar">
+            {{ testimonial.avatar || testimonial.author.charAt(0) }}
+          </div>
+          <div class="author-info">
+            <div class="author-name">{{ testimonial.author }}</div>
+            <div class="author-meta">Reset 42 Graduate</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonials-stats">
+      <div class="stat-card">
+        <div class="stat-value">4.9</div>
+        <div class="stat-label">Average Rating</div>
+        <div class="stat-stars">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star-half-alt"></i>
+        </div>
+      </div>
+      
+      <div class="stat-card highlight">
+        <div class="stat-value">94%</div>
+        <div class="stat-label">Completion Rate</div>
+        <div class="stat-note">Industry average: 60%</div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-value">500+</div>
+        <div class="stat-label">Students Transformed</div>
+        <div class="stat-note">And counting...</div>
+      </div>
+    </div>
+  </div>
+</section>

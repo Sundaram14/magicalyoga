@@ -1,0 +1,13 @@
+<section class="stats-bar animate-section">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item" *ngFor="let stat of stats; trackBy: trackByStat">
+        <div class="stat-icon">
+          <i class="fas" [class]="getIcon(stat.label)"></i>
+        </div>
+        <div class="stat-value">{{ stat.value }}</div>
+        <div class="stat-label">{{ stat.label }}</div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,80 @@
+<section class="hero-section">
+  <div class="hero-pattern"></div>
+  
+  <div class="container">
+    <div class="hero-content">
+      <!-- Logo -->
+      <div class="logo-container">
+        <img 
+          src="assets/Images/footer-logo.png" 
+          alt="Magical Yoga Logo" 
+          class="logo-full"
+          width="250"
+          height="40"
+          loading="eager"
+        />
+      </div>
+
+      <!-- Social Proof Badge -->
+      <div class="hero-badge">
+        <i class="fas fa-star"></i>
+        <span>500+ Students Transformed | 4.9★ Rating</span>
+      </div>
+
+      <!-- Main Heading -->
+      <h1 class="hero-title">
+        Reset <span class="highlight">42</span>
+      </h1>
+
+      <p class="hero-subtitle">
+        Reset your body, calm your mind, and rebuild your habits in 42 days
+      </p>
+
+      <p class="hero-description">
+        Transform your sleep, stress, and daily habits with live yoga and expert coaching
+      </p>
+
+      <!-- Countdown Timer -->
+      <div class="countdown-container">
+        <p class="countdown-label">Program Starts In</p>
+        <div class="countdown-grid">
+          <div class="countdown-item">
+            <div class="countdown-value">{{ getDigits(days)[0] }}{{ getDigits(days)[1] }}</div>
+            <div class="countdown-unit">Days</div>
+          </div>
+          <div class="countdown-item">
+            <div class="countdown-value">{{ getDigits(hours)[0] }}{{ getDigits(hours)[1] }}</div>
+            <div class="countdown-unit">Hours</div>
+          </div>
+          <div class="countdown-item">
+            <div class="countdown-value">{{ getDigits(minutes)[0] }}{{ getDigits(minutes)[1] }}</div>
+            <div class="countdown-unit">Minutes</div>
+          </div>
+          <div class="countdown-item">
+            <div class="countdown-value">{{ getDigits(seconds)[0] }}{{ getDigits(seconds)[1] }}</div>
+            <div class="countdown-unit">Seconds</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA Button -->
+      <button 
+        class="cta-button cta-primary"
+        [disabled]="isEnrolling"
+        (click)="onEnrollClick()"
+        aria-label="Enroll in Reset 42 Program"
+      >
+        <span *ngIf="!isEnrolling">Enroll Now at ₹6,499</span>
+        <span *ngIf="isEnrolling">Processing...</span>
+        <i class="fas fa-arrow-right cta-arrow"></i>
+      </button>
+
+      <p class="price-info">
+        <span class="price-original">₹14,000</span>
+        <span class="price-badge">Save ₹{{ getSavings().toLocaleString('en-IN') }}</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="hero-gradient"></div>
+</section>
