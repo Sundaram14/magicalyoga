@@ -1,7 +1,7 @@
 import { Component, OnInit, PLATFORM_ID, Inject, OnDestroy } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
-
+import { FooterComponent } from '../../components/footer/footer.component'; 
 interface HeroSlide {
   id: number;
   title: string;
@@ -26,7 +26,7 @@ interface GalleryImage {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink , FooterComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })

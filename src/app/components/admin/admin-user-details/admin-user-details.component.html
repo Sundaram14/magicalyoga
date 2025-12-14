@@ -1,0 +1,239 @@
+<div class="user-details-container">
+  <!-- Back Button -->
+  <div class="back-button">
+    <a routerLink="/admin/users" class="btn-back">
+      <i class="fas fa-arrow-left"></i>
+      Back to Users
+    </a>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="isLoading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading user details...</p>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="error && !isLoading" class="error-state">
+    <i class="fas fa-exclamation-triangle"></i>
+    <p>{{ error }}</p>
+    <button class="btn-retry" (click)="loadUserDetails()">Retry</button>
+  </div>
+
+  <!-- User Details -->
+  <div *ngIf="user && !isLoading" class="user-details">
+    <!-- Header -->
+    <div class="user-header">
+      <div class="user-avatar-large">
+        {{ fullName.charAt(0).toUpperCase() }}
+      </div>
+      <div class="user-info-header">
+        <h1>{{ fullName }}</h1>
+        <div class="user-meta">
+          <span class="user-email">{{ user.email }}</span>
+          <span class="user-id">ID: {{ user.id }}</span>
+        </div>
+        <div class="user-status">
+          <span class="status-badge" [class.active]="user.isActive">
+            {{ user.isActive ? 'Active' : 'Inactive' }}
+          </span>
+          <span class="role-badge" [class.admin]="user.isAdmin">
+            {{ user.isAdmin ? 'Admin' : 'User' }}
+          </span>
+          <span class="join-date">
+            <i class="fas fa-calendar-alt"></i>
+            Joined {{ formatDate(user.createdAt) }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button 
+        [class.active]="activeTab === 'profile'" 
+        (click)="setActiveTab('profile')"
+        class="tab-btn">
+        <i class="fas fa-user"></i>
+        Profile
+      </button>
+      <button 
+        [class.active]="activeTab === 'memberships'" 
+        (click)="setActiveTab('memberships')"
+        class="tab-btn">
+        <i class="fas fa-id-card"></i>
+        Memberships
+        <span class="badge">{{ getMembershipsCount() }}</span>
+      </button>
+      <button 
+        [class.active]="activeTab === 'journals'" 
+        (click)="setActiveTab('journals')"
+        class="tab-btn">
+        <i class="fas fa-book"></i>
+        Journals
+        <span class="badge">{{ getJournalsCount() }}</span>
+      </button>
+    </div>
+
+    <!-- Tab Content -->
+    <div class="tab-content">
+      <!-- Profile Tab -->
+      <div *ngIf="activeTab === 'profile'" class="profile-tab">
+        <div class="profile-grid">
+          <!-- Personal Info -->
+          <div class="info-card">
+            <h3><i class="fas fa-user-circle"></i> Personal Information</h3>
+            <div class="info-grid">
+              <div class="info-item">
+                <label>Email</label>
+                <p>{{ user.email }}</p>
+              </div>
+              <div class="info-item">
+                <label>Phone</label>
+                <p>{{ user.whatsAppNumber || 'Not provided' }}</p>
+              </div>
+              <div class="info-item">
+                <label>Gender</label>
+                <p>{{ user.profile?.gender || 'Not provided' }}</p>
+              </div>
+              <div class="info-item">
+                <label>Date of Birth</label>
+                <p>
+                  {{ dateOfBirth ? formatSimpleDate(dateOfBirth) : 'Not provided' }}
+                  <span *ngIf="dateOfBirth" class="age">
+                    (Age: {{ calculateAge(dateOfBirth) }})
+                  </span>
+                </p>
+              </div>
+              <div class="info-item">
+                <label>Height</label>
+                <p>{{ height ? (height + ' cm') : 'Not provided' }}</p>
+              </div>
+              <div class="info-item">
+                <label>Weight</label>
+                <p>{{ weight ? (weight + ' kg') : 'Not provided' }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Yoga Profile -->
+          <div class="info-card">
+            <h3><i class="fas fa-dumbbell"></i> Yoga Profile</h3>
+            <div class="info-grid">
+              <div class="info-item">
+                <label>Experience Level</label>
+                <p>{{ user.profile?.yogaExperienceLevel || 'Not provided' }}</p>
+              </div>
+              <div class="info-item full-width">
+                <label>Health Goals</label>
+                <p>{{ user.profile?.healthGoals || 'Not provided' }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Account Status -->
+          <div class="info-card">
+            <h3><i class="fas fa-cog"></i> Account Status</h3>
+            <div class="status-grid">
+              <div class="status-item">
+                <label>Account Status</label>
+                <span class="status-badge" [class.active]="user.isActive">
+                  {{ user.isActive ? 'Active' : 'Inactive' }}
+                </span>
+              </div>
+              <div class="status-item">
+                <label>Profile Completion</label>
+                <span class="completion-badge" [class.complete]="user.isProfileCompleted">
+                  {{ user.isProfileCompleted ? 'Complete' : 'Incomplete' }}
+                </span>
+              </div>
+              <div class="status-item">
+                <label>Account Created</label>
+                <p>{{ formatDate(user.createdAt) }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Memberships Tab -->
+      <div *ngIf="activeTab === 'memberships'" class="memberships-tab">
+        <div *ngIf="user.memberships && user.memberships.length > 0; else noMemberships">
+          <div class="memberships-grid">
+            <div *ngFor="let membership of user.memberships" class="membership-card">
+              <div class="membership-header">
+                <h4>{{ membership.programName || 'Unnamed Program' }}</h4>
+                <span class="status-badge" [class.active]="membership.status === 'active'">
+                  {{ membership.status || 'unknown' }}
+                </span>
+              </div>
+              
+              <div class="membership-details">
+                <div class="detail-item">
+                  <label>Start Date</label>
+                  <p>{{ formatDate(membership.startDate) }}</p>
+                </div>
+                <div class="detail-item">
+                  <label>End Date</label>
+                  <p>{{ formatDate(membership.endDate) }}</p>
+                </div>
+                <div class="detail-item">
+                  <label>Days Remaining</label>
+                  <p class="days-remaining" [class.low]="calculateDaysRemaining(membership.endDate) <= 7">
+                    {{ calculateDaysRemaining(membership.endDate) }} days
+                  </p>
+                </div>
+                <div class="detail-item">
+                  <label>WhatsApp Group</label>
+                  <span class="whatsapp-status" [class.joined]="membership.whatsAppJoined">
+                    <i class="fab fa-whatsapp"></i>
+                    {{ membership.whatsAppJoined !== undefined ? (membership.whatsAppJoined ? 'Joined' : 'Not Joined') : 'Unknown' }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ng-template #noMemberships>
+          <div class="no-data">
+            <i class="fas fa-id-card"></i>
+            <p>No memberships found</p>
+          </div>
+        </ng-template>
+      </div>
+
+      <!-- Journals Tab -->
+      <div *ngIf="activeTab === 'journals'" class="journals-tab">
+        <div *ngIf="user.recentJournals && user.recentJournals.length > 0; else noJournals">
+          <div class="journals-list">
+            <div *ngFor="let journal of user.recentJournals" class="journal-card">
+              <div class="journal-header">
+                <h4>{{ journal.title || 'Untitled' }}</h4>
+                <span class="journal-date">{{ formatDate(journal.entryDate) }}</span>
+              </div>
+              <div class="journal-meta">
+                <span class="meta-item">
+                  <i class="fas fa-calendar"></i>
+                  {{ formatDate(journal.entryDate) }}
+                </span>
+                <span class="meta-item">
+                  <i class="fas fa-clock"></i>
+                  {{ formatDate(journal.createdAt) }}
+                </span>
+              </div>
+              <button class="btn-view-journal" [routerLink]="['/journal', journal.id]">
+                View Journal
+              </button>
+            </div>
+          </div>
+        </div>
+        <ng-template #noJournals>
+          <div class="no-data">
+            <i class="fas fa-book"></i>
+            <p>No journals found</p>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

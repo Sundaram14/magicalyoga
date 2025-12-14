@@ -1,13 +1,39 @@
 export interface User {
   id: string;
-  whatsAppNumber: string;
   email: string;
   firstName: string;
   lastName: string;
-  role: string;
+  fullName: string; // We'll create this from firstName + lastName
+  whatsAppNumber: string;
+  role: string; // 'admin' or 'user'
+  isActive: boolean;
   isProfileCompleted: boolean;
-  profilePictureUrl?: string;
-  createdAt?: Date;
+  createdAt: string;
+  activeMemberships?: number;
+  totalSpent: number;
+  isAdmin?: boolean; // From your API response
+  
+  // For user details
+  profile?: UserProfile;
+  memberships?: Membership[];
+  recentJournals?: Journal[];
+}
+
+export interface Membership {
+  id: string;
+  programName: string;
+  status: string;
+  startDate: string;
+  endDate: string;
+  whatsAppJoined: boolean;
+  daysRemaining: number;
+}
+
+export interface Journal {
+  id: string;
+  title: string;
+  entryDate: string;
+  createdAt: string;
 }
 
 export interface LoginRequest {
@@ -28,6 +54,7 @@ export interface LoginResponse {
   message: string;
   token: string;
   user: User;
+  Role: string;
 }
 
 // models/profile.model.ts
@@ -35,7 +62,7 @@ export interface UserProfile {
   id: string;
   userId: string;
   gender?: string;
-  dateOfBirth?: Date;
+  dateOfBirth?: string;
   height?: number;
   weight?: number;
   medicalConditions?: string;

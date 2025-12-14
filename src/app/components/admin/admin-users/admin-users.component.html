@@ -1,0 +1,253 @@
+<div class="admin-users-container">
+  <!-- Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <h1>User Management</h1>
+      <p>Manage and monitor all registered users</p>
+    </div>
+  </div>
+
+  <!-- Filters Section -->
+  <div class="filters-section">
+    <div class="search-container">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input 
+          type="text" 
+          [(ngModel)]="searchQuery"
+          (keyup.enter)="onSearch()"
+          placeholder="Search by name, email or phone..."
+          class="search-input">
+        <button 
+          class="search-btn" 
+          (click)="onSearch()"
+          [disabled]="isLoading">
+          <i class="fas fa-search"></i>
+          Search
+        </button>
+        <button 
+          class="clear-btn" 
+          (click)="clearSearch()"
+          *ngIf="searchQuery">
+          <i class="fas fa-times"></i>
+          Clear
+        </button>
+      </div>
+    </div>
+
+    <div class="filters-container">
+
+      <div class="filter-group">
+        <label for="statusFilter">Status</label>
+        <select 
+          id="statusFilter" 
+          [(ngModel)]="selectedStatus"
+          (change)="onFilterChange()"
+          class="filter-select">
+          <option value="">All Status</option>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="pageSize">Show</label>
+        <select 
+          id="pageSize" 
+          [(ngModel)]="pageSize"
+          (change)="onPageSizeChange()"
+          class="filter-select">
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </div>
+
+      <button 
+        class="refresh-btn" 
+        (click)="loadUsers()"
+        [disabled]="isLoading">
+        <i class="fas fa-sync-alt" [class.spin]="isLoading"></i>
+        Refresh
+      </button>
+    </div>
+  </div>
+
+  <!-- Stats Bar -->
+  <div class="stats-bar" *ngIf="!isLoading && users.length > 0">
+    <div class="stat-item">
+      <span class="stat-label">Total Users:</span>
+      <span class="stat-value">{{ totalItems }}</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">Showing:</span>
+      <span class="stat-value">{{ users.length }} users</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">Page:</span>
+      <span class="stat-value">{{ currentPage }} of {{ totalPages }}</span>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading users...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !isLoading" class="error-state">
+    <div class="error-icon">
+      <i class="fas fa-exclamation-triangle"></i>
+    </div>
+    <div class="error-content">
+      <h3>Error Loading Users</h3>
+      <p>{{ error }}</p>
+      <button class="retry-btn" (click)="loadUsers()">
+        <i class="fas fa-redo"></i>
+        Try Again
+      </button>
+    </div>
+  </div>
+
+  <!-- Users Table -->
+  <div *ngIf="!isLoading && !error" class="table-container">
+    <div *ngIf="users.length > 0; else noUsers">
+      <div class="table-responsive">
+        <table class="users-table">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Memberships</th>
+              <th>Joined</th>
+              <th class="text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td>
+                <div class="user-info">
+                  <div class="user-avatar">
+                    {{ getUserInitials(user) }}
+                  </div>
+                  <div class="user-details">
+                    <strong>{{ getFullName(user) }}</strong>
+                    <small>ID: {{ user.id | slice:0:8 }}...</small>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="email-cell">
+                  {{ user.email }}
+                  <span *ngIf="!user.isProfileCompleted" class="profile-badge">
+                    <i class="fas fa-exclamation-circle"></i>
+                    Incomplete
+                  </span>
+                </div>
+              </td>
+              <td>{{ user.whatsAppNumber || 'N/A' }}</td>
+              <td>
+                <span class="role-badge" [class.admin]="user.role === 'admin'">
+                  {{ user.role === 'admin' ? 'Admin' : 'User' }}
+                </span>
+              </td>
+              <td>
+                <span class="status-badge" [class.active]="user.isActive">
+                  {{ user.isActive ? 'Active' : 'Inactive' }}
+                </span>
+              </td>
+              <td>
+                <div class="membership-info">
+                  <span class="membership-count" [class.has-memberships]="user.activeMemberships && user.activeMemberships > 0">
+                    {{ user.activeMemberships || 0 }}
+                  </span>
+                  <span *ngIf="user.totalSpent" class="total-spent">
+                    ₹{{ user.totalSpent | number }}
+                  </span>
+                </div>
+              </td>
+              <td>{{ formatDate(user.createdAt) }}</td>
+              <td>
+                <div class="action-buttons">
+                  <button 
+                    class="btn-action view"
+                    [routerLink]="['/admin/users', user.id]"
+                    title="View Details">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div *ngIf="totalPages > 1" class="pagination">
+        <button 
+          class="pagination-btn prev"
+          (click)="goToPage(currentPage - 1)"
+          [disabled]="currentPage === 1">
+          <i class="fas fa-chevron-left"></i>
+          Previous
+        </button>
+
+        <div class="page-numbers">
+          <button 
+            *ngFor="let page of getPageNumbers()"
+            class="page-number"
+            [class.active]="page === currentPage"
+            (click)="goToPage(page)">
+            {{ page }}
+          </button>
+          
+          <div class="page-input" *ngIf="totalPages > 5">
+            <input 
+              type="number" 
+              [(ngModel)]="pageInput"
+              (keyup.enter)="goToPage(pageInput)"
+              min="1" 
+              [max]="totalPages"
+              placeholder="Page">
+            <button (click)="goToPage(pageInput)">Go</button>
+          </div>
+        </div>
+
+        <button 
+          class="pagination-btn next"
+          (click)="goToPage(currentPage + 1)"
+          [disabled]="currentPage === totalPages">
+          Next
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <ng-template #noUsers>
+      <div class="empty-state">
+        <div class="empty-icon">
+          <i class="fas fa-users"></i>
+        </div>
+        <h3>No Users Found</h3>
+        <p *ngIf="hasActiveFilters()">
+          Try changing your search or filter criteria
+        </p>
+        <p *ngIf="!hasActiveFilters()">
+          No users have been registered yet
+        </p>
+        <button 
+          class="btn-primary" 
+          *ngIf="hasActiveFilters()"
+          (click)="clearFilters()">
+          <i class="fas fa-filter"></i>
+          Clear All Filters
+        </button>
+      </div>
+    </ng-template>
+  </div>
+</div>

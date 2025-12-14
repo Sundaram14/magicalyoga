@@ -14,6 +14,7 @@ import { TestimonialsSectionComponent } from '../../components/Reset42/testimoni
 import { PricingSectionComponent } from '../../components/Reset42/pricing-section/pricing-section.component';
 import { FaqSectionComponent } from '../../components/Reset42/faq-section/faq-section.component';
 import { StickyCtaComponent } from '../../components/Reset42/sticky-cta/sticky-cta.component';
+import { FooterComponent } from '../../components/footer/footer.component'; 
 
 // Services - Adjust paths according to your structure
 import { AuthService } from '../../../services/auth.service';
@@ -32,7 +33,8 @@ import { PaymentSessionService } from '../../../services/payment-session.service
     TestimonialsSectionComponent,
     PricingSectionComponent,
     FaqSectionComponent,
-    StickyCtaComponent
+    StickyCtaComponent,
+    FooterComponent
   ],
   templateUrl: './reset42-landing.component.html',
   styleUrls: ['./reset42-landing.component.css']

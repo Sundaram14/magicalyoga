@@ -18,14 +18,14 @@
           <a class="nav-link" routerLink="/home" routerLinkActive="active" 
              (click)="isMenuOpen = false">Home</a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" routerLink="/about" routerLinkActive="active"
              (click)="isMenuOpen = false">About</a>
-        </li>
-        <li class="nav-item">
+        </li> -->
+        <!-- <li class="nav-item">
           <a class="nav-link" routerLink="/classes" routerLinkActive="active"
              (click)="isMenuOpen = false">Classes</a>
-        </li>
+        </li> -->
         <li class="nav-item">
           <a class="nav-link" routerLink="/reset42" routerLinkActive="active"
              (click)="isMenuOpen = false">Reset42</a>
@@ -43,8 +43,8 @@
           <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" 
              data-bs-toggle="dropdown" aria-expanded="false">
              <div class="user-avatar me-2">
-              {{ currentUser.firstName.charAt(0) }}{{ currentUser.lastName.charAt(0) }}
-            </div>
+                  {{ currentUser.firstName.charAt(0) }}{{ currentUser.lastName.charAt(0) }}
+             </div>
             <span class="d-none d-md-inline">{{ currentUser.firstName }}</span>
           </a>
           <ul class="dropdown-menu dropdown-menu-end">
@@ -52,7 +52,7 @@
               <a class="dropdown-item" routerLink="/dashboard" (click)="isMenuOpen = false">
                 <i class="bi bi-speedometer2 me-2"></i>Dashboard
               </a>
-            </li>
+            </li> 
             <li>
               <a class="dropdown-item" routerLink="/profile" (click)="isMenuOpen = false">
                 <i class="bi bi-person me-2"></i>My Profile

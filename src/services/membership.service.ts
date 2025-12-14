@@ -1,8 +1,9 @@
 // services/membership.service.ts
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
 import { environment } from '../environments/environment';
+import {Recording} from '../models/recording.model'
 
 export interface Membership {
   id: string;
@@ -24,6 +25,7 @@ export interface Membership {
 
 export interface MembershipsResponse {
   memberships: Membership[];
+  recordings: Recording[];
 }
 
 export interface AccessCheckResponse {
@@ -67,6 +69,23 @@ export class MembershipService {
       catchError(error => this.handleError('Failed to confirm WhatsApp join', error))
     );
   }
+    getRecordings(): Observable<Recording[]> {
+      return this.http.get<{ recordings: any[] }>(`${this.apiUrl}/membership/GetRecordings`)
+        .pipe(
+          map(res => res?.recordings ?? []),
+          map(list => list.map(r => ({
+            id: r.id,
+            programId: r.programId,
+            programName: r.programName ?? r.program?.name ?? null,
+            title: r.title,
+            description: r.description ?? null,
+            youtubeVideoId: (r.youtubeVideoId ?? r.youTubeVideoId ?? r.YouTubeVideoId ?? r.youtubeId ?? '').toString(),
+            durationMinutes: r.durationMinutes ?? null,
+            sequenceOrder: r.sequenceOrder ?? 0,
+            isActive: r.isActive ?? true
+          } as Recording)))
+        );
+    }
 
   private handleError(defaultMessage: string, error: any) {
     const message = error.error?.message || defaultMessage;

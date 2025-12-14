@@ -1,0 +1,224 @@
+<div class="contact-container">
+    <!-- Hero Section -->
+    <section class="contact-hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Connect With Your Inner Peace</h1>
+            <p class="hero-subtitle">We're here to guide you on your yoga journey. Reach out with any questions or concerns.</p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <i class="fas fa-comments"></i>
+                    <span>{{ getDemoMessages() || '50+' }} Messages Sent</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Instant Response</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-users"></i>
+                    <span>5000+ Happy Yogis</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Response Messages -->
+    <div *ngIf="responseMessage" class="response-message" [class.error]="isError">
+        <i class="fas" [class.fa-check-circle]="!isError" [class.fa-exclamation-circle]="isError"></i>
+        <span>{{ responseMessage }}</span>
+        <button class="btn-close" (click)="responseMessage = ''">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="contact-main">
+        <!-- Contact Form & Info -->
+        <div class="contact-grid">
+            <!-- Contact Form -->
+            <div class="contact-form-container">
+                <div class="form-header">
+                    <h2>Send us a Message</h2>
+                    <p>We'll respond via email or your preferred contact method</p>
+                </div>
+
+                <form (ngSubmit)="onSubmit()" #contactFormRef="ngForm" class="contact-form">
+                    <div class="form-group">
+                        <label for="name">
+                            Full Name *
+                            <span class="required-dot"></span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="name" 
+                            [(ngModel)]="contactForm.name" 
+                            name="name"
+                            required
+                            placeholder="Enter your full name"
+                            [disabled]="isLoading">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">
+                                Email Address *
+                                <span class="required-dot"></span>
+                            </label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                [(ngModel)]="contactForm.email" 
+                                name="email"
+                                required
+                                placeholder="your@email.com"
+                                [disabled]="isLoading">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input 
+                                type="tel" 
+                                id="phone" 
+                                [(ngModel)]="contactForm.phone" 
+                                name="phone"
+                                placeholder="+91 98765 43210"
+                                [disabled]="isLoading">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input 
+                            type="text" 
+                            id="subject" 
+                            [(ngModel)]="contactForm.subject" 
+                            name="subject"
+                            placeholder="What is this regarding?"
+                            [disabled]="isLoading">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">
+                            Your Message *
+                            <span class="required-dot"></span>
+                        </label>
+                        <textarea 
+                            id="message" 
+                            [(ngModel)]="contactForm.message" 
+                            name="message"
+                            required
+                            rows="5"
+                            placeholder="Tell us how we can help you..."
+                            [disabled]="isLoading"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Preferred Contact Method</label>
+                        <div class="contact-methods">
+                            <label class="method-option">
+                                <input 
+                                    type="radio" 
+                                    [(ngModel)]="contactForm.preferredContact" 
+                                    name="preferredContact"
+                                    value="email"
+                                    [disabled]="isLoading">
+                                <div class="method-card" [class.active]="contactForm.preferredContact === 'email'">
+                                    <i class="fas fa-envelope"></i>
+                                    <span>Email Me</span>
+                                </div>
+                            </label>
+
+                            <label class="method-option">
+                                <input 
+                                    type="radio" 
+                                    [(ngModel)]="contactForm.preferredContact" 
+                                    name="preferredContact"
+                                    value="phone"
+                                    [disabled]="isLoading">
+                                <div class="method-card" [class.active]="contactForm.preferredContact === 'phone'">
+                                    <i class="fas fa-phone"></i>
+                                    <span>Phone Call</span>
+                                </div>
+                            </label>
+
+                            <label class="method-option">
+                                <input 
+                                    type="radio" 
+                                    [(ngModel)]="contactForm.preferredContact" 
+                                    name="preferredContact"
+                                    value="whatsapp"
+                                    [disabled]="isLoading">
+                                <div class="method-card" [class.active]="contactForm.preferredContact === 'whatsapp'">
+                                    <i class="fab fa-whatsapp"></i>
+                                    <span>WhatsApp</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-footer">
+                        <p class="privacy-notice">
+                            <i class="fas fa-lock"></i>
+                            Your information is secure. We'll never share your details.
+                        </p>
+                        <button 
+                            type="submit" 
+                            class="btn-submit" 
+                            [disabled]="isLoading"
+                            [class.loading]="isLoading">
+                            <span *ngIf="!isLoading">
+                                <i class="fas fa-paper-plane"></i>
+                                Send Message
+                            </span>
+                            <span *ngIf="isLoading">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                Sending...
+                            </span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="contact-info-container">
+                <div class="info-card">
+                    <h3><i class="fab fa-whatsapp"></i> WhatsApp</h3>
+                    <p>{{ contactInfo.whatsapp }}</p>
+                    <button class="btn-action whatsapp" (click)="openWhatsApp()">
+                        <i class="fab fa-whatsapp"></i> Message on WhatsApp
+                    </button>
+                </div>
+
+                <div class="info-card">
+                    <h3><i class="fas fa-envelope"></i> Email Us</h3>
+                    <p>{{ contactInfo.email }}</p>
+                    <button class="btn-action" (click)="copyToClipboard(contactInfo.email, 'Email')">
+                        <i class="fas fa-copy"></i> Copy Email
+                    </button>
+                </div>
+
+                <!-- Business Hours -->
+                <div class="hours-card">
+                    <h3><i class="fas fa-clock"></i> Business Hours</h3>
+                    <div [innerHTML]="contactInfo.hours"></div>
+                </div>
+
+                <!-- Social Media -->
+                <div class="social-card">
+                    <h3><i class="fas fa-share-alt"></i> Follow Us</h3>
+                    <div class="social-icons">
+                        <a *ngFor="let social of socialLinks" 
+                           [href]="social.link" 
+                           target="_blank" 
+                           class="social-icon"
+                           [style.background]="social.color">
+                            <i [class]="social.icon"></i>
+                            <span>{{ social.label }}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

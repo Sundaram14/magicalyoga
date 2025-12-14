@@ -1,16 +1,19 @@
-// dashboard.component.ts
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+
 import { AuthService } from '../../../services/auth.service';
 import { UserService } from '../../../services/user.service';
 import { JournalService } from '../../../services/journal.service';
-import { MembershipService, Membership } from '../../../services/membership.service'; 
+import { MembershipService, Membership } from '../../../services/membership.service';
+import { Recording } from '../../../models/recording.model';
 import { User } from '../../../models/user.model';
 import { UserProfile, ProfileResponse } from '../../../models/profile.model';
 import { JournalEntry } from '../../../models/journal.model';
 import { WhatsappSuccessModalComponent } from '../../components/whatsapp-success-modal/whatsapp-success-modal.component';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
+
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -23,18 +26,38 @@ export class DashboardComponent implements OnInit {
   private userService = inject(UserService);
   private journalService = inject(JournalService);
   private membershipService = inject(MembershipService);
+  private sanitizer = inject(DomSanitizer);
 
+  // user / profile
   currentUser: User | null = null;
   userProfile: UserProfile | null = null;
   isLoading = true;
   profileCompletion = 0;
   isBannerMinimized = false;
+
+  // journal
   recentJournalEntries: JournalEntry[] = [];
+
+  // memberships
   memberships: Membership[] = [];
-  membershipsLoading = false; 
-  showSuccessModal: boolean = false;
-  successModalTitle: string = '';
-  successModalMessage: string = '';
+  membershipsLoading = false;
+
+  // recordings
+  recordings: Recording[] = [];
+  recordingsLoading = false;
+  recordingsByProgram: Record<string, Recording[]> = {};
+  selectedProgramForRecordings: string | null = null;
+  selectedProgramName: string = '--';
+
+  // player state
+  selectedRecording: Recording | null = null;
+  embedUrl: SafeResourceUrl | null = null;
+  isPlayerOpen = false;
+
+  // whatsapp modal
+  showSuccessModal = false;
+  successModalTitle = '';
+  successModalMessage = '';
   selectedMembership: Membership | null = null;
 
   ngOnInit(): void {
@@ -43,40 +66,114 @@ export class DashboardComponent implements OnInit {
       if (user) {
         this.loadUserProfile();
         this.loadRecentJournalEntries();
-        this.loadMemberships(); 
+        this.loadMemberships();
       } else {
         this.isLoading = false;
       }
     });
   }
 
-  // ADD THIS METHOD
   private loadMemberships(): void {
     this.membershipsLoading = true;
     this.membershipService.getMyMemberships().subscribe({
       next: (response) => {
-        this.memberships = response.memberships;
+        this.memberships = (response && (response as any).memberships) ? (response as any).memberships : (response as any) || [];
         this.membershipsLoading = false;
+        if (this.memberships.length > 0) this.loadRecordings();
       },
       error: (error) => {
         console.error('Error loading memberships:', error);
+        this.memberships = [];
         this.membershipsLoading = false;
       }
     });
   }
 
-// UPDATE THE WHATSAPP CONFIRMATION METHOD
+  private loadRecordings(): void {
+    this.recordingsLoading = true;
+    this.membershipService.getRecordings().subscribe({
+      next: (list: Recording[]) => {
+        this.recordings = Array.isArray(list) ? list : [];
+        this.recordingsByProgram = {};
+        for (const r of this.recordings) {
+          const pid = r.programId ?? 'unknown';
+          if (!this.recordingsByProgram[pid]) this.recordingsByProgram[pid] = [];
+          this.recordingsByProgram[pid].push(r);
+        }
+        for (const pid of Object.keys(this.recordingsByProgram)) {
+          this.recordingsByProgram[pid].sort((a, b) => (a.sequenceOrder ?? 0) - (b.sequenceOrder ?? 0));
+        }
+        this.recordingsLoading = false;
+      },
+      error: (err) => {
+        console.error('Error loading recordings:', err);
+        this.recordings = [];
+        this.recordingsByProgram = {};
+        this.recordingsLoading = false;
+      }
+    });
+  }
+
+  openRecordingsForProgram(programId: string) {
+    if (!programId) return;
+
+    this.selectedProgramForRecordings = programId;
+
+    const membership = this.memberships.find(m => (m as any).programId === programId);
+    if (membership && (membership as any).programName) {
+      this.selectedProgramName = (membership as any).programName;
+    } else {
+      const rec = this.recordingsByProgram[programId]?.[0];
+      this.selectedProgramName = rec?.programName ?? '--';
+    }
+
+    if (!this.recordings || this.recordings.length === 0) this.loadRecordings();
+
+    setTimeout(() => {
+      const el = document.getElementById('recordings-panel');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+
+  // play inside embedded player
+  playRecording(rec: Recording) {
+    if (!rec?.youtubeVideoId) return;
+    this.selectedRecording = rec;
+    const url = `https://www.youtube.com/embed/${rec.youtubeVideoId}?autoplay=1&rel=0`;
+    this.embedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    this.isPlayerOpen = true;
+    setTimeout(() => {
+      const el = document.getElementById('recordings-player');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 80);
+  }
+
+  closePlayer() {
+    this.isPlayerOpen = false;
+    this.embedUrl = null;
+    this.selectedRecording = null;
+  }
+
+  closeRecordingsPanel() {
+    this.selectedProgramForRecordings = null;
+    this.selectedProgramName = '--';
+    this.closePlayer();
+  }
+
+  getRecordingsForProgram(programId: string | null): Recording[] {
+    if (!programId) return [];
+    return this.recordingsByProgram[programId] ?? [];
+  }
+
   confirmWhatsAppJoin(programId: string): void {
-    const membership = this.memberships.find(m => m.programId === programId);
+    const membership = this.memberships.find(m => (m as any).programId === programId);
     if (!membership) return;
 
     this.membershipService.confirmWhatsAppJoin(programId).subscribe({
       next: (response) => {
-        // Update local membership state
-        membership.whatsAppJoined = true;
-        membership.whatsAppJoinDate = response.whatsAppJoinDate;
-        
-        // Show success modal instead of alert
+        (membership as any).whatsAppJoined = true;
+        (membership as any).whatsAppJoinDate = response?.whatsAppJoinDate ?? new Date().toISOString();
+
         this.selectedMembership = membership;
         this.successModalTitle = 'WhatsApp Group Joined! 🎉';
         this.successModalMessage = 'You now have full access to all class content, recordings, and instructor support.';
@@ -84,32 +181,30 @@ export class DashboardComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error confirming WhatsApp join:', error);
-        // You could also create an error modal here
         alert('Failed to confirm WhatsApp join. Please try again.');
       }
     });
   }
-  // ADD METHOD TO CLOSE MODAL
+
   onModalClosed(): void {
     this.showSuccessModal = false;
     this.selectedMembership = null;
   }
 
-  // In dashboard.component.ts - Update the methods
   getActiveMemberships(): Membership[] {
-    return this.memberships.filter(m => 
-      m.status === 'active' && 
-      (!m.endDate || new Date(m.endDate) > new Date()) &&
-      !m.accessRevoked
+    return this.memberships.filter(m =>
+      (m as any).status === 'active' &&
+      (!(m as any).endDate || new Date((m as any).endDate) > new Date()) &&
+      !(m as any).accessRevoked
     );
   }
 
   getMembershipsWithFullAccess(): Membership[] {
-    return this.getActiveMemberships().filter(m => m.whatsAppJoined);
+    return this.getActiveMemberships().filter(m => (m as any).whatsAppJoined);
   }
 
   getMembershipsNeedingWhatsApp(): Membership[] {
-    return this.getActiveMemberships().filter(m => !m.whatsAppJoined);
+    return this.getActiveMemberships().filter(m => !(m as any).whatsAppJoined);
   }
 
   get activeMembershipsCount(): number {
@@ -120,14 +215,14 @@ export class DashboardComponent implements OnInit {
     return this.getMembershipsWithFullAccess().length;
   }
 
-  // ... rest of your existing methods remain the same ...
   private loadRecentJournalEntries(): void {
     this.journalService.getRecentEntries().subscribe({
       next: (entries: JournalEntry[]) => {
-        this.recentJournalEntries = entries;
+        this.recentJournalEntries = entries ?? [];
       },
       error: (error: any) => {
         console.error('Error loading recent journal entries:', error);
+        this.recentJournalEntries = [];
       }
     });
   }
@@ -216,10 +311,10 @@ export class DashboardComponent implements OnInit {
   }
 
   get inactiveMemberships(): Membership[] {
-    return this.memberships.filter(m => 
-      !(m.status === 'active' && 
-        (!m.endDate || new Date(m.endDate) > new Date()) &&
-        !m.accessRevoked)
+    return this.memberships.filter(m =>
+      !( (m as any).status === 'active' &&
+         (!(m as any).endDate || new Date((m as any).endDate) > new Date()) &&
+         !(m as any).accessRevoked)
     );
   }
 
@@ -232,12 +327,11 @@ export class DashboardComponent implements OnInit {
   }
 
   getNewEnrollments(): Membership[] {
-    // Show enrollments from last 24 hours that need WhatsApp
     const twentyFourHoursAgo = new Date();
     twentyFourHoursAgo.setHours(twentyFourHoursAgo.getHours() - 24);
-    
+
     return this.getMembershipsNeedingWhatsApp().filter(membership => {
-      const enrollmentDate = new Date(membership.startDate);
+      const enrollmentDate = new Date((membership as any).startDate);
       return enrollmentDate > twentyFourHoursAgo;
     });
   }
@@ -245,7 +339,9 @@ export class DashboardComponent implements OnInit {
   hasNewEnrollments(): boolean {
     return this.getNewEnrollments().length > 0;
   }
+
   logout(): void {
     this.authService.logout();
   }
+
 }

@@ -1,0 +1,178 @@
+<div class="recording-form-container">
+  <!-- Back Button -->
+  <div class="back-button">
+    <a routerLink="/admin/recordings" class="btn-back">
+      <i class="fas fa-arrow-left"></i>
+      Back to Recordings
+    </a>
+  </div>
+
+  <div class="form-wrapper">
+    <div class="form-header">
+      <h1>{{ isEditMode ? 'Edit Recording' : 'Add New Recording' }}</h1>
+      <p>{{ isEditMode ? 'Update recording details' : 'Add a new yoga session recording' }}</p>
+    </div>
+
+    <!-- Success Message -->
+    <div *ngIf="successMessage" class="success-message">
+      <i class="fas fa-check-circle"></i>
+      <p>{{ successMessage }}</p>
+      <p class="redirect-message">Redirecting back to recordings...</p>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="error" class="error-message">
+      <i class="fas fa-exclamation-circle"></i>
+      <p>{{ error }}</p>
+    </div>
+
+    <!-- Form -->
+    <form *ngIf="!successMessage" (ngSubmit)="onSubmit()" class="recording-form">
+      <div class="form-grid">
+        <!-- Left Column - Form Fields -->
+        <div class="form-column">
+          <div class="form-group">
+            <label for="programId">
+              <i class="fas fa-dumbbell"></i>
+              Program *
+            </label>
+            <select id="programId" [(ngModel)]="formData.programId" name="programId" required>
+              <option value="">Select a program</option>
+              <option *ngFor="let program of programs" [value]="program.id">
+                {{ program.name }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="title">
+              <i class="fas fa-heading"></i>
+              Title *
+            </label>
+            <input type="text" id="title" [(ngModel)]="formData.title" name="title" required
+                   placeholder="Enter recording title">
+          </div>
+
+          <div class="form-group">
+            <label for="description">
+              <i class="fas fa-align-left"></i>
+              Description
+            </label>
+            <textarea id="description" [(ngModel)]="formData.description" name="description" 
+                     rows="4" placeholder="Enter recording description"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="youtubeVideoId">
+              <i class="fab fa-youtube"></i>
+              YouTube Video ID or URL *
+            </label>
+            <input type="text" id="youtubeVideoId" [(ngModel)]="formData.youtubeVideoId" name="youtubeVideoId" required
+                   placeholder="Enter YouTube video ID or URL">
+            <small class="form-help">
+              Enter either YouTube video ID (e.g., dQw4w9WgXcQ) or full URL
+            </small>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="durationMinutes">
+                <i class="fas fa-clock"></i>
+                Duration (minutes) *
+              </label>
+              <input type="number" id="durationMinutes" [(ngModel)]="formData.durationMinutes" name="durationMinutes" 
+                     min="1" max="300" required>
+            </div>
+
+            <div class="form-group">
+              <label for="sequenceOrder">
+                <i class="fas fa-sort-numeric-up"></i>
+                Sequence Order *
+              </label>
+              <input type="number" id="sequenceOrder" [(ngModel)]="formData.sequenceOrder" name="sequenceOrder" 
+                     min="1" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="checkbox-label">
+              <input type="checkbox" [(ngModel)]="formData.isActive" name="isActive">
+              <span class="checkmark"></span>
+              <i class="fas fa-toggle-on"></i>
+              Active Recording
+            </label>
+            <small class="form-help">
+              Inactive recordings won't be visible to users
+            </small>
+          </div>
+        </div>
+
+        <!-- Right Column - Preview -->
+        <div class="preview-column">
+          <div class="preview-card">
+            <h3><i class="fas fa-eye"></i> Preview</h3>
+            
+            <div *ngIf="formData.youtubeVideoId" class="preview-content">
+              <div class="thumbnail-preview">
+                <img [src]="getYoutubeThumbnail()" 
+                     [alt]="formData.title || 'Recording preview'"
+                     class="preview-thumbnail">
+                <div class="preview-overlay">
+                  <i class="fab fa-youtube"></i>
+                  <span>YouTube Preview</span>
+                </div>
+              </div>
+              
+              <div class="preview-details">
+                <h4>{{ formData.title || 'No title' }}</h4>
+                <p class="preview-description">{{ formData.description || 'No description' }}</p>
+                
+                <div class="preview-meta">
+                  <span class="meta-item">
+                    <i class="fas fa-clock"></i>
+                    {{ formData.durationMinutes }} minutes
+                  </span>
+                  <span class="meta-item">
+                    <i class="fas fa-sort-numeric-up"></i>
+                    Sequence: {{ formData.sequenceOrder }}
+                  </span>
+                  <span class="meta-item" [class.active]="formData.isActive">
+                    <i class="fas fa-toggle-on"></i>
+                    {{ formData.isActive ? 'Active' : 'Inactive' }}
+                  </span>
+                </div>
+                
+                <div *ngIf="getYoutubeEmbedUrl()" class="preview-embed">
+                  <small>Embed URL:</small>
+                  <code>{{ getYoutubeEmbedUrl() }}</code>
+                </div>
+              </div>
+            </div>
+            
+            <div *ngIf="!formData.youtubeVideoId" class="preview-empty">
+              <i class="fas fa-video-slash"></i>
+              <p>Enter YouTube video ID to see preview</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Actions -->
+        <div class="form-actions">
+        <button type="button" class="btn-primary" (click)="navigateToRecordings()">
+            Cancel
+        </button>
+        <button type="submit" class="btn-primary" [disabled]="isLoading">
+            <i class="fas" [class.fa-save]="!isLoading" [class.fa-spinner]="isLoading" [class.fa-spin]="isLoading"></i>
+            {{ isLoading ? 'Saving...' : (isEditMode ? 'Update Recording' : 'Create Recording') }}
+        </button>
+        </div>
+    </form>
+
+    <!-- Loading -->
+    <div *ngIf="isLoading && !successMessage" class="loading-overlay">
+      <div class="spinner"></div>
+      <p>{{ isEditMode ? 'Loading recording data...' : 'Creating recording...' }}</p>
+    </div>
+  </div>
+</div>

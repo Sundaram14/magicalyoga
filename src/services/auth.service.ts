@@ -23,6 +23,10 @@ export class AuthService {
     this.loadUserFromStorage();
   }
 
+   get currentUser(): User | null {
+    return this.currentUserSubject.value;
+  }
+
   login(loginRequest: LoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.apiUrl}/auth/login`, loginRequest)
       .pipe(
@@ -82,7 +86,7 @@ export class AuthService {
       }
     }
   }
-
+  
   private handleAuthentication(response: LoginResponse): void {
     if (response.success && response.token) {
       localStorage.setItem(this.tokenKey, response.token);

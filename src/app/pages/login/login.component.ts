@@ -35,7 +35,10 @@ export class LoginComponent {
       this.authService.login(this.loginForm.value).subscribe({
         next: (response) => {
           this.isLoading = false;
-          if (response.success) {
+          console.log('Login successful:', response);
+          if (response.success && response.user.role === 'admin' ) {
+            this.router.navigate(['/admin/dashboard']);
+          } else {
             this.router.navigate(['/dashboard']);
           }
         },

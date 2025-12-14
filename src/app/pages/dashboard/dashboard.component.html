@@ -138,7 +138,7 @@
               
               <div class="row g-3">
                 <div *ngFor="let membership of getMembershipsWithFullAccess()" 
-                     class="col-md-12">
+                     class="col-md-6">
                   <div class="enrolled-program-card active">
                     <div class="d-flex justify-content-between align-items-start mb-2">
                       <h6 class="mb-0 fw-bold" style="color: var(--secondary-color);">
@@ -177,10 +177,8 @@
                     </div>
 
                     <div class="d-flex gap-2">
-                      <a routerLink="/classes" class="btn btn-outline-success btn-sm flex-fill">
-                        <i class="fas fa-play me-1"></i>Access Classes
-                      </a>
-                      <button class="btn btn-outline-primary btn-sm flex-fill" disabled>
+                      <button class="btn btn-outline-primary btn-sm flex-fill"
+                              (click)="openRecordingsForProgram(membership.programId)">
                         <i class="fas fa-video me-1"></i>Recordings
                       </button>
                     </div>
@@ -271,7 +269,7 @@
         </div>
 
         <!-- Stats Grid -->
-        <div class="row g-4 mb-4">
+        <!-- <div class="row g-4 mb-4">
           <div class="col-md-4">
             <div class="card border-0 shadow-sm h-100 hover-lift">
               <div class="card-body text-center">
@@ -313,7 +311,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <!-- Recent Journal Entries -->
         <div class="row g-4">
@@ -400,8 +398,85 @@
             </div>
           </div>
         </div>
-      </div>
 
+        <!-- recordings panel (modern card + embedded player) -->
+        <div class="row g-4">
+          <div class="col-md-12">
+             <div id="recordings-panel" *ngIf="selectedProgramForRecordings" class="card border-0 shadow-sm mb-4  mt-4 recordings-panel">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                  <div>
+                    <h5 class="mb-0">Class Recordings</h5>
+                    <small class="text-muted">Program: {{ selectedProgramName }}</small>
+                  </div>
+
+                  <div class="d-flex align-items-center gap-2">
+                    <button *ngIf="isPlayerOpen" class="btn btn-sm btn-outline-danger" (click)="closePlayer()">
+                      <i class="fas fa-times me-1"></i>Close Player
+                    </button>
+                    <button class="btn btn-sm btn-outline-secondary" (click)="closeRecordingsPanel()">
+                      <i class="fas fa-chevron-down me-1"></i>Close
+                    </button>
+                  </div>
+                </div>
+
+                <div class="card-body">
+                  <!-- embedded player -->
+                  <div *ngIf="isPlayerOpen && selectedRecording" id="recordings-player" class="recordings-player mb-3">
+                    <div class="player-meta d-flex justify-content-between align-items-start mb-2">
+                      <div>
+                        <h6 class="mb-1">{{ selectedRecording.title }}</h6>
+                        <small class="text-muted">{{ selectedRecording.description }}</small>
+                      </div>
+                      <div class="text-end">
+                        <small class="text-muted">{{ selectedRecording.durationMinutes ? (selectedRecording.durationMinutes + ' min') : '' }}</small>
+                      </div>
+                    </div>
+
+                    <div class="player-wrapper ratio ratio-16x9">
+                      <iframe *ngIf="embedUrl" [src]="embedUrl" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    </div>
+                  </div>
+
+                  <!-- loading state -->
+                  <div *ngIf="recordingsLoading" class="text-center py-4">
+                    <div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>
+                  </div>
+
+                  <!-- no recordings -->
+                  <div *ngIf="!recordingsLoading && (getRecordingsForProgram(selectedProgramForRecordings).length === 0)" class="text-center py-4">
+                    <p class="text-muted">No recordings available yet for this program.</p>
+                  </div>
+
+                  <!-- recordings grid -->
+                  <div *ngIf="!recordingsLoading && getRecordingsForProgram(selectedProgramForRecordings).length > 0" class="row g-3">
+                    <div *ngFor="let rec of getRecordingsForProgram(selectedProgramForRecordings)" class="col-12 col-md-6 col-lg-4">
+                      <article class="card recording-card h-100">
+                        <div class="card-img-top recording-thumb" (click)="playRecording(rec)" role="button" tabindex="0">
+                          <img [src]="'https://img.youtube.com/vi/' + rec.youtubeVideoId + '/hqdefault.jpg'" class="img-fluid" alt="{{ rec.title }}" />
+                          <div class="play-overlay">
+                            <span class="play-button"><i class="fas fa-play"></i></span>
+                          </div>
+                        </div>
+
+                        <div class="card-body d-flex flex-column">
+                          <h6 class="card-title mb-1 text-truncate">{{ rec.title }}</h6>
+                          <p class="card-text small text-muted mb-2 text-truncate-2">{{ rec.description }}</p>
+                          <div class="mt-auto d-flex justify-content-between align-items-center">
+                            <small class="text-muted">{{ rec.durationMinutes ? (rec.durationMinutes + ' min') : '' }}</small>
+                            <div class="btn-group">
+                              <button class="btn btn-sm btn-primary" (click)="playRecording(rec)"><i class="fas fa-play me-1"></i>Play</button>
+                              <a class="btn btn-sm btn-outline-secondary" [href]="'https://youtu.be/' + rec.youtubeVideoId" target="_blank"><i class="fas fa-external-link-alt me-1"></i>Open</a>
+                            </div>
+                          </div>
+                        </div>
+                      </article>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
       <!-- Sidebar -->
       <div class="col-md-3 mb-4">
         <div class="card border-0 shadow-sm sticky-sidebar">

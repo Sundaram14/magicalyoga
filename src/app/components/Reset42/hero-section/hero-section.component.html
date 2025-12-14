@@ -1,4 +1,4 @@
-<section class="hero-section">
+<section class="hero-section mt-5">
   <div class="hero-pattern"></div>
   
   <div class="container">
@@ -64,14 +64,14 @@
         (click)="onEnrollClick()"
         aria-label="Enroll in Reset 42 Program"
       >
-        <span *ngIf="!isEnrolling">Enroll Now at ₹6,499</span>
+        <span *ngIf="!isEnrolling">Reserve at ₹999</span>
         <span *ngIf="isEnrolling">Processing...</span>
         <i class="fas fa-arrow-right cta-arrow"></i>
       </button>
 
       <p class="price-info">
         <span class="price-original">₹14,000</span>
-        <span class="price-badge">Save ₹{{ getSavings().toLocaleString('en-IN') }}</span>
+        <span class="price-badge"> Only at ₹6,499</span>
       </p>
     </div>
   </div>
