@@ -1,4 +1,3 @@
-// app.routes.ts - KEEP IT SIMPLE
 import { Routes } from '@angular/router';
 import { authGuard } from '../guards/auth.guard';
 import { adminGuard } from '../guards/admin.guard';
@@ -9,8 +8,37 @@ import { PaymentComponent } from './pages/payment/payment.component';
 import { PaymentStatusComponent } from './components/payment-status/payment-status.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  
+  // Default route to /home
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+
+  // Legal Pages
+  {
+    path: 'legal',
+    children: [
+      {
+        path: 'refund',
+        loadComponent: () => import('./pages/legal-pages/legal-pages.component').then(m => m.LegalPagesComponent)
+      },
+      {
+        path: 'terms',
+        loadComponent: () => import('./pages/legal-pages/legal-pages.component').then(m => m.LegalPagesComponent)
+      },
+      {
+        path: 'shipping',
+        loadComponent: () => import('./pages/legal-pages/legal-pages.component').then(m => m.LegalPagesComponent)
+      },
+      {
+        path: 'privacy',
+        loadComponent: () => import('./pages/legal-pages/legal-pages.component').then(m => m.LegalPagesComponent)
+      },
+      {
+        path: '',
+        redirectTo: 'terms',
+        pathMatch: 'full'
+      }
+    ]
+  },
+
   // Public Routes (No Header)
   { 
     path: 'login', 
@@ -34,20 +62,20 @@ export const routes: Routes = [
   },
   
   // Admin Routes
- {
+  {
     path: 'admin',
     loadComponent: () => import('./components/admin/admin-layout/admin-layout.component')
       .then(m => m.AdminLayoutComponent),
-    canActivate: [adminGuard],
+    canActivate: [authGuard, adminGuard], // Both guards
     children: [
-      // Dashboard
+      // Admin Dashboard
       {
         path: 'dashboard',
         loadComponent: () => import('./pages/admin/admin-dashboard/admin-dashboard.component')
           .then(m => m.AdminDashboardComponent)
       },
       
-      // Users
+      // Admin Users
       {
         path: 'users',
         children: [
@@ -64,7 +92,7 @@ export const routes: Routes = [
         ]
       },
       
-      // Recordings
+      // Admin Recordings
       {
         path: 'recordings',
         children: [
@@ -86,24 +114,26 @@ export const routes: Routes = [
         ]
       },
       
-      // Default route
+      // Default admin route
       {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full'
+      },
+      
+      // Catch-all for admin section
+      {
+        path: '**',
+        redirectTo: 'dashboard'
       }
     ]
   },
   
-  // Your Existing Public Pages
+  // Public Pages
   { 
     path: 'home', 
     loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent) 
   },
-  // { 
-  //   path: 'about', 
-  //   loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent) 
-  // },
   { 
     path: 'contact', 
     loadComponent: () => import('./pages/contact/contact.component').then(m => m.ContactComponent) 
@@ -112,20 +142,42 @@ export const routes: Routes = [
     path: 'reset42', 
     loadComponent: () => import('./pages/reset42-landing/reset42-landing.component').then(m => m.Reset42LandingComponent) 
   },
+  
+  // Optional pages (currently commented out)
+  // { 
+  //   path: 'about', 
+  //   loadComponent: () => import('./pages/about/about.component').then(m => m.AboutComponent) 
+  // },
   // { 
   //   path: 'classes', 
   //   loadComponent: () => import('./pages/classes/classes.component').then(m => m.ClassesComponent) 
   // },
   // { 
   //   path: 'shop', 
-  //   loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent) 
+  //   loadComponent: () => import('./pages/shop/shop.component').then(m => m.ShopComponent) 
   // },
 
-  // Journal Routes
-  { path: 'journal', component: JournalListComponent },
-  { path: 'journal/new', component: JournalFormComponent },
-  { path: 'journal/edit/:id', component: JournalFormComponent },
-  { path: 'journal/:id', component: JournalDetailComponent },
+  // Journal Routes (non-lazy loaded)
+  { 
+    path: 'journal', 
+    component: JournalListComponent,
+    canActivate: [authGuard]
+  },
+  { 
+    path: 'journal/new', 
+    component: JournalFormComponent,
+    canActivate: [authGuard]
+  },
+  { 
+    path: 'journal/edit/:id', 
+    component: JournalFormComponent,
+    canActivate: [authGuard]
+  },
+  { 
+    path: 'journal/:id', 
+    component: JournalDetailComponent,
+    canActivate: [authGuard]
+  },
 
   // Payment Routes
   { 
@@ -138,5 +190,9 @@ export const routes: Routes = [
     component: PaymentStatusComponent 
   },
 
-  { path: '**', redirectTo: '/dashboard' }
+  // Wildcard route - redirect to home instead of dashboard
+  { 
+    path: '**', 
+    redirectTo: '/home' 
+  }
 ];

@@ -46,7 +46,7 @@ export class Reset42LandingComponent implements OnInit, OnDestroy {
   program = {
     id: '09a1c14a-ff26-4855-af76-2e52e05de0c0',
     title: 'Reset 42 - Transformational Program',
-    price: 6499,
+    price: 999,
     originalPrice: 14000,
     startDate: new Date().toISOString()
   };

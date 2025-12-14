@@ -167,16 +167,6 @@
         <div *ngIf="successMessage" class="alert alert-success mt-3" role="alert">
           <i class="fas fa-check-circle me-2"></i>{{ successMessage }}
         </div>
-        <!-- Add this debug section temporarily -->
-<div class="alert alert-info mt-3" *ngIf="profileData">
-  <h6>Debug Info:</h6>
-  <p>Form Valid: {{ profileForm.valid }}</p>
-  <p>Has Changes: {{ hasFormChanges() }}</p>
-  <p>Can Save: {{ canSaveChanges() }}</p>
-  <p>First Name Changed: {{ profileForm.get('firstName')?.value !== profileData.firstName }}</p>
-  <p>Original First Name: {{ profileData.firstName }}</p>
-  <p>Current First Name: {{ profileForm.get('firstName')?.value }}</p>
-</div>
       </div>
     </div>
   </main>

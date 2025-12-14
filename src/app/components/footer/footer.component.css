@@ -12,18 +12,13 @@
   font-size: 1.8rem;
   font-weight: 800;
   color: white;
-  margin-bottom: 1rem;
 }
 
 .footer-tagline {
   color: rgba(255, 255, 255, 1);
   font-size: 1rem;
-  margin-bottom: 2rem;
 }
 
-.social-links {
-  margin-top: 1.5rem;
-}
 
 .social-title {
   display: block;
@@ -116,4 +111,94 @@
   color: rgba(255, 255, 255, 1);
   margin: 0;
   font-size: 0.95rem;
+}
+
+/* Legal Links Styling */
+.legal-links a {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+}
+
+.legal-links a:hover {
+  color: #4fc3f7;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-copyright {
+  flex: 1;
+  min-width: 250px;
+}
+
+.disclaimer-text {
+  font-size: 12px;
+  opacity: 0.7;
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+.footer-legal-links {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.footer-legal-links a {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 13px;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-legal-links a:hover {
+  color: #4fc3f7;
+}
+
+/* Support Hours */
+.support-hours {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin-top: 15px;
+}
+
+.support-hours h5 {
+  color: white;
+  font-size: 14px;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.support-hours p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 13px;
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .footer-legal-links {
+    justify-content: center;
+  }
+  
+  .footer-copyright {
+    min-width: 100%;
+  }
 }

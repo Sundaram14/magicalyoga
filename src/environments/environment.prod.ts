@@ -1,5 +1,6 @@
 export const environment = {
-  production: true,
-  apiUrl: 'https://api.magicalyoga.com/api',
-  appName: 'Magical Yoga'
+  production: false,
+  apiUrl: 'https://localhost:7145/api',
+  appName: 'Magical Yoga',
+  razorpayKey: 'rzp_test_RlceCjPpaTV9ro'
 };

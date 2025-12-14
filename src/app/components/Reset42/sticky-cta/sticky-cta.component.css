@@ -18,7 +18,7 @@
 .cta-button {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 7px;
   background: linear-gradient(135deg, #0097b2, #005f73);
   color: white;
   border: none;
@@ -78,15 +78,20 @@
     right: 16px;
     left: 16px;
   }
+
+  .sticky-cta.visible{
+    justify-items: right;
+  }
   
   .cta-button {
-    width: 100%;
+    width: 50%;
     justify-content: space-between;
-    padding: 16px 24px;
+    padding: 10px 24px;
+    gap: 5px;
   }
   
   .cta-text {
-    font-size: 15px;
+    font-size: 13px;
   }
   
   .cta-price {
@@ -104,15 +109,15 @@
 @media (max-width: 480px) {
   .cta-button {
     padding: 14px 20px;
-    gap: 10px;
+    gap: 5px;
   }
   
   .cta-text {
-    font-size: 14px;
+    font-size: 12px;
   }
   
   .cta-price {
-    font-size: 14px;
+    font-size: 12px;
     padding: 2px 8px;
   }
 }

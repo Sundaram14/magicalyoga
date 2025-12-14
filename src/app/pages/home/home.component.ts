@@ -52,8 +52,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       id: 2,
       title: 'Live Online Classes',
       description: 'Join our interactive live yoga sessions from anywhere. Experience real-time guidance with expert instructors and a supportive community.',
-      cta: 'View Schedule',
-      link: '/classes',
+      cta: 'Contact Us',
+      link: '/contact',
       image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1200&q=80',
       badge: 'Live'
     },
@@ -61,12 +61,13 @@ export class HomeComponent implements OnInit, OnDestroy {
       id: 3,
       title: 'Magical Mama',
       description: 'Specialized prenatal and postnatal yoga programs designed for expecting and new mothers. Safe, nurturing practices for your journey.',
-      cta: 'Learn More',
-      link: '/magical-mama',
-      image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=80',
+      cta: 'Contact Us',
+      link: '/contact',
+      image: 'assets/Images/hero/hero-3.png',
       badge: 'For Mothers'
     }
   ];
+
 
   currentSlide = 0;
 

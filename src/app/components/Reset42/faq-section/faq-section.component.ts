@@ -30,7 +30,7 @@ export class FaqSectionComponent {
       hint: 'Next batch information',
       answer: 'The Reset 42 program starts on January 15, 2025. Live yoga sessions are held Monday to Friday from 7:30-8:30 AM IST.',
       details: [
-        'Orientation: January 14, 2025',
+        'January 5, 2025',
         'Daily sessions: Mon-Fri, 7:30-8:30 AM',
         'Coaching classes: Saturdays, 10 AM'
       ],
@@ -76,12 +76,12 @@ export class FaqSectionComponent {
       id: 5,
       category: 'payment',
       question: 'Is there a money-back guarantee?',
-      hint: 'Risk-free investment',
-      answer: 'Yes! We offer a 14-day satisfaction guarantee. If you attend all sessions in the first 14 days and don\'t see any improvement, we\'ll refund your full amount.',
+      hint: 'Review before purchase',
+      answer: 'No, we do not offer a money-back guarantee. All purchases are final.',
       details: [
-        'Full refund within 14 days',
-        'Must attend all scheduled sessions',
-        'No questions asked policy'
+        'No refunds are provided. To know more please read our Refund Policy mentioned in the footer.',
+        'All sales are considered final',
+        'Please review all details before purchasing'
       ],
       expanded: false
     },
@@ -90,7 +90,7 @@ export class FaqSectionComponent {
       category: 'payment',
       question: 'What payment methods do you accept?',
       hint: 'Secure payment options',
-      answer: 'We accept all major payment methods including credit/debit cards, UPI, net banking, and EMI options.',
+      answer: 'We accept all major payment methods including credit/debit cards, UPI, net banking',
       details: [
         'Credit/Debit Cards',
         'UPI (Google Pay, PhonePe, etc.)',
@@ -108,7 +108,7 @@ export class FaqSectionComponent {
       details: [
         '80% stress reduction (average)',
         '+3.2 hours quality sleep increase',
-        '5.2kg healthy weight loss (average)',
+        '75% balanced diet (average)',
         '90% reduction in body pain'
       ],
       expanded: false

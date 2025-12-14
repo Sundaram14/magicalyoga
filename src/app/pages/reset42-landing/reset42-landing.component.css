@@ -108,6 +108,7 @@
 
 .sticky-cta.visible {
   transform: translateY(0);
+  justify-items: right !important;
 }
 
 .sticky-enroll-btn {

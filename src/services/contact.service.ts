@@ -15,9 +15,9 @@ export interface ContactForm {
 })
 export class ContactService {
     // EmailJS Configuration (You'll get these from EmailJS dashboard)
-    private serviceID = 'YOUR_SERVICE_ID';
-    private templateID = 'YOUR_TEMPLATE_ID';
-    private publicKey = 'YOUR_PUBLIC_KEY';
+    private serviceID = 'service_v5c4chw';
+    private templateID = 'template_otsxqfr';
+    private publicKey = '7nMcIxZ8wBgX2IQKz';
 
     constructor() {
         // Initialize EmailJS with your public key

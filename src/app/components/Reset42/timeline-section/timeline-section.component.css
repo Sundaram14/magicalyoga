@@ -1230,6 +1230,10 @@
   .timeline-section {
     padding: 4rem 0;
   }
+
+  .card-scroll-hint{
+    display: none;
+  }
   
   .card-content.expanded {
     max-height: 1600px;

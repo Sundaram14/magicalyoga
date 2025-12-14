@@ -33,8 +33,8 @@ export class HeroSectionComponent implements OnInit, OnDestroy {
   }
 
   private startCountdown(): void {
-    // Set target date: December 15, 2025, 7:30 AM IST
-    const targetDate = new Date('2025-12-15T07:30:00+05:30');
+    // Set target date: January 15, 2026, 7:30 AM IST
+    const targetDate = new Date('2026-01-15T07:30:00+05:30');
     
     const updateCountdown = () => {
       const now = new Date();

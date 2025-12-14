@@ -90,9 +90,6 @@
 /* Highlight Card */
 .offering-card.highlight {
   border-color: #00c9ff;
-  background: linear-gradient(135deg, 
-    rgba(0, 201, 255, 0.05), 
-    rgba(0, 151, 178, 0.05));
 }
 
 .offering-card.highlight::after {
@@ -102,8 +99,6 @@
   right: -2px;
   bottom: -2px;
   left: -2px;
-  background: linear-gradient(135deg, 
-    #0097b2, #00c9ff, #0097b2);
   border-radius: 1.5rem;
   z-index: -1;
   opacity: 0.5;

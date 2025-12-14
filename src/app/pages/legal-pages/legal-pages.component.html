@@ -1,0 +1,181 @@
+<div class="legal-pages-container mt-5-c">
+  <!-- Navigation Sidebar -->
+  <aside class="legal-sidebar">
+    <div class="sidebar-header">
+      <h3><i class="fas fa-scale-balanced"></i> Legal Center</h3>
+      <p class="last-updated">Last Updated: {{ currentDate }}</p>
+    </div>
+    
+    <nav class="sidebar-nav">
+      <a routerLink="/legal/refund" routerLinkActive="active">
+        <i class="fas fa-rotate-left"></i>
+        <span>Refund Policy</span>
+      </a>
+      <a routerLink="/legal/terms" routerLinkActive="active">
+        <i class="fas fa-file-contract"></i>
+        <span>Terms & Conditions</span>
+      </a>
+      <a routerLink="/legal/shipping" routerLinkActive="active">
+        <i class="fas fa-truck-fast"></i>
+        <span>Delivery Policy</span>
+      </a>
+      <a routerLink="/legal/privacy" routerLinkActive="active">
+        <i class="fas fa-shield-halved"></i>
+        <span>Privacy Policy</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="contact-card">
+        <h4><i class="fas fa-headset"></i> Need Help?</h4>
+        <div class="contact-info">
+          <p><a href="https://wa.me/919884524742"><i class="fab fa-whatsapp"></i> +91-98845 24742</a></p>
+          <p><a href="mailto:info@magicalyoga.in"><i class="fas fa-envelope"></i> info&#64;magicalyoga.in</a></p>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="legal-content">
+    <!-- Header -->
+    <div class="content-header">
+      <div class="header-left">
+        <h1>{{ getPolicyContent().title }}</h1>
+        <div class="page-meta">
+          <span class="meta-item">
+            <i class="fas fa-calendar-alt"></i>
+            Last Updated: {{ currentDate }}
+          </span>
+          <span class="meta-item">
+            <i class="fas fa-file-lines"></i>
+            Legal Document
+          </span>
+        </div>
+      </div>
+      
+      <div class="header-actions">
+        <button class="btn-action print" (click)="printPage()">
+          <i class="fas fa-print"></i> Print
+        </button>
+        <button class="btn-action download" (click)="downloadPDF()">
+          <i class="fas fa-download"></i> PDF
+        </button>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="policy-content" *ngIf="hasPolicy(); else noPolicy">
+      <!-- Introduction -->
+      <div class="intro-card">
+        <i class="fas fa-scale-balanced intro-icon"></i>
+        <div class="intro-text">
+          <h3>Welcome to Magical Yoga</h3>
+          <p>By accessing our website, programs, and services, you agree to the following terms and policies.</p>
+        </div>
+      </div>
+
+      <!-- Policy Sections -->
+      <div class="policy-sections">
+        <div *ngFor="let section of getPolicyContent().content; let i = index" 
+             class="policy-section" [id]="'section-' + i">
+          <div class="section-header" *ngIf="section.title">
+            <span class="section-number">§ {{ i + 1 }}</span>
+            <h3>{{ section.title }}</h3>
+          </div>
+          
+          <div class="section-content">
+            <p *ngIf="section.content">{{ section.content }}</p>
+            
+            <ul *ngIf="section.points" class="policy-points">
+              <li *ngFor="let point of section.points">
+                <i class="fas fa-check-circle"></i>
+                {{ point }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Acceptance Section -->
+      <div class="acceptance-section">
+        <div class="acceptance-card">
+          <i class="fas fa-handshake acceptance-icon"></i>
+          <div class="acceptance-content">
+            <h3>Agreement Acceptance</h3>
+            <p>By using Magical Yoga services, you acknowledge that you have read, understood, and agree to be bound by these policies.</p>
+            <div class="acceptance-actions">
+              <button class="btn-primary" (click)="scrollToTop()">
+                <i class="fas fa-check"></i> I Understand
+              </button>
+              <button class="btn-secondary" routerLink="/contact">
+                <i class="fas fa-question-circle"></i> Have Questions?
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Contact -->
+      <div class="quick-contact">
+        <div class="contact-card">
+          <h3><i class="fas fa-life-ring"></i> Need Clarification?</h3>
+          <div class="contact-details">
+            <div class="contact-item">
+              <a href="https://wa.me/919884524742">
+                <i class="fab fa-whatsapp"></i>
+              <div>
+                <strong>WhatsApp Support</strong>
+                <p>+91-98845 24742</p>
+              </div>
+              </a>
+            </div>
+            <div class="contact-item">
+              <a href="mailto:info@magicalyoga.in">
+                <i class="fas fa-envelope"></i>
+                <div>
+                  <strong>Email</strong>
+                  <p>info&#64;magicalyoga.in</p>
+                </div>
+              </a>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-clock"></i>
+              <div>
+                <strong>Response Time</strong>
+                <p>Within 48 hours, Monday–Saturday</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #noPolicy>
+      <div class="no-policy">
+        <i class="fas fa-file-circle-question"></i>
+        <h3>Policy Not Found</h3>
+        <p>The requested policy page does not exist.</p>
+        <a routerLink="/legal/terms" class="btn-primary">
+          <i class="fas fa-arrow-left"></i> View Terms & Conditions
+        </a>
+      </div>
+    </ng-template>
+
+    <!-- Footer Navigation -->
+    <div class="footer-nav">
+      <a routerLink="/legal/refund" *ngIf="currentPage !== 'refund'">
+        <i class="fas fa-arrow-left"></i> Previous: Refund Policy
+      </a>
+      <a routerLink="/legal/terms" *ngIf="currentPage === 'refund'">
+        Next: Terms & Conditions <i class="fas fa-arrow-right"></i>
+      </a>
+      <a routerLink="/legal/shipping" *ngIf="currentPage === 'terms'">
+        Next: Delivery Policy <i class="fas fa-arrow-right"></i>
+      </a>
+      <a routerLink="/legal/privacy" *ngIf="currentPage === 'shipping'">
+        Next: Privacy Policy <i class="fas fa-arrow-right"></i>
+      </a>
+    </div>
+  </main>
+</div>

@@ -9,56 +9,62 @@
       <p class="section-subtitle">Join 500+ students who transformed their lives</p>
     </div>
 
-    <div class="testimonials-grid">
-      <div class="testimonial-card" *ngFor="let testimonial of testimonials; trackBy: trackByTestimonial">
-        <div class="testimonial-rating">
-          <div class="stars">
-            <i class="fas fa-star" *ngFor="let star of [1,2,3,4,5]"></i>
-          </div>
-          <div class="result-badge">{{ testimonial.result }}</div>
-        </div>
-        
-        <div class="testimonial-quote">
-          <i class="fas fa-quote-left"></i>
-          <p>{{ testimonial.text }}</p>
-        </div>
-        
-        <div class="testimonial-author">
-          <div class="author-avatar">
-            {{ testimonial.avatar || testimonial.author.charAt(0) }}
-          </div>
-          <div class="author-info">
-            <div class="author-name">{{ testimonial.author }}</div>
-            <div class="author-meta">Reset 42 Graduate</div>
+    <!-- Carousel Container -->
+    <div class="testimonial-carousel-container" 
+         (mouseenter)="stopAutoplay()" 
+         (mouseleave)="startAutoplay()">
+      
+      <!-- Carousel Track -->
+      <div class="testimonial-carousel-track" 
+           [style.transform]="'translateX(-' + (currentSlide * (100 / slidesToShow)) + '%)'">
+        <div class="testimonial-carousel-slide" 
+             *ngFor="let testimonial of testimonials; let i = index"
+             [attr.data-index]="i">
+          <div class="testimonial-card">
+            <div class="testimonial-rating">
+              <div class="stars">
+                <i class="fas fa-star" *ngFor="let star of [1,2,3,4,5]"></i>
+              </div>
+              <div class="result-badge">{{ testimonial.result }}</div>
+            </div>
+            
+            <div class="testimonial-quote">
+              <i class="fas fa-quote-left"></i>
+              <p>{{ testimonial.text }}</p>
+            </div>
+            
+            <div class="testimonial-author">
+              <div class="author-avatar">
+                {{ testimonial.author.charAt(0) }}
+              </div>
+              <div class="author-info">
+                <div class="author-name">{{ testimonial.author }}</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
+      <!-- Navigation Buttons -->
+      <button class="carousel-btn carousel-btn-prev" 
+              (click)="prevSlide()"
+              [disabled]="currentSlide === 0 && getTotalVisibleSlides() === 1">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <button class="carousel-btn carousel-btn-next" 
+              (click)="nextSlide()"
+              [disabled]="currentSlide >= getTotalVisibleSlides() - 1">
+        <i class="fas fa-chevron-right"></i>
+      </button>
     </div>
 
-    <div class="testimonials-stats">
-      <div class="stat-card">
-        <div class="stat-value">4.9</div>
-        <div class="stat-label">Average Rating</div>
-        <div class="stat-stars">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star-half-alt"></i>
-        </div>
-      </div>
-      
-      <div class="stat-card highlight">
-        <div class="stat-value">94%</div>
-        <div class="stat-label">Completion Rate</div>
-        <div class="stat-note">Industry average: 60%</div>
-      </div>
-      
-      <div class="stat-card">
-        <div class="stat-value">500+</div>
-        <div class="stat-label">Students Transformed</div>
-        <div class="stat-note">And counting...</div>
-      </div>
+    <!-- Dots Navigation -->
+    <div class="carousel-dots">
+      <button *ngFor="let dot of [].constructor(getTotalVisibleSlides()); let i = index"
+              class="carousel-dot"
+              [class.active]="i === currentSlide"
+              (click)="goToSlide(i)">
+      </button>
     </div>
   </div>
 </section>
