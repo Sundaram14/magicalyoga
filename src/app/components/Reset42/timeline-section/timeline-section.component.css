@@ -672,6 +672,7 @@
   border-radius: 1rem;
   padding: 1.5rem;
   margin-top: 2rem;
+  align-items: center;
 }
 
 .insight-icon {
@@ -857,7 +858,6 @@
   .card-header {
     flex-direction: column;
     gap: 1rem;
-    text-align: center;
   }
   
   .card-number {

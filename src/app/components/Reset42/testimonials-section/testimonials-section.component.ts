@@ -18,7 +18,7 @@ interface Testimonial {
 export class TestimonialsSectionComponent implements OnInit, OnDestroy {
   testimonials: Testimonial[] = [
     {
-      text: "Hi Master Sundaram, It's been a 2 months journey and continuing. For a thing to be consistent we have to understand and like the process and I could feel both of this only because of you. In your classes you are not just an instructor, you are a very good teacher who clearly makes learners understand what, where and how to do and specially what not to do. You convey these very politely which gives us feel that you are so friendly to approach for any clarification.",
+      text: "Hi Master Sundaram, it’s been a 2-month journey and still going strong. Consistency comes from understanding and enjoying the process, and I’ve felt both because of you. You’re not just an instructor but a great teacher who clearly explains what to do, how to do it, and what to avoid. Your polite and friendly approach makes it easy to reach out for any clarification.",
       author: "Reset42 Student",
       result: "Weight Loss"
     },
