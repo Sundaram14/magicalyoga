@@ -1,0 +1,107 @@
+<section class="faq-section animate-section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-badge">
+        <i class="fas fa-question-circle"></i>
+        Got Questions?
+      </div>
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <p class="section-subtitle">Everything you need to know before joining Reset 42</p>
+    </div>
+
+    <div class="faq-container">
+      <!-- FAQ Categories -->
+      <div class="faq-categories">
+        <button 
+          class="category-btn"
+          [class.active]="activeCategory === 'general'"
+          (click)="setActiveCategory('general')">
+          <i class="fas fa-info-circle"></i>
+          <span>General</span>
+        </button>
+        
+        <button 
+          class="category-btn"
+          [class.active]="activeCategory === 'program'"
+          (click)="setActiveCategory('program')">
+          <i class="fas fa-calendar-alt"></i>
+          <span>Program Details</span>
+        </button>
+        
+        <button 
+          class="category-btn"
+          [class.active]="activeCategory === 'payment'"
+          (click)="setActiveCategory('payment')">
+          <i class="fas fa-credit-card"></i>
+          <span>Payment & Support</span>
+        </button>
+        
+        <button 
+          class="category-btn"
+          [class.active]="activeCategory === 'results'"
+          (click)="setActiveCategory('results')">
+          <i class="fas fa-chart-line"></i>
+          <span>Results & Expectations</span>
+        </button>
+      </div>
+
+      <!-- FAQ Items -->
+      <div class="faq-items">
+        <div class="faq-item" *ngFor="let faq of getActiveFaqs()">
+          <div 
+            class="faq-question"
+            (click)="toggleFaq(faq.id)">
+            <div class="question-content">
+              <h3>{{ faq.question }}</h3>
+              <p class="question-hint">{{ faq.hint }}</p>
+            </div>
+            <div class="question-toggle">
+              <i class="fas" [class.fa-plus]="!faq.expanded" [class.fa-minus]="faq.expanded"></i>
+            </div>
+          </div>
+          
+          <div class="faq-answer" [class.expanded]="faq.expanded">
+            <div class="answer-content">
+              <p>{{ faq.answer }}</p>
+              
+              <div class="answer-details" *ngIf="faq.details">
+                <div class="detail-item" *ngFor="let detail of faq.details">
+                  <i class="fas fa-check-circle"></i>
+                  <span>{{ detail }}</span>
+                </div>
+              </div>
+              
+              <div class="answer-note" *ngIf="faq.note">
+                <i class="fas fa-lightbulb"></i>
+                <span>{{ faq.note }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Still Have Questions -->
+    <div class="contact-cta">
+      <div class="contact-card">
+        <div class="contact-icon">
+          <i class="fas fa-headset"></i>
+        </div>
+        <div class="contact-content">
+          <h3>Still have questions?</h3>
+          <p>Our team is here to help. Get personalized answers within 24 hours.</p>
+        </div>
+        <div class="contact-actions">
+          <a class="whatsapp-btn" href="https://wa.me/919884524742" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+            WhatsApp Us
+          </a>
+          <a class="email-btn" href="mailto:reach@magicalyoga.com">
+            <i class="fas fa-envelope"></i>
+            Email Us
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

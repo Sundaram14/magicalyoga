@@ -1,0 +1,36 @@
+<section class="features-section animate-section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-badge">
+        <i class="fas fa-star"></i>
+        Our Core Promises
+      </div>
+      <h2 class="section-title">Real Results in 42 Days</h2>
+      <p class="section-subtitle">What you can expect from the Reset 42 transformation</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card" *ngFor="let feature of features; trackBy: trackByFeature">
+        <div class="feature-icon" [style.background]="getGradient(feature.color)">
+          <i [class]="feature.icon"></i>
+        </div>
+        <h3 class="feature-title">{{ feature.title }}</h3>
+        <p class="feature-description">{{ feature.description }}</p>
+        <!-- <div class="feature-progress">
+          <div class="progress-bar">
+            <div class="progress-fill" [style.width.%]="80"></div>
+          </div>
+          <div class="progress-label">Average Improvement</div>
+        </div> -->
+      </div>
+    </div>
+
+    <!-- <div class="features-cta">
+      <p class="cta-text">All 5 promises work together to create lasting transformation</p>
+      <button class="cta-button" (click)="onLearnMore()">
+        <i class="fas fa-play-circle"></i>
+        See How It Works
+      </button>
+    </div> -->
+  </div>
+</section>

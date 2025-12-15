@@ -1,0 +1,114 @@
+<div class="min-vh-100 bg-light mt-5-c">
+  <main class="container-fluid py-4">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-md-3 mb-4">
+        <div class="card border-0 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title text-secondary mb-3">Journal</h5>
+            <div class="d-grid gap-2">
+              <a routerLink="/journal/new" class="btn btn-primary">
+                <i class="fas fa-plus me-2"></i>New Entry
+              </a>
+              <a routerLink="/dashboard" class="btn btn-outline-primary">
+                <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="card border-0 shadow-sm mt-4">
+          <div class="card-body">
+            <h6 class="text-secondary mb-3">Your Journal</h6>
+            <div class="text-center">
+              <div class="h4 text-primary mb-1">{{ entries.length }}</div>
+              <small class="text-muted">Total Entries</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="col-md-9">
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <div>
+            <h2 class="h4 text-dark mb-1">My Yoga Journal</h2>
+            <p class="text-muted mb-0">Reflect on your yoga journey and progress</p>
+          </div>
+        </div>
+
+        <!-- Loading State -->
+        <div *ngIf="isLoading" class="text-center py-5">
+          <div class="spinner-border text-primary" role="status"></div>
+          <p class="text-muted mt-2">Loading your journal entries...</p>
+        </div>
+
+        <!-- Error Message -->
+        <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+          <i class="fas fa-exclamation-triangle me-2"></i>{{ errorMessage }}
+        </div>
+
+        <!-- Empty State -->
+        <div *ngIf="!isLoading && entries.length === 0" class="text-center py-5">
+          <i class="fas fa-book-open text-muted fs-1 mb-3"></i>
+          <h4 class="text-dark mb-2">No journal entries yet</h4>
+          <p class="text-muted mb-4">Start documenting your yoga journey with your first entry</p>
+          <a routerLink="/journal/new" class="btn btn-primary">
+            <i class="fas fa-plus me-2"></i>Create Your First Entry
+          </a>
+        </div>
+
+        <!-- Journal Entries List -->
+        <div *ngIf="!isLoading && entries.length > 0" class="row g-4">
+          <div class="col-12" *ngFor="let entry of entries">
+            <div class="card border-0 shadow-sm h-100 journal-entry-card">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                  <div>
+                    <h5 class="card-title text-dark mb-1">{{ entry.title }}</h5>
+                    <small class="text-muted">
+                      <i class="fas fa-calendar me-1"></i>
+                      {{ formatDate(entry.entryDate) }}
+                    </small>
+                  </div>
+                  <div class="dropdown">
+                    <button class="btn btn-sm btn-outline-secondary border-0" type="button" 
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                      <li>
+                        <a class="dropdown-item" [routerLink]="['/journal/edit', entry.id]">
+                          <i class="fas fa-edit me-2"></i>Edit
+                        </a>
+                      </li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li>
+                        <a class="dropdown-item text-danger" (click)="deleteEntry(entry.id)">
+                          <i class="fas fa-trash me-2"></i>Delete
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <p class="card-text text-muted">{{ truncateContent(entry.content) }}</p>
+                
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                  <small class="text-muted">
+                    Updated {{ formatDate(entry.updatedAt) }}
+                  </small>
+                  <a [routerLink]="['/journal', entry.id]" class="btn btn-sm btn-outline-primary">
+                    Read More
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

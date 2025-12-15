@@ -1,0 +1,32 @@
+<!-- payment-status.component.html - Simplified -->
+<div class="payment-status-container">
+  <!-- Success State -->
+  <div *ngIf="statusData.success" class="status-success">
+    <i class="fas fa-check-circle success-icon"></i>
+    <h3>{{ statusData.title }}</h3>
+    <p>{{ statusData.message }}</p>
+    <div class="action-buttons">
+      <button class="btn btn-primary" (click)="goToDashboard()">
+        <i class="fas fa-tachometer-alt me-2"></i>Go to Dashboard
+      </button>
+      <button class="btn btn-outline-primary" (click)="goToClasses()">
+        <i class="fas fa-play-circle me-2"></i>Browse More Classes
+      </button>
+    </div>
+  </div>
+
+  <!-- Failure State -->
+  <div *ngIf="!statusData.success" class="status-failure">
+    <i class="fas fa-exclamation-circle failure-icon"></i>
+    <h3>{{ statusData.title }}</h3>
+    <p>{{ statusData.message }}</p>
+    <div class="action-buttons">
+      <button class="btn btn-primary" (click)="onRetry()">
+        <i class="fas fa-redo me-2"></i>Try Again
+      </button>
+      <button class="btn btn-outline-primary" (click)="goToClasses()">
+        <i class="fas fa-arrow-left me-2"></i>Back to Classes
+      </button>
+    </div>
+  </div>
+</div>

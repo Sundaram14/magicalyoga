@@ -1,6 +1,189 @@
-<app-header></app-header>
-<app-introduction></app-introduction>
-<app-why-us></app-why-us>
-<app-student-gallery></app-student-gallery>
-<app-whats-new></app-whats-new>
-<app-about-founder></app-about-founder>
+<!-- Hero Section - Slider -->
+<section class="hero-slider">
+  <div class="hero-slides">
+    <div 
+      *ngFor="let slide of heroSlides; let i = index" 
+      class="hero-slide"
+      [class.active]="i === currentSlide">
+      <div class="hero-slide-image">
+        <img [src]="slide.image" [alt]="slide.title" loading="eager">
+        <div class="hero-overlay"></div>
+      </div>
+      
+      <div class="hero-slide-content">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-lg-8 col-xl-7">
+              <span class="hero-badge">{{ slide.badge }}</span>
+              <h1 class="hero-title animate-fade-in">{{ slide.title }}</h1>
+              <p class="hero-description animate-fade-in-delay">{{ slide.description }}</p>
+              <a [routerLink]="slide.link" class="btn btn-hero btn-lg animate-fade-in-delay-2">
+                {{ slide.cta }} <i class="fas fa-arrow-right ms-2"></i>
+              </a>
+            </div>
+          </div>
+            <!-- Dots Indicator -->
+            <div class="hero-dots">
+              <button 
+                *ngFor="let slide of heroSlides; let i = index"
+                class="hero-dot"
+                [class.active]="i === currentSlide"
+                (click)="goToSlide(i)"
+                [attr.aria-label]="'Go to slide ' + (i + 1)">
+              </button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- Welcome Section -->
+<section class="welcome-section">
+  <div class="container">
+    <div class="text-center mb-5">
+      <span class="section-badge">Welcome to Magical Yoga</span>
+      <h2 class="section-title">Learn yoga anytime, anywhere!</h2>
+      <p class="section-description mx-auto" style="max-width: 800px;">
+        At Magical Yoga, we are driven by the vision of helping you become the best version of yourself. 
+        Born from a passion for wellness, we blend traditional yoga techniques with a modern approach to 
+        make your practice enjoyable and transformative. Experience the Magic of Yoga and embrace a 
+        healthier, more balanced life - wherever you are.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- Benefits Section -->
+<section class="benefits-section" id="benefits">
+  <div class="container">
+    <div class="text-center mb-5">
+      <span class="section-badge">Benefits</span>
+      <h2 class="section-title">Why Join Magical Yoga?</h2>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-3" *ngFor="let benefit of benefits">
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <i [class]="benefit.icon"></i>
+          </div>
+          <h3 class="benefit-title">{{ benefit.title }}</h3>
+          <p class="benefit-description">{{ benefit.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery Section -->
+<section class="gallery-section" id="gallery">
+  <div class="container">
+    <div class="text-center mb-5">
+      <span class="section-badge">Our Gallery</span>
+      <h2 class="section-title">Moments of Magic</h2>
+    </div>
+
+    <div class="gallery-carousel-wrapper">
+      <button 
+        class="gallery-nav prev" 
+        (click)="previousGalleryImage()" 
+        [disabled]="!canGoPrevious()"
+        [class.disabled]="!canGoPrevious()"
+        aria-label="Previous images">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      
+      <div class="gallery-images-container">
+        <div class="gallery-images-track">
+          <div 
+            *ngFor="let image of getVisibleGalleryImages()" 
+            class="gallery-image-item">
+            <img 
+              [src]="image.url"
+              [alt]="image.alt" 
+              class="gallery-image"
+              loading="lazy">
+          </div>
+        </div>
+      </div>
+      
+      <button 
+        class="gallery-nav next" 
+        (click)="nextGalleryImage()" 
+        [disabled]="!canGoNext()"
+        [class.disabled]="!canGoNext()"
+        aria-label="Next images">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Pagination Dots -->
+    <div class="gallery-pagination">
+      <button 
+        *ngFor="let image of galleryImages; let i = index" 
+        class="pagination-dot"
+        [class.active]="i >= currentGalleryIndex && i < currentGalleryIndex + imagesPerView"
+        (click)="goToImage(i)"
+        [attr.aria-label]="'Go to image ' + (i + 1)">
+      </button>
+    </div>
+
+    <!-- Thumbnails -->
+    <div class="gallery-thumbnails">
+      <div 
+        *ngFor="let image of galleryImages; let i = index" 
+        class="thumbnail-wrapper"
+        [class.active]="i >= currentGalleryIndex && i < currentGalleryIndex + imagesPerView"
+        (click)="goToImage(i)">
+        <img 
+          [src]="image.url"
+          [alt]="image.alt" 
+          class="thumbnail-image"
+          loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Birth of Magical Yoga -->
+<section class="birth-section">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6">
+        <span class="section-badge">Our Story</span>
+        <h2 class="section-title">Birth of Magical Yoga</h2>
+        <p class="birth-description">
+          Magical Yoga was born from a simple belief: that everyone deserves to experience the 
+          transformative power of yoga, regardless of where they are or what stage of life they're in.
+        </p>
+        <p class="birth-description">
+          Founded by passionate yoga practitioners, our journey began with a vision to make authentic 
+          yoga practices accessible to all. We combine ancient wisdom with modern teaching methods, 
+          creating a unique experience that resonates with today's lifestyle while staying true to 
+          yoga's traditional roots.
+        </p>
+        <a routerLink="/about" class="btn btn-primary btn-lg">
+          <i class="fas fa-info-circle me-2"></i>Learn More About Us
+        </a>
+      </div>
+      <div class="col-lg-6">
+        <div class="birth-image-wrapper">
+          <img 
+            src="../../../assets/Images/birth.PNG" 
+            alt="Yoga Journey" 
+            class="birth-image">
+          <div class="birth-stats">
+            <div class="stat-number">12+</div>
+            <div class="stat-label">Years of Excellence</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

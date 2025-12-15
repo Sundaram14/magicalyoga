@@ -1,0 +1,46 @@
+<main class="reset42-landing">
+  <!-- Hero Section -->
+  <app-hero-section
+    [isEnrolling]="isEnrolling"
+    (enrollClick)="onEnrollClick()">
+  </app-hero-section>
+
+  <!-- Stats Bar -->
+  <app-stats-bar [stats]="stats"></app-stats-bar>
+
+  <!-- Timeline Journey -->
+  <app-timeline-section
+    [isEnrolling]="isEnrolling"
+    (enrollClick)="onEnrollClick()">
+  </app-timeline-section>
+
+  <!-- Features -->
+  <app-features-section [features]="features"></app-features-section>
+
+  <!-- Offerings -->
+  <app-offerings-section
+    [offerings]="offerings"
+    [isEnrolling]="isEnrolling"
+    (enrollClick)="onEnrollClick()">
+  </app-offerings-section>
+
+  <!-- Testimonials -->
+  <app-testimonials-section></app-testimonials-section>
+
+  <!-- Pricing -->
+  <app-pricing-section
+    [program]="program"
+    [isEnrolling]="isEnrolling"
+    (enrollClick)="onEnrollClick()">
+  </app-pricing-section>
+
+  <!-- FAQ -->
+  <app-faq-section></app-faq-section>
+
+  <!-- Sticky CTA (Note: This component manages its own visibility) -->
+  <app-sticky-cta
+    [isEnrolling]="isEnrolling"
+    (enrollClick)="onEnrollClick()">
+  </app-sticky-cta>
+</main>
+<app-footer></app-footer>

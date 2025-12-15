@@ -1,0 +1,129 @@
+/* Journal Reading View Styles */
+.journal-reading-view {
+  position: relative;
+}
+
+.journal-reading-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e9ecef;
+  overflow: hidden;
+  position: relative;
+}
+
+.journal-reading-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50px;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to right, 
+    transparent 0%, 
+    transparent 39px, 
+    rgba(0, 151, 178, 0.02) 39px, 
+    rgba(0, 151, 178, 0.02) 40px
+  );
+  background-size: 40px 100%;
+  pointer-events: none;
+}
+
+.journal-reading-header {
+  padding: 2.5rem 2.5rem 1.5rem 2.5rem;
+  border-bottom: 1px solid var(--primary-extra-light);
+  background: linear-gradient(135deg, var(--primary-extra-light) 0%, rgba(255, 255, 255, 0.9) 100%);
+}
+
+.journal-reading-title {
+  color: var(--secondary-color);
+  font-weight: 600;
+  font-size: 1.75rem;
+  line-height: 1.3;
+  margin-bottom: 1rem;
+}
+
+.journal-reading-meta {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.journal-reading-date,
+.journal-reading-updated {
+  color: var(--gray-600);
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+}
+
+.journal-reading-menu {
+  color: var(--gray-500);
+  background: transparent;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.journal-reading-menu:hover {
+  background: var(--primary-extra-light);
+  color: var(--primary-color);
+}
+
+.journal-reading-content {
+  padding: 2rem 2.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.journal-content-text {
+  white-space: pre-wrap;
+  line-height: 1.7;
+  font-size: 1.05rem;
+  color: var(--gray-800);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding-left: 1rem;
+}
+
+.journal-reading-footer {
+  padding: 1.5rem 2.5rem;
+  background: var(--gray-50);
+  border-top: 1px solid var(--primary-extra-light);
+  text-align: center;
+}
+
+.journal-reading-info {
+  color: var(--gray-500);
+  font-size: 0.9rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .journal-reading-header,
+  .journal-reading-content,
+  .journal-reading-footer {
+    padding: 1.5rem;
+  }
+  
+  .journal-reading-title {
+    font-size: 1.5rem;
+  }
+  
+  .journal-reading-meta {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .journal-reading-container::before {
+    left: 30px;
+  }
+  
+  .journal-content-text {
+    padding-left: 0.5rem;
+  }
+}
+
+.dropdown-toggle::after {
+  display: none;
+}

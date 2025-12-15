@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { SummerCampHeaderComponent } from '../../components/summer-camp-header/summer-camp-header.component';
-import { SummerCampOverviewComponent } from '../../components/summer-camp-overview/summer-camp-overview.component';
-import { SummerCampSylComponent } from '../../components/summer-camp-syl/summer-camp-syl.component';
-import { CtaSectionComponent } from '../../components/cta-section/cta-section.component';
-import { AboutFounderComponent } from '../../components/about-founder/about-founder.component';
+import { SummerCampHeaderComponent } from '../../components/home/summer-camp-header/summer-camp-header.component';
+import { SummerCampOverviewComponent } from '../../components/home/summer-camp-overview/summer-camp-overview.component';
+import { SummerCampSylComponent } from '../../components/home/summer-camp-syl/summer-camp-syl.component';
+import { CtaSectionComponent } from '../../components/home/cta-section/cta-section.component';
+import { AboutFounderComponent } from '../../components/home/about-founder/about-founder.component';
 
 @Component({
   selector: 'app-summer-camp',

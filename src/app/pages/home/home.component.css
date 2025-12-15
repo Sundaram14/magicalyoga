@@ -1,51 +1,885 @@
-/* Header Section */
-.header-section {
-  background: url('/assets/Images/yoga-header.png');
-    height: 80vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    text-align: center;
+/* ============================================
+     CSS VARIABLES
+   ============================================ */
+:root {
+  --primary-color: #0097b2;
+  --secondary-color: #005f73;
+  --accent-color: #00c9ff;
+}
+
+/* ============================================
+   HERO SLIDER SECTION
+   ============================================ */
+
+.hero-slider {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
+  overflow: hidden;
+}
+
+.hero-slides {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.hero-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  pointer-events: none;
+}
+
+.hero-slide.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.hero-slide-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.hero-slide-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(0, 151, 178, 0.9) 0%, rgba(0, 95, 115, 0.85) 100%);
+  z-index: 1;
+}
+
+.hero-slide-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 2rem 0;
+}
+
+.hero-badge {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  color: white;
+  border-radius: 50px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 800;
+  color: white;
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+}
+
+.hero-description {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 2.5rem;
+  line-height: 1.7;
+  max-width: 600px;
+}
+
+.btn-hero {
+  padding: 1rem 3rem;
+  background: white;
+  color: var(--primary-color);
+  font-weight: 600;
+  border-radius: 12px;
+  border: none;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.btn-hero:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(255, 255, 255, 0.4);
+  background: #f8f9fa;
+  color: var(--secondary-color);
+}
+
+
+/* Dots Indicator */
+.hero-dots {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.75rem;
+  z-index: 10;
+}
+
+.hero-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.hero-dot:hover {
+  background: rgba(255, 255, 255, 0.6);
+  transform: scale(1.2);
+}
+
+.hero-dot.active {
+  width: 32px;
+  border-radius: 6px;
+  background: white;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
   }
-  .header-section .overlay {
-    background: rgba(0, 0, 0, 0.5);
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out;
+}
+
+.animate-fade-in-delay {
+  animation: fadeIn 0.8s ease-out 0.2s both;
+}
+
+.animate-fade-in-delay-2 {
+  animation: fadeIn 0.8s ease-out 0.4s both;
+}
+
+/* ============================================
+   SHARED SECTION STYLES
+   ============================================ */
+
+section {
+  padding: 3rem 0;
+}
+
+.section-badge {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  color: var(--primary-color);
+  border-radius: 50px;
+  font-size: 25px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 700;
+  color: var(--secondary-color);
+  margin-bottom: 1.5rem;
+}
+
+.section-description {
+  font-size: 1.15rem;
+  color: #666;
+  line-height: 1.8;
+}
+
+/* ============================================
+   WELCOME SECTION - CLEAN & MINIMAL
+   ============================================ */
+
+:root {
+  --primary-color: #0097b2;
+  --secondary-color: #083e56;
+  --accent-color: #00c9ff;
+  --text-dark: #2d3748;
+  --text-light: #718096;
+  --bg-light: #f8fafc;
+}
+
+
+
+.welcome-section {
+  background: #fff;
+}
+
+/* Grid Layout */
+.welcome-grid {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+/* Left: Logo */
+.welcome-logo {
+  display: flex;
+  justify-content: center;
+}
+
+.logo-container {
+  width: 100%;
+  max-width: 250px;
+  padding: 2rem;
+  position: relative;
+}
+
+.brand-logo {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1));
+  transition: transform 0.4s ease;
+}
+
+.brand-logo:hover {
+  transform: scale(1.02);
+}
+
+/* Right: Content */
+.welcome-content {
+  padding-left: 3rem;
+  border-left: 1px solid rgba(0, 151, 178, 0.1);
+}
+
+/* Content Intro */
+.content-intro {
+  margin-bottom: 3rem;
+}
+
+.welcome-subtitle {
+  display: block;
+  color: var(--primary-color);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 0.75rem;
+}
+
+.welcome-title {
+  font-size: 3rem;
+  font-weight: 600;
+  color: var(--secondary-color);
+  margin: 0 0 1.5rem 0;
+  line-height: 1.1;
+}
+
+.welcome-title strong {
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.title-divider {
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+  border-radius: 2px;
+}
+
+/* Content Body */
+.welcome-text {
+  font-size: 1.125rem;
+  color: var(--text-dark);
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+.welcome-text:last-of-type {
+  margin-bottom: 3rem;
+}
+
+/* Quote */
+.welcome-quote {
+  background: linear-gradient(135deg, rgba(0, 151, 178, 0.03), rgba(0, 201, 255, 0.02));
+  padding: 2.5rem;
+  border-radius: 12px;
+  margin: 3rem 0;
+  border-left: 3px solid var(--primary-color);
+}
+
+.quote-mark {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  opacity: 0.2;
+  margin-bottom: 1rem;
+}
+
+.quote-text {
+  font-size: 1.25rem;
+  font-style: italic;
+  color: var(--secondary-color);
+  line-height: 1.6;
+  margin: 0 0 0.5rem 0;
+  font-weight: 300;
+}
+
+.quote-author {
+  font-size: 0.875rem;
+  color: var(--text-light);
+  font-weight: 500;
+  display: block;
+}
+
+/* CTA Button */
+.welcome-actions {
+  margin-top: 3rem;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 2.5rem;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 151, 178, 0.2);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(0, 151, 178, 0.3);
+  gap: 1.5rem;
+}
+
+.btn-primary i {
+  transition: transform 0.3s ease;
+}
+
+.btn-primary:hover i {
+  transform: translateX(5px);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .welcome-section {
+    padding: 4rem 0;
+  }
+  
+  .welcome-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  
+  .welcome-content {
+    padding-left: 0;
+    border-left: none;
+    border-top: 1px solid rgba(0, 151, 178, 0.1);
+    padding-top: 3rem;
+  }
+  
+  .logo-container {
+    max-width: 200px;
+    padding: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .welcome-container {
+    padding: 0 1.5rem;
+  }
+  
+  .welcome-title {
+    font-size: 2.25rem;
+  }
+  
+  .welcome-text {
+    font-size: 1.0625rem;
+  }
+  
+  .welcome-quote {
     padding: 2rem;
-    border-radius: 8px;
   }
-  .header-section h1 {
-    font-size: 3rem;
+  
+  .quote-text {
+    font-size: 1.125rem;
   }
-  .header-section p {
+}
+
+@media (max-width: 480px) {
+  .welcome-section {
+    padding: 3rem 0;
+  }
+  
+  .welcome-title {
+    font-size: 1.875rem;
+  }
+  
+  .btn-primary {
+    width: 100%;
+    justify-content: center;
+    padding: 1rem 2rem;
+  }
+  
+  .logo-container {
+    max-width: 180px;
+  }
+}
+
+/* Animation */
+.welcome-grid {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Performance */
+@media (prefers-reduced-motion: reduce) {
+  .welcome-grid,
+  .brand-logo,
+  .btn-primary {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* ============================================
+   BENEFITS SECTION
+   ============================================ */
+
+.benefits-section {
+  background: linear-gradient(135deg, #f0fdff 0%, #e6f7ff 100%);
+}
+
+.benefit-card {
+  height: 100%;
+  background: white;
+  padding: 2.5rem 2rem;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.benefit-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(0, 151, 178, 0.2);
+  border-color: var(--primary-color);
+}
+
+.benefit-icon {
+  font-size: 4rem;
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+}
+
+.benefit-icon i {
+  display: inline-block;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.benefit-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--secondary-color);
+  margin-bottom: 1rem;
+}
+
+.benefit-description {
+  color: #666;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* ============================================
+   GALLERY SECTION
+   ============================================ */
+
+.gallery-section {
+  background: white;
+}
+
+.gallery-carousel-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  padding: 2rem 0;
+}
+
+.gallery-images-container {
+  flex: 1;
+  max-width: 1200px;
+  overflow: hidden;
+}
+
+.gallery-images-track {
+  display: flex;
+  gap: 1.5rem;
+  transition: transform 0.5s ease-in-out;
+}
+
+.gallery-image-item {
+  flex: 1;
+  min-width: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  background: white;
+  transition: transform 0.3s ease;
+}
+
+.gallery-image-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 50px rgba(0, 151, 178, 0.3);
+}
+
+.gallery-image {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-nav {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 15px rgba(0, 151, 178, 0.3);
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+.gallery-nav:hover:not(.disabled) {
+  background: var(--secondary-color);
+  transform: scale(1.1);
+  box-shadow: 0 8px 20px rgba(0, 151, 178, 0.4);
+}
+
+.gallery-nav.disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Pagination Dots */
+.gallery-pagination {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.pagination-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--primary-color);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.pagination-dot:hover {
+  background: rgba(0, 151, 178, 0.3);
+  transform: scale(1.2);
+}
+
+.pagination-dot.active {
+  background: var(--primary-color);
+  transform: scale(1.3);
+}
+
+/* Thumbnails */
+.gallery-thumbnails {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0 1rem;
+}
+
+.thumbnail-wrapper {
+  width: 80px;
+  height: 110px;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 3px solid transparent;
+  transition: all 0.3s ease;
+  opacity: 0.6;
+}
+
+.thumbnail-wrapper:hover {
+  border-color: var(--primary-color);
+  transform: scale(1.05);
+  opacity: 1;
+}
+
+.thumbnail-wrapper.active {
+  border-color: var(--primary-color);
+  box-shadow: 0 5px 15px rgba(0, 151, 178, 0.3);
+  opacity: 1;
+}
+
+.thumbnail-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ============================================
+   BIRTH OF MAGICAL YOGA SECTION
+   ============================================ */
+
+.birth-section {
+  background: linear-gradient(135deg, #f0fdff 0%, #e6f7ff 100%);
+}
+
+.birth-description {
+  font-size: 1.15rem;
+  color: #555;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+.birth-image-wrapper {
+  position: relative;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.birth-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.birth-stats {
+  position: absolute;
+  bottom: -1.5rem;
+  left: -1.5rem;
+  background: white;
+  padding: 2rem 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--primary-color);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-size: 1rem;
+  color: #666;
+  font-weight: 600;
+}
+
+
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 991px) {
+  .hero-slider {
+    min-height: 500px;
+  }
+
+  .hero-nav {
+    width: 50px;
+    height: 50px;
     font-size: 1.2rem;
   }
-  
-  /* Welcome Section */
-  .welcome-section, .benefits-section, .reasons-section, .instructor-section, .cta-section {
-    padding: 4rem 2rem;
+
+  .hero-nav.prev {
+    left: 1rem;
+  }
+
+  .hero-nav.next {
+    right: 1rem;
+  }
+
+  section {
+    padding: 3rem 0;
+  }
+
+  .gallery-carousel-wrapper {
+    gap: 1rem;
+  }
+
+  .gallery-images-track {
+    gap: 1rem;
+  }
+
+  .gallery-image {
+    height: 400px;
+  }
+
+  .gallery-nav {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
+
+  .birth-stats {
+    bottom: 1rem;
+    left: 1rem;
+    padding: 1.5rem 2rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero-slider {
+    min-height: 600px;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-description {
+    font-size: 1.1rem;
+  }
+
+  .btn-hero {
+    width: 100%;
     text-align: center;
   }
-  .welcome-section h2, .benefits-section h2, .reasons-section h2, .instructor-section h2 {
-    color: #0097b2;
+
+  .gallery-carousel-wrapper {
+    gap: 0;
+    padding: 1rem 0;
   }
-  
-  /* Benefits and Reasons Section */
-  .card {
-    background-color: #4dbbd3;
-    color: white;
-    padding: 2rem;
-    border-radius: 12px;
+
+  .gallery-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 45px;
+    height: 45px;
+    font-size: 1.2rem;
+    z-index: 20;
+  }
+
+  .gallery-nav.prev {
+    left: 0.5rem;
+  }
+
+  .gallery-nav.next {
+    right: 0.5rem;
+  }
+
+  .gallery-images-container {
+    width: 100%;
+    padding: 0 3rem;
+  }
+
+  .gallery-image {
+    height: 450px;
+  }
+
+  .thumbnail-wrapper {
+    width: 60px;
+    height: 80px;
+  }
+
+  .pagination-dot {
+    width: 10px;
+    height: 10px;
+  }
+
+  .social-icons {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-image {
+    height: 350px;
+  }
+
+  .gallery-nav {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .birth-stats {
+    position: static;
     margin-top: 1rem;
   }
-  
-  /* Instructor Section */
-  .instructor-card {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
+
+  .stat-number {
+    font-size: 2.5rem;
   }
-  .instructor-card img {
-    width: 200px;
-    border-radius: 50%;
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
-  
+}

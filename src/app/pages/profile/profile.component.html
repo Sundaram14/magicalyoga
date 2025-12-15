@@ -1,0 +1,173 @@
+<div class="min-vh-100 bg-light mt-5-c">
+  <!-- Main Content -->
+  <main class="container-fluid py-4">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <!-- Profile Completion Alert -->
+        <div *ngIf="profileData && !profileData.isProfileCompleted" 
+             class="alert alert-primary alert-dismissible fade show mb-4" role="alert">
+          <div class="d-flex align-items-center">
+            <i class="fas fa-info-circle me-2 fs-5"></i>
+            <div>
+              <strong>Complete your yoga profile!</strong> Provide your details to get personalized recommendations.
+            </div>
+          </div>
+        </div>
+
+        <!-- Loading State -->
+        <div *ngIf="isLoading" class="text-center py-5">
+          <div class="spinner-border text-primary" role="status"></div>
+          <p class="text-muted mt-2">Loading profile...</p>
+        </div>
+
+        <!-- Profile Form -->
+        <form *ngIf="!isLoading" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+          <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-white py-3">
+              <h3 class="h5 mb-0 text-dark">
+                <i class="fas fa-user me-2"></i>Basic Information
+              </h3>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-medium text-secondary">First Name *</label>
+                  <input type="text" formControlName="firstName" class="form-control"
+                         [class.is-invalid]="profileForm.get('firstName')?.invalid && profileForm.get('firstName')?.touched">
+                  <div *ngIf="profileForm.get('firstName')?.invalid && profileForm.get('firstName')?.touched" 
+                       class="invalid-feedback">
+                    First name is required and must be at least 2 characters.
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-medium text-secondary">Last Name *</label>
+                  <input type="text" formControlName="lastName" class="form-control"
+                         [class.is-invalid]="profileForm.get('lastName')?.invalid && profileForm.get('lastName')?.touched">
+                  <div *ngIf="profileForm.get('lastName')?.invalid && profileForm.get('lastName')?.touched" 
+                       class="invalid-feedback">
+                    Last name is required and must be at least 2 characters.
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-medium text-secondary">Email</label>
+                  <input type="email" formControlName="email" class="form-control" readonly>
+                  <small class="text-muted">Email cannot be changed</small>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-medium text-secondary">WhatsApp Number</label>
+                  <input type="tel" formControlName="whatsAppNumber" class="form-control" readonly>
+                  <small class="text-muted">WhatsApp number cannot be changed</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Yoga Profile Section -->
+          <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-white py-3">
+              <h3 class="h5 mb-0 text-dark">
+                <i class="fas fa-heartbeat me-2"></i>Yoga Profile
+              </h3>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-medium text-secondary">Gender *</label>
+                  <select formControlName="gender" class="form-select"
+                          [class.is-invalid]="profileForm.get('gender')?.invalid && profileForm.get('gender')?.touched">
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-medium text-secondary">Date of Birth *</label>
+                  <input type="date" formControlName="dateOfBirth" class="form-control"
+                         [class.is-invalid]="profileForm.get('dateOfBirth')?.invalid && profileForm.get('dateOfBirth')?.touched">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-medium text-secondary">Height (cm)</label>
+                  <input type="number" formControlName="height" class="form-control" placeholder="175.5" step="0.1" min="0">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-medium text-secondary">Weight (kg)</label>
+                  <input type="number" formControlName="weight" class="form-control" placeholder="68.2" step="0.1" min="0">
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-medium text-secondary">Yoga Experience Level *</label>
+                <select formControlName="yogaExperienceLevel" class="form-select"
+                        [class.is-invalid]="profileForm.get('yogaExperienceLevel')?.invalid && profileForm.get('yogaExperienceLevel')?.touched">
+                  <option value="">Select Experience Level</option>
+                  <option value="beginner">Beginner</option>
+                  <option value="intermediate">Intermediate</option>
+                  <option value="advanced">Advanced</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-medium text-secondary">Medical Conditions</label>
+                <textarea formControlName="medicalConditions" class="form-control" rows="3"
+                          placeholder="Any medical conditions we should know about..."></textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-medium text-secondary">Ongoing Medications</label>
+                <textarea formControlName="ongoingMedications" class="form-control" rows="3"
+                          placeholder="Any medications you're currently taking..."></textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-medium text-secondary">Health Goals</label>
+                <textarea formControlName="healthGoals" class="form-control" rows="3"
+                          placeholder="What are your primary health and wellness goals?"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="d-flex justify-content-between align-items-center">
+            <button type="button" class="btn btn-outline-secondary" (click)="goToDashboard()">
+              <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+            </button>
+            <div class="d-flex gap-2">
+              <button type="button" class="btn btn-success" 
+                      *ngIf="!profileData?.isProfileCompleted"
+                      [disabled]="!canCompleteProfile() || isSubmitting"
+                      (click)="onCompleteProfile()">
+                <span *ngIf="!isSubmitting">
+                  <i class="fas fa-check-circle me-2"></i>Complete Profile
+                </span>
+                <span *ngIf="isSubmitting">
+                  <span class="spinner-border spinner-border-sm me-2"></span>
+                  Completing...
+                </span>
+              </button>
+              <!-- Change the Save Changes button to use canSaveChanges() -->
+              <button type="submit" class="btn btn-primary"
+                [disabled]="!hasFormChanges() || isSubmitting">
+                <span *ngIf="!isSubmitting">
+                  <i class="fas fa-save me-2"></i>Save Changes
+                </span>
+                <span *ngIf="isSubmitting">
+                  <span class="spinner-border spinner-border-sm me-2"></span>
+                  Saving...
+                </span>
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <!-- Messages -->
+        <div *ngIf="errorMessage" class="alert alert-danger mt-3" role="alert">
+          <i class="fas fa-exclamation-triangle me-2"></i>{{ errorMessage }}
+        </div>
+        <div *ngIf="successMessage" class="alert alert-success mt-3" role="alert">
+          <i class="fas fa-check-circle me-2"></i>{{ successMessage }}
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

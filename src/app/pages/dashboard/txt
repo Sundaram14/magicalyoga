@@ -1,0 +1,223 @@
+<div class="min-vh-100 bg-light mt-5-c">
+  <!-- Main Content -->
+  <main class="container-fluid py-4">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-md-3 mb-4">
+        <div class="card border-0 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title text-secondary mb-3">Quick Actions</h5>
+            <div class="d-grid gap-2">
+              <a routerLink="/profile" class="btn btn-outline-primary text-start">
+                <i class="fas fa-user me-2"></i>My Profile
+              </a>
+              <a routerLink="/classes" class="btn btn-outline-primary text-start">
+                <i class="fas fa-play-circle me-2"></i>Browse Classes
+              </a>
+              <a routerLink="/memberships" class="btn btn-outline-primary text-start">
+                <i class="fas fa-clipboard-list me-2"></i>My Membership
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Dashboard -->
+      <div class="col-md-9">
+        <!-- Profile Completion Banner - Only show if profile is NOT complete -->
+        <div *ngIf="currentUser && !isProfileComplete" 
+             class="card border-warning border-2 mb-4 profile-banner">
+          <div class="card-body bg-warning bg-opacity-10">
+            <div class="d-flex justify-content-between align-items-start">
+              <div class="flex-grow-1">
+                <div class="d-flex align-items-center mb-2">
+                  <i class="fas fa-user-check me-2 fs-5" style="color: var(--primary-color);"></i>
+                  <strong style="color: var(--primary-color);">
+                    <span *ngIf="isProfilePartial">Complete your profile! ({{profileCompletion}}%)</span>
+                    <span *ngIf="profileCompletion === 0">Start your profile!</span>
+                  </strong>
+                </div>
+                
+                <!-- Expanded Content -->
+                <div *ngIf="!isBannerMinimized">
+                  <p class="text-dark mb-3">
+                    <span *ngIf="isProfilePartial">
+                      You're {{profileCompletion}}% done! Finish setting up your profile to get personalized yoga recommendations.
+                    </span>
+                    <span *ngIf="profileCompletion === 0">
+                      Complete your profile to get personalized yoga recommendations and full access.
+                    </span>
+                  </p>
+                  
+                  <!-- Progress Bar for Partial Completion -->
+                  <div *ngIf="isProfilePartial" class="mb-3">
+                    <div class="progress" style="height: 8px; background-color: rgba(255, 193, 7, 0.3);">
+                      <div class="progress-bar bg-warning" 
+                           [style.width]="profileCompletion + '%'"
+                           role="progressbar"
+                           [attr.aria-valuenow]="profileCompletion"
+                           aria-valuemin="0"
+                           aria-valuemax="100">
+                      </div>
+                    </div>
+                    <small class="text-warning">{{profileCompletion}}% complete</small>
+                  </div>
+                  
+                  <a routerLink="/profile" class="btn btn-warning btn-sm">
+                    <i class="fas fa-arrow-right me-1"></i>Complete now
+                  </a>
+                </div>
+                
+                <!-- Minimized Content -->
+                <div *ngIf="isBannerMinimized" style="color: var(--primary-color);">
+                  <small>
+                    <i class="fas fa-user me-1"></i>
+                    Profile {{profileCompletion}}% complete - 
+                    <a routerLink="/profile" style="color: var(--primary-color); text-decoration: underline;">Finish setup</a>
+                  </small>
+                </div>
+              </div>
+              
+              <!-- Minimize/Expand Toggle -->
+              <button type="button" 
+                      class="btn btn-sm btn-toggle p-1 ms-2 flex-shrink-0"
+                      (click)="toggleBanner()"
+                      [attr.aria-expanded]="!isBannerMinimized"
+                      style="border: 1px solid var(--primary-color); border-radius: 50%; background: white; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                <i class="fas" 
+                   [class.fa-minus]="!isBannerMinimized" 
+                   [class.fa-plus]="isBannerMinimized"
+                   style="color: var(--primary-color); font-size: 0.9rem;"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Welcome Section -->
+        <div class="card border-0 shadow-sm mb-4">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-md-8">
+                <h2 class="card-title h4 text-dark mb-2">Welcome back, {{ currentUser?.firstName }}! 👋</h2>
+                <p class="text-muted mb-0">Ready to continue your yoga journey? Explore our classes and track your progress.</p>
+                
+                <!-- Profile Status Badge - Only show if profile is NOT complete -->
+                <div *ngIf="!isProfileComplete" class="mt-2">
+                  <span class="badge bg-warning text-dark">
+                    <i class="fas fa-user-check me-1"></i>
+                    <span *ngIf="isProfilePartial">Profile {{profileCompletion}}% complete</span>
+                    <span *ngIf="profileCompletion === 0">Profile setup required</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="row g-4 mb-4">
+          <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body text-center">
+                <div class="rounded-circle bg-primary-light d-inline-flex align-items-center justify-content-center mb-3" 
+                     style="width: 60px; height: 60px;">
+                  <i class="fas fa-play text-white fs-4"></i>
+                </div>
+                <h3 class="h5 text-dark">Available Classes</h3>
+                <p class="text-muted mb-2">Explore our yoga programs</p>
+                <a routerLink="/classes" class="btn btn-primary btn-sm">Browse Classes</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body text-center">
+                <div class="rounded-circle bg-primary-light d-inline-flex align-items-center justify-content-center mb-3" 
+                     style="width: 60px; height: 60px;">
+                  <i class="fas fa-book text-white fs-4"></i>
+                </div>
+                <h3 class="h5 text-dark">Daily Journal</h3>
+                <p class="text-muted mb-2">Track your yoga practice</p>
+                <a routerLink="/journal" class="btn btn-primary btn-sm">View Journal</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body text-center">
+                <div class="rounded-circle bg-primary-light d-inline-flex align-items-center justify-content-center mb-3" 
+                     style="width: 60px; height: 60px;">
+                  <i class="fas fa-video text-white fs-4"></i>
+                </div>
+                <h3 class="h5 text-dark">Recordings</h3>
+                <p class="text-muted mb-2">Access class recordings</p>
+                <button class="btn btn-outline-primary btn-sm" disabled>Available Soon</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Section: Journal and Recent Activity Side by Side -->
+        <div class="row g-4">
+          <!-- Recent Journal Entries -->
+          <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100 journal-dashboard-preview">
+              <div class="card-header bg-white border-0 py-3 d-flex justify-content-between align-items-center">
+                <h3 class="h5 mb-0 text-dark">
+                  <i class="fas fa-book-open me-2"></i>Recent Journal Entries
+                </h3>
+                <a routerLink="/journal" class="btn btn-sm btn-outline-primary">View All</a>
+              </div>
+              <div class="card-body p-0">
+                <div *ngIf="recentJournalEntries.length === 0" class="text-center py-4 journal-preview-empty">
+                  <i class="fas fa-book text-muted fs-2 mb-3"></i>
+                  <p class="text-muted mb-3 small">No journal entries yet</p>
+                  <a routerLink="/journal/new" class="btn btn-primary btn-sm">
+                    <i class="fas fa-plus me-1"></i>Start Journaling
+                  </a>
+                </div>
+                
+                <div *ngIf="recentJournalEntries.length > 0" class="journal-preview-list">
+                  <div *ngFor="let entry of recentJournalEntries" 
+                      class="journal-preview-item">
+                    <a [routerLink]="['/journal', entry.id]" class="journal-preview-link">
+                      <div class="journal-preview-content">
+                        <h6 class="journal-preview-title">{{ entry.title }}</h6>
+                        <p class="journal-preview-text">{{ truncateContent(entry.content, 80) }}</p>
+                        <div class="journal-preview-meta">
+                          <small class="text-muted">
+                            <i class="fas fa-calendar me-1"></i>
+                            {{ formatDate(entry.entryDate) }}
+                          </small>
+                        </div>
+                      </div>
+                      <i class="fas fa-chevron-right journal-preview-arrow"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Activity -->
+          <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-header bg-white border-0 py-3">
+                <h3 class="h5 mb-0 text-dark">Recent Activity</h3>
+              </div>
+              <div class="card-body">
+                <div class="text-center py-5">
+                  <i class="fas fa-history text-muted fs-1 mb-3"></i>
+                  <p class="text-muted">No recent activity yet</p>
+                  <p class="text-muted small">Your yoga journey activities will appear here</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

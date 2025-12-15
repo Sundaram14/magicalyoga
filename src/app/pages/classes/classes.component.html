@@ -1,0 +1,148 @@
+<div class="classes-page mt-5-c">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="hero-title">Find Your Perfect Yoga Journey</h1>
+        <p class="hero-subtitle">Transform your life with our carefully crafted yoga programs designed for every age and lifestyle</p>
+        <div class="hero-stats">
+          <div class="stat">
+            <span class="stat-number">1000+</span>
+            <span class="stat-label">Happy Students</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">4.9★</span>
+            <span class="stat-label">Rating</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">5</span>
+            <span class="stat-label">Expert Teachers</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filter Section -->
+  <section class="filter-section">
+    <div class="container">
+      <div class="filter-tabs">
+        <button 
+          class="filter-tab" 
+          [class.active]="activeFilter === 'all'"
+          (click)="filterPrograms('all')">
+          🌟 All Programs
+        </button>
+        <button 
+          class="filter-tab" 
+          [class.active]="activeFilter === 'Adults'"
+          (click)="filterPrograms('Adults')">
+          🧘‍♀️ Adults Yoga
+        </button>
+        <button 
+          class="filter-tab" 
+          [class.active]="activeFilter === 'Kids'"
+          (click)="filterPrograms('Kids')">
+          🌟 Kids Yoga
+        </button>
+        <button 
+          class="filter-tab" 
+          [class.active]="activeFilter === 'Recording'"
+          (click)="filterPrograms('Recording')">
+          🎥 Recorded Sessions
+        </button>
+        <button 
+          class="filter-tab" 
+          [class.active]="activeFilter === 'Prenatal'"
+          (click)="filterPrograms('Prenatal')">
+          🤰 Prenatal Yoga
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Programs Grid -->
+  <section class="programs-section">
+    <div class="container">
+      <div class="programs-grid">
+        <div class="program-card" *ngFor="let program of filteredPrograms" [style.border-color]="getCategoryColor(program.category)">
+          <!-- Category Badge -->
+          <div class="category-badge" [style.background]="getCategoryColor(program.category)">
+            {{ getCategoryIcon(program.category) }} {{ program.category }}
+          </div>
+
+          <!-- Program Image -->
+          <div class="program-image">
+            <img [src]="program.image" [alt]="program.title">
+            <div class="image-overlay"></div>
+          </div>
+
+          <!-- Program Content -->
+          <div class="program-content">
+            <h3 class="program-title">{{ program.title }}</h3>
+            <p class="program-description">{{ program.description }}</p>
+
+            <!-- Batch Timings -->
+            <div class="batch-timings" *ngIf="program.batchTimings">
+              <div class="timing-label">Batch Timings:</div>
+              <div class="timings">
+                <span class="timing" *ngFor="let timing of program.batchTimings">{{ timing }}</span>
+              </div>
+            </div>
+
+            <!-- Highlights -->
+            <div class="highlights">
+              <div class="highlight" *ngFor="let highlight of program.highlights">
+                ✅ {{ highlight }}
+              </div>
+            </div>
+
+            <!-- Best For -->
+            <div class="best-for">
+              <div class="best-for-label">Perfect For:</div>
+              <div class="best-for-tags">
+                <span class="tag" *ngFor="let item of program.bestFor">{{ item }}</span>
+              </div>
+            </div>
+
+            <!-- Features -->
+            <div class="features">
+              <div class="feature" *ngFor="let feature of program.features">
+                <span class="feature-icon">⚡</span>
+                {{ feature }}
+              </div>
+            </div>
+
+            <!-- Price & Sessions -->
+            <div class="price-section">
+              <div class="price-info">
+                <span class="price">₹{{ program.price }}</span>
+                <span class="duration">/{{ program.duration }}</span>
+              </div>
+              <div class="sessions">{{ program.sessions }}</div>
+            </div>
+
+            <!-- CTA Button -->
+            <button class="enroll-btn" (click)="onEnrollClick(program)">
+              <span class="btn-text">Start Your Journey</span>
+              <span class="btn-price">₹{{ program.price }}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Ready to Transform Your Life?</h2>
+        <p>Join 1000+ students who have transformed their health and wellness with Magical Yoga</p>
+        <button class="cta-btn" routerLink="/register">
+          Start Your Free Trial
+        </button>
+      </div>
+    </div>
+  </section>
+</div>

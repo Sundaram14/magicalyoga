@@ -1,0 +1,112 @@
+<section class="pricing-section animate-section" id="pricing">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-badge">
+        <i class="fas fa-tag"></i>
+        Limited Time Offer
+      </div>
+      <h2 class="section-title">Start Your Transformation Today</h2>
+      <p class="section-subtitle">Invest in your health and get lifetime benefits</p>
+    </div>
+
+    <div class="pricing-container">
+      <div class="pricing-card">
+        <div class="pricing-header">
+          <div class="program-badge">
+            <i class="fas fa-bolt"></i>
+            Most Popular
+          </div>
+          <h3 class="program-title">Reset 42 Complete</h3>
+          <div class="program-duration">
+            <i class="fas fa-calendar-alt"></i>
+            42-Day Transformation Program
+          </div>
+        </div>
+
+        <div class="pricing-body">
+          <!-- Price Display -->
+          <div class="price-display">
+            <div class="price-original">
+              <span class="label">Original Price:</span>
+              <span class="value">{{ formatPrice(program.originalPrice) }}</span>
+            </div>
+            
+            <div class="price-current">
+              <span class="label">Your Investment:</span>
+              <span class="value"> ₹6,499</span>
+            </div>
+            <div>
+              <div class="price-savings">
+                Save ₹7,501
+              </div>
+            </div>
+          </div>
+
+
+          <!-- CTA -->
+          <div class="pricing-cta">
+            <button 
+              class="cta-button"
+              [disabled]="isEnrolling"
+              (click)="enrollClick.emit()">
+              <div class="cta-content">
+                <i class="fas fa-lock"></i>
+                <div class="cta-text">
+                  <div class="main-text">Secure Your Spot Now At ₹999</div>
+                  <div class="sub-text">Limited spots available for January batch</div>
+                </div>
+              </div>
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+
+          <!-- Countdown -->
+          <!-- <div class="pricing-countdown">
+            <div class="countdown-header">
+              <i class="fas fa-clock"></i>
+              <span>Offer ends when batch is full</span>
+            </div>
+            <div class="spots-remaining">
+              <div class="spots-bar">
+                <div class="spots-filled" [style.width.%]="75"></div>
+              </div>
+              <div class="spots-text">
+                <span>Only 12 spots left</span>
+                <span>75% full</span>
+              </div>
+            </div>
+          </div> -->
+        </div>
+      </div>
+
+      <!-- Value Comparison -->
+      <div class="value-comparison">
+        <h4>Compare the Value</h4>
+        <div class="comparison-grid">
+          <div class="comparison-item">
+            <div class="item-title">Regular Yoga Classes</div>
+            <div class="item-price">₹6,000+</div>
+            <div class="item-note">30 sessions only</div>
+          </div>
+          
+          <div class="comparison-item">
+            <div class="item-title">Personal Coaching</div>
+            <div class="item-price">₹8,000+</div>
+            <div class="item-note">Monthly fee</div>
+          </div>
+          
+          <div class="comparison-item highlight">
+            <div class="item-title">Reset 42 Program</div>
+            <div class="item-price">₹6,499</div>
+            <div class="item-note">All-inclusive</div>
+          </div>
+        </div>
+        
+        <div class="value-note">
+          <i class="fas fa-gem"></i>
+          <span>Get complete transformation for less than the cost of yoga classes alone</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

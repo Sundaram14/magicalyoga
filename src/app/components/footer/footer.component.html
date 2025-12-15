@@ -1,48 +1,86 @@
-<footer class="footer-container">
-    <!-- First Part: Columns -->
-    <div class="footer-top">
-      <!-- First Column: Logo and Socials -->
-      <div class="footer-column">
-        <img src="/assets/Images/footer-logo.png" alt="Magical Yoga Logo" class="footer-logo" />
-        <p class="social-text">Connect with us on Socials:</p>
-        <div class="social-icons">
-            <a href="https://wa.me/9884524742?text=Want%20to%20Enquire%20About%20Yoga%20Sessions%20%26%20Try%20a%20Free%20Trial" target="_blank" aria-label="WhatsApp">
-              <i class="fab fa-whatsapp social-icon"></i>
-            </a>
-            <a href="https://instagram.com/magical__yoga" target="_blank" aria-label="Instagram">
-              <i class="fab fa-instagram social-icon"></i>
-            </a>
-            <a href="https://youtube.com/@magicalyogatamil" target="_blank" aria-label="YouTube">
-              <i class="fab fa-youtube social-icon"></i>
-            </a>
-          </div>          
+<!-- Footer -->
+<footer class="footer-section">
+  <div class="container">
+    <div class="row g-4">
+      <!-- Brand & Social -->
+      <div class="col-lg-4 mb-4 mb-lg-0">
+        <div class="footer-brand">
+          <h3 class="footer-logo-text">Magical Yoga</h3>
+          <p class="footer-tagline">Awaken Your Best Self With Every Breath</p>
+          <div class="social-links">
+            <span class="social-title">Connect with us:</span>
+            <div class="social-icons">
+              <a href="mailto:info@magicalyoga.in" class="social-icon" aria-label="Email">
+                <i class="fas fa-envelope"></i>
+              </a>
+              <a href="https://www.instagram.com/magical__yoga" class="social-icon" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a href="https://www.youtube.com/channel/UChLcOzqm3t492pWi5oOzhpA?sub_confirmation=1" class="social-icon" aria-label="YouTube">
+                <i class="fab fa-youtube"></i>
+              </a>
+              <a href="https://wa.me/919884524742" class="social-icon" aria-label="WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
-  
-      <!-- Second Column: Quick Links -->
-      <div class="footer-column quicklink">
-        <h2 class="footer-title">Quick Links</h2>
-        <ul class="footer-links">  
-          <li><a href="summer-camp">Summer Camp</a></li>
-          <li><a href="video-contents">Video Contents</a></li>
-          <li><a href="about-us">About Us</a></li>
-          <li><a href="contact-us">Contact</a></li>
+
+      <!-- Quick Links -->
+      <div class="col-lg-4 col-md-6">
+        <h4 class="footer-heading">
+          <i class="fas fa-link me-2"></i>Quick Links
+        </h4>
+        <ul class="footer-links">
+          <li><a routerLink="/reset42"><i class="fas fa-sun me-2"></i>Reset42 Program</a></li>
+          <li><a routerLink="/classes"><i class="fas fa-video me-2"></i>Live Classes</a></li>
+          <li><a routerLink="/magical-mama"><i class="fas fa-heart me-2"></i>Magical Mama</a></li>
+          <li><a routerLink="/about"><i class="fas fa-info-circle me-2"></i>About Us</a></li>
+          <li><a routerLink="/contact"><i class="fas fa-envelope me-2"></i>Contact</a></li>
         </ul>
       </div>
-  
-      <!-- Third Column: Contact Info -->
-      <div class="footer-column contact-us">
-        <h2 class="footer-title">Contact Us</h2>
-        <p class="contact-info">Email: <a href="mailto:magicalyogatamil&#64;gmail.com">magicalyogatamil&#64;gmail.com</a></p>
-        <p class="contact-info">Phone: +91-9884524742</p>
+
+      <!-- Contact Info -->
+      <div class="col-lg-4 col-md-6">
+        <h4 class="footer-heading">
+          <i class="fas fa-address-book me-2"></i>Contact Us
+        </h4>
+        <ul class="footer-contact">
+          <li>
+            <i class="fas fa-envelope me-2"></i>
+            <a href="mailto:info@magicalyoga.in">info&#64;magicalyoga.in</a>
+          </li>
+          <li>
+            <i class="fas fa-phone me-2"></i>
+            <a href="tel:+919884524742">+91-9884524742</a>
+          </li>
+          <li>
+            <i class="fas fa-map-marker-alt me-2"></i>
+            <span>Chennai, Tamil Nadu</span>
+          </li>
+        </ul>
       </div>
     </div>
-  
-    <!-- Divider -->
-    <div class="footer-divider"></div>
-  
-    <!-- Bottom Part: Rights Reserved -->
+
+    <!-- Footer Bottom -->
     <div class="footer-bottom">
-      <p>© 2025 Magical Yoga. All rights reserved.</p>
+      <div class="footer-copyright">
+        <p>
+          <i class="fas fa-copyright me-1"></i>2025 Magical Yoga. All rights reserved.
+        </p>
+        <p class="disclaimer-text">
+          Yoga involves physical movement. Consult your doctor before starting any new exercise program.
+        </p>
+      </div>
+      
+      <div class="footer-legal-links">
+        <a routerLink="/legal/terms">Terms</a> | 
+        <a routerLink="/legal/privacy">Privacy</a> | 
+        <a routerLink="/legal/refund">Refund</a> | 
+        <a routerLink="/legal/shipping">Delivery</a> | 
+        <a routerLink="/contact">Contact</a>
+      </div>
     </div>
-  </footer>
-  
+  </div>
+</footer>

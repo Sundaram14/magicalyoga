@@ -1,0 +1,70 @@
+<section class="testimonials-section animate-section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-badge">
+        <i class="fas fa-heart"></i>
+        Success Stories
+      </div>
+      <h2 class="section-title">Real People, Real Results</h2>
+      <p class="section-subtitle">Join 500+ students who transformed their lives</p>
+    </div>
+
+    <!-- Carousel Container -->
+    <div class="testimonial-carousel-container" 
+         (mouseenter)="stopAutoplay()" 
+         (mouseleave)="startAutoplay()">
+      
+      <!-- Carousel Track -->
+      <div class="testimonial-carousel-track" 
+           [style.transform]="'translateX(-' + (currentSlide * (100 / slidesToShow)) + '%)'">
+        <div class="testimonial-carousel-slide" 
+             *ngFor="let testimonial of testimonials; let i = index"
+             [attr.data-index]="i">
+          <div class="testimonial-card">
+            <div class="testimonial-rating">
+              <div class="stars">
+                <i class="fas fa-star" *ngFor="let star of [1,2,3,4,5]"></i>
+              </div>
+              <div class="result-badge">{{ testimonial.result }}</div>
+            </div>
+            
+            <div class="testimonial-quote">
+              <i class="fas fa-quote-left"></i>
+              <p>{{ testimonial.text }}</p>
+            </div>
+            
+            <div class="testimonial-author">
+              <div class="author-avatar">
+                {{ testimonial.author.charAt(0) }}
+              </div>
+              <div class="author-info">
+                <div class="author-name">{{ testimonial.author }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Buttons -->
+      <button class="carousel-btn carousel-btn-prev" 
+              (click)="prevSlide()"
+              [disabled]="currentSlide === 0 && getTotalVisibleSlides() === 1">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <button class="carousel-btn carousel-btn-next" 
+              (click)="nextSlide()"
+              [disabled]="currentSlide >= getTotalVisibleSlides() - 1">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Dots Navigation -->
+    <div class="carousel-dots">
+      <button *ngFor="let dot of [].constructor(getTotalVisibleSlides()); let i = index"
+              class="carousel-dot"
+              [class.active]="i === currentSlide"
+              (click)="goToSlide(i)">
+      </button>
+    </div>
+  </div>
+</section>
