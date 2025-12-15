@@ -122,7 +122,6 @@
 .price-display {
   margin-bottom: 2rem;
   padding-bottom: 2rem;
-  border-bottom: 2px solid rgba(0, 151, 178, 0.1);
 }
 
 .price-original {
@@ -172,6 +171,7 @@
   font-weight: 700;
   margin-top: 0.5rem;
   display: inline-block;
+  float: right;
 }
 
 /* Payment Options */

@@ -80,7 +80,7 @@ export class Reset42LandingComponent implements OnInit, OnDestroy {
       icon: 'fas fa-bullseye',
       title: 'Diet Clarity',
       description: 'Build sustainable food habits',
-      color: '#00c9ff'
+      color: '#0097b2'
     },
     {
       icon: 'fas fa-bolt',

@@ -28,9 +28,9 @@ export class FaqSectionComponent {
       category: 'general',
       question: 'When does the program start?',
       hint: 'Next batch information',
-      answer: 'The Reset 42 program starts on January 15, 2025. Live yoga sessions are held Monday to Friday from 7:30-8:30 AM IST.',
+      answer: 'The Reset 42 program starts on January 5, 2026. Live yoga sessions are held Monday to Friday from 7:30-8:30 AM IST.',
       details: [
-        'January 5, 2025',
+        'January 5, 2026',
         'Daily sessions: Mon-Fri, 7:30-8:30 AM',
         'Coaching classes: Saturdays, 10 AM'
       ],
@@ -94,8 +94,7 @@ export class FaqSectionComponent {
       details: [
         'Credit/Debit Cards',
         'UPI (Google Pay, PhonePe, etc.)',
-        'Net Banking',
-        'EMI options available'
+        'Net Banking'
       ],
       expanded: false
     },
@@ -106,9 +105,9 @@ export class FaqSectionComponent {
       hint: 'Average improvements',
       answer: 'Most students experience significant improvements in sleep quality, stress reduction, energy levels, and overall well-being.',
       details: [
-        '80% stress reduction (average)',
+        '80% stress reduction',
         '+3.2 hours quality sleep increase',
-        '75% balanced diet (average)',
+        '75% balanced diet',
         '90% reduction in body pain'
       ],
       expanded: false
